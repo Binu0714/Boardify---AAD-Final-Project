@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BordifyBackEndApplication {
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(BordifyBackEndApplication.class, args);
 	}
 

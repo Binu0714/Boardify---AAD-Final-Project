@@ -4,28 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SignUp - Boardify</title>
-    <link rel="stylesheet" href="../Css/SignUp.css">
+    <link rel="stylesheet" href="../Css/SignIn.css">
 </head>
 <body>
 <div class="container">
     <div class="left-panel">
         <div class="logo-container">
-            <div class="logo-placeholder">L</div>
+                <img src="/assets/logo.png">
         </div>
         <div class="welcome-text">
-            <h1>Welcome Back</h1>
-            <p>Sign in to your account and continue your journey with us. We're glad to see you again!</p>
+            <h1>Welcome to<br>Your App</h1>
+            <p>Sign in to access your account and explore all the amazing features we have to offer.</p>
         </div>
     </div>
 
     <div class="right-panel">
         <div class="form-container">
             <div class="form-header">
-                <h2>Sign in to your account</h2>
-                <p>Welcome back! Please sign in to continue</p>
+                <h2>Create your account</h2>
+                <p>Fill in your details to get started</p>
             </div>
 
-            <form>
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="name">Username</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
                 <div class="form-group">
                     <label for="email">E-mail Address</label>
                     <input type="email" id="email" name="email" required>
@@ -36,16 +41,7 @@
                     <input type="password" id="password" name="password" required>
                 </div>
 
-                <div class="form-options">
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="remember" name="remember">
-                        <label for="remember">Remember me</label>
-                    </div>
-                    <a href="#" class="forgot-password">Forgot password?</a>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-full-width">Sign In</button>
-
+                <button type="submit" class="btn btn-primary btn-full-width">Sign Up</button>
 
                 <button type="button" class="btn btn-google">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -58,13 +54,16 @@
                 </button>
             </form>
 
-            <div class="signup-link">
-                <p>Don't have an account? <a href="#">Sign up</a></p>
+            <div class="signin-link">
+                <p>Already have an account? <a href="#">Sign in</a></p>
             </div>
         </div>
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../JS/SignUp.js"></script>
+
 </body>
 </html>

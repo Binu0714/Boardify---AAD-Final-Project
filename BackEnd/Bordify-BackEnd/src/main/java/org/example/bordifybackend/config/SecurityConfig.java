@@ -1,6 +1,7 @@
 package org.example.bordifybackend.config;
 
 import lombok.RequiredArgsConstructor;
+import org.example.bordifybackend.util.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -19,14 +20,31 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final UserDetailsService userDetailsService;
+    private final JwtAuthFilter jwtAuthFilter;
     private final PasswordEncoder passwordEncoder;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth ->
-                        auth.anyRequest().permitAll()
-                );
+        http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(
+                        auth->
+                                auth.requestMatchers("/user/**").permitAll()
+                                        .anyRequest().authenticated())
+                .sessionManagement(
+                        session->session
+                                .sessionCreationPolicy(
+                                        SessionCreationPolicy.STATELESS)
+                )
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthFilter
+                        , UsernamePasswordAuthenticationFilter.class);
         return http.build();
+    }
+
+    private AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider=new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder);
+        return provider;
     }
 }

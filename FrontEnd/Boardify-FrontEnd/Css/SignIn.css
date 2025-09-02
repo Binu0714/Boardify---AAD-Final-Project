@@ -4,6 +4,46 @@
     box-sizing: border-box;
 }
 
+/* --- STYLES FOR SHOW/HIDE PASSWORD ICON --- */
+
+/* 1. Create a positioning context for the icon */
+.password-wrapper {
+    position: relative;
+}
+
+/* 2. Style the icon's container (the span) */
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 16px; /* Position icon on the right */
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #a0aec0; /* Icon color */
+    transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+    color: #4facfe; /* Icon color on hover */
+}
+
+/* 3. Adjust input padding to prevent text from overlapping the icon */
+.password-wrapper input {
+    padding-right: 45px; /* Make space for the icon */
+}
+
+/* 4. Logic to show/hide the correct eye icon */
+.toggle-password .eye-slash {
+    display: none; /* Hide the slashed eye by default */
+}
+
+.toggle-password.visible .eye-slash {
+    display: block; /* Show the slashed eye when active */
+}
+
+.toggle-password.visible .eye-open {
+    display: none; /* Hide the open eye when active */
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     min-height: 100vh;
@@ -21,7 +61,7 @@ body {
     overflow: hidden;
     max-width: 900px;
     width: 100%;
-    height: 600px;
+    height: 630px;
 }
 
 .left-panel {
@@ -184,7 +224,7 @@ body {
 }
 
 .form-group {
-    margin-bottom: 18px;
+    margin-bottom: 10px;
 }
 
 .form-group label {

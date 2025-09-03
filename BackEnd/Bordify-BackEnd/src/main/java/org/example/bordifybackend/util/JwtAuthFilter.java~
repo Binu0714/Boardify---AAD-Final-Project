@@ -27,31 +27,27 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         final String authHeader = request.getHeader("Authorization");
 
-        // 1. Header must exist
         if (authHeader == null) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // 2. Header must start with Bearer
         if (!authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // 3. Extract token safely
         String jwtToken = authHeader.substring(7).trim();
         if (jwtToken.isEmpty()) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // 4. Extract username and authenticate
+        // Extract username and authenticate
         String username;
         try {
             username = jwtUtil.extractUsername(jwtToken);
         } catch (Exception e) {
-            // Token is malformed
             filterChain.doFilter(request, response);
             return;
         }

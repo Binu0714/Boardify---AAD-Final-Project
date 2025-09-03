@@ -23,8 +23,13 @@ public class User {
     private String email;
 
     @Column(nullable = false)
+    private int mobile;
+
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    private String profilePicUrl;
 }

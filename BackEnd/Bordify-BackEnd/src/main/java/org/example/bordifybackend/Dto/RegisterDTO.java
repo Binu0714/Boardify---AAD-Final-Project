@@ -8,4 +8,6 @@ public class RegisterDTO {
     private String password;
     private String email;
     private String role;
+    private int mobile;
+    private String profilePicUrl;
 }

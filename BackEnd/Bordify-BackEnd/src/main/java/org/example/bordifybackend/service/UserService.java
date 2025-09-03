@@ -45,6 +45,8 @@ public class UserService {
                 .password(passwordEncoder.encode(registerDTO.getPassword()))
                 .email(registerDTO.getEmail())
                 .role(Role.valueOf(registerDTO.getRole()))
+                .mobile(registerDTO.getMobile())
+                .profilePicUrl(registerDTO.getProfilePicUrl())
                 .build();
         userRepository.save(user);
         return "User registered successfully";

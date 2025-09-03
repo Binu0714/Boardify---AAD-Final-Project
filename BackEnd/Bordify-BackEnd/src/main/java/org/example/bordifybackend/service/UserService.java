@@ -46,7 +46,7 @@ public class UserService {
                 .email(registerDTO.getEmail())
                 .role(Role.valueOf(registerDTO.getRole()))
                 .mobile(registerDTO.getMobile())
-                .profilePicUrl(registerDTO.getProfilePicUrl())
+                .profilePicUrl(null)
                 .build();
         userRepository.save(user);
         return "User registered successfully";

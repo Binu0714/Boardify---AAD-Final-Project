@@ -23,7 +23,7 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private int mobile;
+    private String mobile;
 
     @Column(nullable = false)
     private String password;

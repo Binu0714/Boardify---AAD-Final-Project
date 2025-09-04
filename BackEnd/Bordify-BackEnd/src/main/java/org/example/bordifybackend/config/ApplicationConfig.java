@@ -14,21 +14,18 @@ import java.util.List;
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
+
     private final UserRepo userRepository;
 
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByUsername(username)
-                .map(user -> new
-                        org.springframework.security.core.userdetails.User(
+                .map(user -> new org.springframework.security.core.userdetails.User(
                         user.getUsername(),
                         user.getPassword(),
-                        List.of(new SimpleGrantedAuthority(
-                                "ROLE_"+user.getRole().name()))
-
-                )).orElseThrow(
-                        ()->new RuntimeException("User not found")
-                );
+                        List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()))
+                ))
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     @Bean

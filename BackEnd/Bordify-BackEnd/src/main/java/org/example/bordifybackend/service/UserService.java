@@ -66,5 +66,25 @@ public class UserService {
         );
     }
 
+    public UserDTO updateUser(String username, String email, String mobile, String profilePicUrl) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
+        user.setEmail(email);
+        user.setMobile(mobile);
+
+        if (profilePicUrl != null) {
+            user.setProfilePicUrl(profilePicUrl);
+        }
+
+        userRepository.save(user);
+
+        return new UserDTO(
+                user.getUsername(),
+                user.getEmail(),
+                user.getMobile(),
+                user.getRole(),
+                user.getProfilePicUrl()
+        );
+    }
 }

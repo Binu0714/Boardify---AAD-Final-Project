@@ -1,5 +1,6 @@
 package org.example.bordifybackend.controller;
 
+import jakarta.servlet.annotation.MultipartConfig;
 import lombok.RequiredArgsConstructor;
 import org.example.bordifybackend.Dto.ApiResponse;
 import org.example.bordifybackend.Dto.AuthDTO;
@@ -10,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -53,6 +57,47 @@ public class UserController {
                         "User fetched successfully",
                         userDTO
                 )
+        );
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<ApiResponse> updateUser(
+            @RequestParam("email") String email,
+            @RequestParam("mobile") String mobile,
+            @RequestParam(value = "file", required = false) MultipartFile file
+        ) {
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        String profilePicUrl = null;
+
+        if (file != null && !file.isEmpty()) {
+            try {
+                // Save files in project root /uploads folder
+                String uploadDir = System.getProperty("user.dir") + "/uploads";
+                File folder = new File(uploadDir);
+                if (!folder.exists()) folder.mkdirs();
+
+                String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                File destination = new File(folder, fileName);
+                file.transferTo(destination);
+
+                profilePicUrl = "/uploads/" + fileName;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.status(500)
+                        .body(new ApiResponse(500, "File upload failed", null));
+            }
+        }
+
+        UserDTO updatedUser = userService.updateUser(username, email, mobile, profilePicUrl);
+
+        return ResponseEntity.ok(
+                new ApiResponse(
+                        200,
+                        "Profile updated successfully",
+                        updatedUser)
         );
     }
 

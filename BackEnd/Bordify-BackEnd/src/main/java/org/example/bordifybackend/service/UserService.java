@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.bordifybackend.Dto.AuthDTO;
 import org.example.bordifybackend.Dto.AuthResponseDTO;
 import org.example.bordifybackend.Dto.RegisterDTO;
+import org.example.bordifybackend.Dto.UserDTO;
 import org.example.bordifybackend.entity.Role;
 import org.example.bordifybackend.entity.User;
 import org.example.bordifybackend.repo.UserRepo;
@@ -51,4 +52,19 @@ public class UserService {
         userRepository.save(user);
         return "User registered successfully";
     }
+
+    public UserDTO getByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return new UserDTO(
+                user.getUsername(),
+                user.getEmail(),
+                user.getMobile(),
+                user.getRole(),
+                user.getProfilePicUrl()
+        );
+    }
+
+
 }

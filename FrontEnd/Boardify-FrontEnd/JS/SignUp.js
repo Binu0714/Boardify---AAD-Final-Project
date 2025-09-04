@@ -4,11 +4,13 @@ $("#signup-form").submit(function (event) {
     let username = $("#name").val();
     let email = $("#email").val();
     let password = $("#password").val();
+    let mobile = $("#mobile").val();
 
     let user = {
         username: username,
         password: password,
         email: email,
+        mobile: mobile,
         role: "USER"
     };
 

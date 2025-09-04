@@ -51,7 +51,7 @@
         <!-- Left Sidebar for Profile Navigation -->
         <aside class="profile-sidebar">
             <div class="user-summary">
-                <img src="../assets/user.png" alt="User Avatar" id="sidebar-avatar" class="user-avatar">
+                <img src="https://via.placeholder.com/100" alt="User Avatar" id="sidebar-avatar" class="user-avatar">
                 <h3 id="sidebar-username">John Smith</h3>
                 <p id="sidebar-role">Room Seeker</p>
             </div>

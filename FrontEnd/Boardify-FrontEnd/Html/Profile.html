@@ -52,8 +52,9 @@
         <aside class="profile-sidebar">
             <div class="user-summary">
                 <img src="../assets/user.png" alt="User Avatar" id="sidebar-avatar" class="user-avatar">
-                <h3 id="sidebar-username">John Smith</h3>
-                <p id="sidebar-role">Room Seeker</p>
+                <h3 id="sidebar-username">Username</h3>
+                <p id="sidebar-email">Email</p>
+                <p id="sidebar-mobile">Contact</p>
             </div>
             <nav class="profile-nav">
                 <a href="#" class="profile-nav-link active">
@@ -110,7 +111,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn-primary">Update Profile</button>
+                        <button type="submit" class="btn-primary" id="update-profile">Update Profile</button>
                     </div>
                 </form>
             </div>
@@ -214,22 +215,6 @@
             }
         });
 
-        // --- Form Submission Logic ---
-        const profileForm = document.getElementById('profile-update-form');
-        profileForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            // Collect and send profile data
-            alert('Profile updated successfully!');
-        });
-
-        const passwordForm = document.getElementById('password-update-form');
-        passwordForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            // Collect and send password data
-            alert('Password updated successfully!');
-        });
-
-        // --- Add other header/dropdown JS here ---
     });
 </script>
 

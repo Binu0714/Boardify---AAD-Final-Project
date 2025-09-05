@@ -110,6 +110,10 @@ function updateUser() {
                         $("#form-avatar-preview").attr("src", fullImgUrl);
                         $("#sidebar-avatar").attr("src", fullImgUrl);
                     }
+                    if (response.data) {
+                        $("#sidebar-email").text(response.data.email);
+                        $("#sidebar-mobile").text(response.data.mobile);
+                    }
                 });
             },
 

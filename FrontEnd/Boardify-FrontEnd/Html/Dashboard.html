@@ -48,7 +48,7 @@
                         </a>
 
                         <div class="dropdown-footer">
-                            <a href="#" class="dropdown-link" onclick="handleLogout(event)">
+                            <a href="LogIn.html" class="dropdown-link" onclick="handleLogout(event)">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                                 Logout
                             </a>
@@ -304,7 +304,6 @@
 <script src="../JS/Dashboard.js"></script>
 
 <script>
-    // --- UPDATED JAVASCRIPT ---
 
     document.addEventListener('DOMContentLoaded', () => {
         // --- Mobile Menu Toggle ---
@@ -344,24 +343,10 @@
             }
         });
 
-        // --- Favorite toggle ---
-        document.querySelectorAll('.ad-favorite').forEach(fav => {
-            fav.addEventListener('click', (e) => {
-                e.preventDefault();
-                fav.classList.toggle('active');
-            });
-        });
     });
 
-    // --- Logout functionality ---
-    function handleLogout(event) {
-        event.preventDefault();
-        if (confirm('Are you sure you want to logout?')) {
-            alert('Logging out...');
-            // In a real application, you would redirect to the login page
-            // window.location.href = '/login.html';
-        }
-    }
+
+
 </script>
 </body>
 </html>

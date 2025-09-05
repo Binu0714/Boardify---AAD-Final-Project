@@ -125,17 +125,35 @@
                     <div class="form-row">
                         <div class="form-group full-width">
                             <label for="current-password">Current Password</label>
-                            <input type="password" id="current-password" required>
+                            <!-- WRAPPER ADDED -->
+                            <div class="password-wrapper">
+                                <input type="password" id="current-password" required>
+                                <span class="toggle-password">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path class="eye-open" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle class="eye-open" cx="12" cy="12" r="3"></circle><path class="eye-slash" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22"></path></svg>
+                    </span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="new-password">New Password</label>
-                            <input type="password" id="new-password" required>
+                            <!-- WRAPPER ADDED -->
+                            <div class="password-wrapper">
+                                <input type="password" id="new-password" required>
+                                <span class="toggle-password">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path class="eye-open" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle class="eye-open" cx="12" cy="12" r="3"></circle><path class="eye-slash" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22"></path></svg>
+                    </span>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="confirm-password">Confirm New Password</label>
-                            <input type="password" id="confirm-password" required>
+                            <!-- WRAPPER ADDED -->
+                            <div class="password-wrapper">
+                                <input type="password" id="confirm-password" required>
+                                <span class="toggle-password">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path class="eye-open" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle class="eye-open" cx="12" cy="12" r="3"></circle><path class="eye-slash" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22"></path></svg>
+                    </span>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -197,22 +215,21 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- Avatar Preview Logic ---
-        const avatarUploadInput = document.getElementById('avatar-upload-input');
-        const avatarPreview = document.getElementById('form-avatar-preview');
-        const sidebarAvatar = document.getElementById('sidebar-avatar');
 
-        avatarUploadInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const imageUrl = event.target.result;
-                    avatarPreview.src = imageUrl;
-                    sidebarAvatar.src = imageUrl;
-                };
-                reader.readAsDataURL(file);
-            }
+        const togglePasswordIcons = document.querySelectorAll('.toggle-password');
+
+        togglePasswordIcons.forEach(icon => {
+            icon.addEventListener('click', function () {
+                // Get the input field associated with this icon
+                const passwordInput = this.previousElementSibling;
+
+                // Toggle the type attribute between 'password' and 'text'
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+
+                // Toggle the 'visible' class on the icon container (the span)
+                this.classList.toggle('visible');
+            });
         });
 
     });

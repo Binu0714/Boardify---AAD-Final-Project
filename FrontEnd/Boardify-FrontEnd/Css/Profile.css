@@ -49,6 +49,49 @@ body {
     letter-spacing: -0.02em;
 }
 
+/* --- STYLES FOR SHOW/HIDE PASSWORD ICON --- */
+
+/* 1. Create a positioning context for the icon */
+.password-wrapper {
+    position: relative;
+}
+
+/* 2. Style the icon's container (the span) */
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem; /* Same as the input's padding */
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #a0aec0; /* Icon color */
+    display: flex; /* Helps vertically align the SVG perfectly */
+    align-items: center;
+    transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+    color: #4facfe; /* Icon color on hover */
+}
+
+/* 3. Adjust input padding to prevent text from overlapping the icon */
+.password-wrapper input {
+    /* Add space on the right side of the input field */
+    padding-right: 2.5rem;
+}
+
+/* 4. Logic to show/hide the correct part of the SVG icon */
+.toggle-password .eye-slash {
+    display: none; /* Hide the slashed eye by default */
+}
+
+.toggle-password.visible .eye-slash {
+    display: block; /* Show the slashed eye when active */
+}
+
+.toggle-password.visible .eye-open {
+    display: none; /* Hide the open eye when active */
+}
+
 .nav-menu { display: flex; align-items: center; gap: 1.5rem; }
 .nav-links { display: flex; gap: 0.5rem; list-style: none; }
 .nav-link { text-decoration: none; color: #4a5568; font-weight: 500; transition: all 0.2s ease; padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.95rem; }

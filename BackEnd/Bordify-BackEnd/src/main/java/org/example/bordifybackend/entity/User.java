@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -32,4 +34,13 @@ public class User {
     private Role role;
 
     private String profilePicUrl;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Property> properties;
+
+    @OneToMany(mappedBy = "user")
+    private List<Review> reviews;
+
+    @OneToMany(mappedBy = "user")
+    private List<BookingReq> bookingReqs;
 }

@@ -2,10 +2,7 @@ package org.example.bordifybackend.controller;
 
 import jakarta.servlet.annotation.MultipartConfig;
 import lombok.RequiredArgsConstructor;
-import org.example.bordifybackend.Dto.ApiResponse;
-import org.example.bordifybackend.Dto.AuthDTO;
-import org.example.bordifybackend.Dto.RegisterDTO;
-import org.example.bordifybackend.Dto.UserDTO;
+import org.example.bordifybackend.Dto.*;
 import org.example.bordifybackend.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -97,8 +94,35 @@ public class UserController {
                 new ApiResponse(
                         200,
                         "Profile updated successfully",
-                        updatedUser)
+                        updatedUser
+                )
         );
+    }
+
+    @PutMapping("/updatePassword")
+    public ResponseEntity<ApiResponse> updatePassword(@RequestBody PasswordDTO dto){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        try {
+            userService.updatePassword(username, dto.getCurrentPassword(), dto.getNewPassword(), dto.getConfirmPassword());
+            return ResponseEntity.ok(
+                    new ApiResponse(
+                            200,
+                            "Password updated successfully",
+                            null
+                    )
+            );
+        } catch (RuntimeException ex) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(
+                            new ApiResponse(
+                                    400,
+                                    ex.getMessage(),
+                                    null
+                            )
+                    );
+        }
     }
 
 }

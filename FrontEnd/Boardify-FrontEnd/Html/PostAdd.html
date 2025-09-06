@@ -59,7 +59,9 @@
     <div class="stepper">
       <div class="step active"><div class="step-number">1</div><div class="step-label">Details</div></div>
       <div class="step-line"></div>
-      <div class="step"><div class="step-number">2</div><div class="step-label">Location</div></div>
+      <div class="step"><div class="step-number">2</div><div class="step-label">Amenities</div></div>
+      <div class="step-line"></div>
+      <div class="step"><div class="step-number">3</div><div class="step-label">Location</div></div>
       <div class="step-line"></div>
       <div class="step"><div class="step-number">3</div><div class="step-label">Photos</div></div>
     </div>
@@ -73,6 +75,67 @@
           <div class="form-row"><div class="form-group"><label for="ad-property-type">Property Type</label><select id="ad-property-type" required><option value="">Select Type</option><option value="single">Single Room</option><option value="shared">Shared Room</option><option value="annex">Annex</option><option value="house">House</option></select></div><div class="form-group"><label for="ad-listed-for">Listed For</label><select id="ad-listed-for" required><option value="">Select Option</option><option value="any">Anyone</option><option value="boys">Boys Only</option><option value="girls">Girls Only</option></select></div></div>
           <div class="form-row"><div class="form-group"><label for="ad-bedrooms">Bedrooms</label><select id="ad-bedrooms" required><option value="">Select Count</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5+">5+</option></select></div><div class="form-group"><label for="ad-bathrooms">Bathrooms</label><select id="ad-bathrooms" required><option value="">Select Count</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4+">4+</option></select></div></div>
           <div class="form-row"><div class="form-group"><label for="ad-price">Monthly Rent (LKR)</label><div class="input-with-icon"><span>LKR</span><input type="number" id="ad-price" placeholder="e.g., 25000" min="0" required></div></div><div class="form-group"><label for="ad-bills-included">Bills Included?</label><select id="ad-bills-included" required><option value="">Select Option</option><option value="yes">Yes</option><option value="no">No</option></select></div></div>
+        </div>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- == PASTE THIS NEW "AMENITIES" CARD INTO YOUR FORM              == -->
+      <!-- =================================================================== -->
+      <div class="content-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <h3>Amenities</h3>
+        </div>
+        <div class="card-body">
+          <p class="section-subtitle">Select the amenities and features available at your property.</p>
+          <div class="amenities-grid" id="amenities-grid">
+
+            <!-- These are the selectable amenity buttons -->
+            <!-- Each 'label' acts as a button for a hidden checkbox -->
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="Wi-Fi">
+              <span>Wi-Fi</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="Parking">
+              <span>Parking</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="Air Conditioning">
+              <span>Air Conditioning</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="Furnished">
+              <span>Furnished</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="Attached Bathroom">
+              <span>Bills Included</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="Hot Water">
+              <span>Hot Water</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="Kitchen Access">
+              <span>Kitchen Access</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="Separate Entrance">
+              <span>Meals Provided</span>
+            </label>
+
+          </div>
         </div>
       </div>
 

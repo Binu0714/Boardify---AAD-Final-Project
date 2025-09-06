@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -25,7 +27,7 @@ public class Property {
     @Column(nullable = false)
     private String title;
 
-    @Lob // Use @Lob for long text fields
+    @Lob
     @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
 
@@ -48,7 +50,13 @@ public class Property {
     @Column(name = "bathroom_count", nullable = false)
     private int noOfBaths;
 
-    private boolean billsIncluded;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "property_amenities", // This is the name of the new linking table that will be created
+            joinColumns = @JoinColumn(name = "property_id"), // This column in the linking table points to a Property
+            inverseJoinColumns = @JoinColumn(name = "amenity_id") // This column in the linking table points to an Amenity
+    )
+    private Set<Amenity> amenities = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

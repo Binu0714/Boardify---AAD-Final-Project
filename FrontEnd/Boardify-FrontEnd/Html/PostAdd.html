@@ -12,7 +12,6 @@
 
   <!-- External Libraries CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.min.css">
 
   <!-- Your Custom CSS File -->
   <link rel="stylesheet" href="../Css/PostAdd.css">
@@ -70,11 +69,69 @@
       <div class="content-card">
         <div class="card-header"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><h3>Property Details</h3></div>
         <div class="card-body">
-          <div class="form-group full-width"><label for="ad-title">Ad Title</label><div class="input-with-icon"><input type="text" id="ad-title" placeholder="e.g., Modern Single Room in Nugegoda" required></div></div>
-          <div class="form-group full-width"><label for="ad-description">Description</label><textarea id="ad-description" rows="6" placeholder="Describe the property, its features, and any rules." required></textarea></div>
-          <div class="form-row"><div class="form-group"><label for="ad-property-type">Property Type</label><select id="ad-property-type" required><option value="">Select Type</option><option value="single">Single Room</option><option value="shared">Shared Room</option><option value="annex">Annex</option><option value="house">House</option></select></div><div class="form-group"><label for="ad-listed-for">Listed For</label><select id="ad-listed-for" required><option value="">Select Option</option><option value="any">Anyone</option><option value="boys">Boys Only</option><option value="girls">Girls Only</option></select></div></div>
-          <div class="form-row"><div class="form-group"><label for="ad-bedrooms">Bedrooms</label><select id="ad-bedrooms" required><option value="">Select Count</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5+">5+</option></select></div><div class="form-group"><label for="ad-bathrooms">Bathrooms</label><select id="ad-bathrooms" required><option value="">Select Count</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4+">4+</option></select></div></div>
-          <div class="form-row"><div class="form-group"><label for="ad-price">Monthly Rent (LKR)</label><div class="input-with-icon"><span>LKR</span><input type="number" id="ad-price" placeholder="e.g., 25000" min="0" required></div></div><div class="form-group"><label for="ad-bills-included">Bills Included?</label><select id="ad-bills-included" required><option value="">Select Option</option><option value="yes">Yes</option><option value="no">No</option></select></div></div>
+          <div class="form-group full-width">
+            <label for="ad-title">Ad Title</label>
+            <div class="input-with-icon">
+              <input type="text" id="ad-title" placeholder="e.g., Modern Single Room in Nugegoda" required>
+            </div>
+          </div>
+          <div class="form-group full-width">
+            <label for="ad-description">Description</label>
+            <textarea id="ad-description" rows="6" placeholder="Describe the property, its features, and any rules." required></textarea>
+          </div>
+          <div class="form-row"><div class="form-group">
+            <label for="ad-property-type">Property Type</label>
+            <select id="ad-property-type" required>
+              <option value="">Select Type</option>
+              <option value="single">Single Room</option>
+              <option value="shared">Shared Room</option>
+              <option value="annex">Annex</option>
+              <option value="house">House</option>
+            </select>
+          </div>
+            <div class="form-group">
+              <label for="ad-listed-for">Listed For</label>
+              <select id="ad-listed-for" required>
+                <option value="">Select Option</option>
+                <option value="any">Anyone</option>
+                <option value="boys">Boys Only</option>
+                <option value="girls">Girls Only</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ad-bedrooms">Bedrooms</label>
+              <select id="ad-bedrooms" required>
+                <option value="">Select Count</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5+">5+</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="ad-bathrooms">Bathrooms</label>
+              <select id="ad-bathrooms" required>
+                <option value="">Select Count</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4+">4+</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ad-price">Monthly Rent (LKR)</label>
+              <div class="input-with-icon">
+                <span>LKR</span>
+                <input type="number" id="ad-price" placeholder="e.g., 25000" min="0" required>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
 
@@ -139,44 +196,42 @@
         </div>
       </div>
 
-<!--      location section-->
-      <!-- Section 2: Location (Corrected and Enhanced) -->
+      <!--location section-->
+      <!-- =================================================================== -->
+      <!-- == FINAL "LOCATION" CARD (MANUAL INPUT & CORRECT LAYOUT)         == -->
+      <!-- =================================================================== -->
       <div class="content-card">
         <div class="card-header">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </div>
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
           <h3>Location</h3>
         </div>
         <div class="card-body">
-          <!-- Input for City with Autocomplete Wrapper -->
-          <div class="form-group full-width">
-            <label for="ad-city">City</label>
-            <div class="autoComplete_wrapper">
-              <input type="text" id="ad-city" placeholder="Start typing a city to get suggestions..." required>
+
+          <!-- Row for City and District (Manual Input) -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ad-city">City</label>
+              <input type="text" id="ad-city" placeholder="e.g., Wellawatte" required>
+            </div>
+            <div class="form-group">
+              <label for="ad-district">District</label>
+              <input type="text" id="ad-district" placeholder="e.g., Colombo" required>
             </div>
           </div>
 
-          <!-- Row for auto-filled District and optional Street Address -->
-          <div class="form-row">
-            <div class="form-group">
-              <label for="ad-district">District</label>
-              <!-- This field will be auto-filled by the JavaScript -->
-              <input type="text" id="ad-district" placeholder="Auto-filled from city" readonly>
-            </div>
-            <div class="form-group">
-              <label for="ad-address">Street Address <small>(Optional)</small></label>
-              <input type="text" id="ad-address" placeholder="e.g., No. 123, Galle Road">
-            </div>
+          <!-- Street Address on its own line below -->
+          <div class="form-group full-width">
+            <label for="ad-address">Street Address</label>
+            <input type="text" id="ad-address" placeholder="e.g., No. 123, Galle Road, Galle" required>
           </div>
 
           <!-- Map Placeholder -->
           <div class="form-group full-width">
             <label>Map Location Preview</label>
-            <div id="map"></div> <!-- This is where the Leaflet map will appear -->
+            <div id="map"></div>
           </div>
 
-          <!-- Hidden input fields to store the final coordinates for submission -->
+          <!-- Hidden input fields -->
           <input type="hidden" id="latitude" name="latitude">
           <input type="hidden" id="longitude" name="longitude">
         </div>
@@ -246,10 +301,9 @@
 <!-- External Libraries JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
 
 <!-- Your Custom JS File - LOAD THIS LAST! -->
-<script src="../Js/PostAdd.js"></script>
+<script src="../JS/PostAdd.js"></script>
 
 </body>
 </html>

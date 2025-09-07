@@ -14,7 +14,7 @@ spring.jpa.show-sql=true
 spring.jpa.generate-ddl=true
 
 #JWT data
-jwt.expiration=1500000000
+jwt.expiration=15000000
 jwt.secretKey=wkjdfuyerbvejabfwiouewhjfnckjdshvfuykerwgfhbdskjchabewfiuygewbadjnfbkeiwkgfrawyeufjbdshkcgeyf
 
 # ImgBB API Configuration

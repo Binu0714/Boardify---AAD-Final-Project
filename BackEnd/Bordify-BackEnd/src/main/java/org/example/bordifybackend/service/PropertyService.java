@@ -47,6 +47,7 @@ public class PropertyService {
                 .listedFor(ListedFor.valueOf(String.valueOf(propertyDTO.getListedFor())))
                 .noOfBeds(propertyDTO.getNoOfBeds())
                 .noOfBaths(propertyDTO.getNoOfBaths())
+                .nearestCampus(propertyDTO.getNearestCampus())
                 .location(location)
                 .user(currentUser)
                 .build();

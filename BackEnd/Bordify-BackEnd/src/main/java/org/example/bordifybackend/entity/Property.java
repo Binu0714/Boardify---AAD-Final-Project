@@ -1,10 +1,7 @@
 package org.example.bordifybackend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,11 +14,19 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+
+// We use 'onlyExplicitlyIncluded = true' to prevent a StackOverflowError caused by the
+// bidirectional @OneToOne relationship with the Property entity.
+// By including ONLY the primary key (locationId) in the equals() and hashCode() methods,
+// we break the infinite loop that would occur if Lombok tried to call property.hashCode().
+
 @Table(name = "properties")
 public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "property_id")
+    @EqualsAndHashCode.Include
     private Long propertyId;
 
     @Column(nullable = false)
@@ -31,7 +36,7 @@ public class Property {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
 
-    @Column(nullable = false, precision = 10, scale = 2) // Use BigDecimal for currency
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 
     private boolean availability;
@@ -49,6 +54,9 @@ public class Property {
 
     @Column(name = "bathroom_count", nullable = false)
     private int noOfBaths;
+
+    @Column(name = "nearest_campus")
+    private String nearestCampus;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

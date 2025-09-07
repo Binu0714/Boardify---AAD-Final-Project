@@ -16,6 +16,7 @@ public class PropertyDTO {
     private ListedFor listedFor;
     private int noOfBeds;
     private int noOfBaths;
+    private String nearestCampus;
     private BigDecimal price;
 
     private String city;

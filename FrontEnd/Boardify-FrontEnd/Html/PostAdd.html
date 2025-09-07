@@ -131,6 +131,13 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <label for="ad-uni">Nearest University</label>
+              <div class="input-with-icon">
+                <input type="text" id="ad-uni" placeholder="e.g., University Of Colombo">
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -163,18 +170,33 @@
             </label>
 
             <label class="amenity-btn">
-              <input type="checkbox" name="amenities" value="Air Conditioning">
-              <span>Air Conditioning</span>
-            </label>
-
-            <label class="amenity-btn">
               <input type="checkbox" name="amenities" value="Furnished">
               <span>Furnished</span>
             </label>
 
             <label class="amenity-btn">
-              <input type="checkbox" name="amenities" value="Attached Bathroom">
+              <input type="checkbox" name="amenities" value="Bills Included">
               <span>Bills Included</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="Air Conditioning">
+              <span>Air Conditioning (A/C)</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="Attached Bathroom">
+              <span>Attached Bathroom</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="Washing Machine">
+              <span>Washing Machine</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="Separate Entrance">
+              <span>Separate Entrance</span>
             </label>
 
             <label class="amenity-btn">
@@ -188,7 +210,13 @@
             </label>
 
             <label class="amenity-btn">
-              <input type="checkbox" name="amenities" value="Separate Entrance">
+              <input type="checkbox" name="amenities" value="CCTV Security">
+              <span>CCTV Security</span>
+            </label>
+
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="Meals Provided">
               <span>Meals Provided</span>
             </label>
 
@@ -249,7 +277,9 @@
           </div>
         </div>
       </div>
-      <div class="form-actions"><button type="submit" id="submit-ad-btn" class="btn-primary">Preview & Submit Listing</button></div>
+      <div class="form-actions">
+        <button type="submit" id="submit-ad-btn" class="btn-primary">Preview & Submit Listing</button>
+      </div>
     </form>
   </div>
 </main>
@@ -301,9 +331,19 @@
 <!-- External Libraries JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<!-- Your Custom JS File - LOAD THIS LAST! -->
+<script src="../JS/PostAdd-LoadMap.js"></script>
 <script src="../JS/PostAdd.js"></script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+

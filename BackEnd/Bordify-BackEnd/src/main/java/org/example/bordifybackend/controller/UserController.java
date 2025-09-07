@@ -84,7 +84,12 @@ public class UserController {
             } catch (Exception e) {
                 e.printStackTrace();
                 return ResponseEntity.status(500)
-                        .body(new ApiResponse(500, "File upload failed", null));
+                        .body(new ApiResponse(
+                                500,
+                                "File upload failed",
+                                null
+                                )
+                        );
             }
         }
 

@@ -23,7 +23,7 @@ public class Amenity {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String name; // e.g., "Bills Included", "Parking", "Wi-Fi", "Furnished"
+    private String name;
 
     // This defines the "other side" of the many-to-many relationship.
     // It links back to all the properties that have this specific amenity.

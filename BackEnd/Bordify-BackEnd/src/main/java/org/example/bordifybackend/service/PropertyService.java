@@ -26,10 +26,9 @@ public class PropertyService {
 
     @Transactional
     public Property createProperty(PropertyDTO propertyDTO, List<MultipartFile> images) {
-        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        User currentUser = userRepo.findByUsername(currentUsername)
-                .orElseThrow(() -> new RuntimeException("Authenticated user '" + currentUsername + "' not found."));
+        User currentUser = userRepo.findByUsername(
+                SecurityContextHolder.getContext().getAuthentication().getName()
+        ).orElseThrow(() -> new RuntimeException("User not found"));
 
         Location location = Location.builder()
                 .address(propertyDTO.getAddress())
@@ -43,35 +42,33 @@ public class PropertyService {
                 .title(propertyDTO.getTitle())
                 .description(propertyDTO.getDescription())
                 .price(propertyDTO.getPrice())
-                .type(PropertyType.valueOf(String.valueOf(propertyDTO.getPropertyType())))
-                .listedFor(ListedFor.valueOf(String.valueOf(propertyDTO.getListedFor())))
+                .type(propertyDTO.getPropertyType())
+                .listedFor(propertyDTO.getListedFor())
                 .noOfBeds(propertyDTO.getNoOfBeds())
                 .noOfBaths(propertyDTO.getNoOfBaths())
                 .nearestCampus(propertyDTO.getNearestCampus())
+                .availability(true)
                 .location(location)
                 .user(currentUser)
                 .build();
 
         location.setProperty(property);
 
+        Property savedProperty = propertyRepo.save(property);
+
         if (propertyDTO.getAmenityIds() != null && !propertyDTO.getAmenityIds().isEmpty()) {
             Set<Amenity> amenities = new HashSet<>(amenityRepo.findAllById(propertyDTO.getAmenityIds()));
-            property.setAmenities(amenities);
+            savedProperty.setAmenities(amenities);
         }
 
         if (images != null && !images.isEmpty()) {
             List<Photo> photoEntities = images.stream().map(file -> {
-                String imageUrl = imgbbService.upload(file); // Upload to ImgBB
-
-                return Photo.builder()
-                        .photoUrl(imageUrl) // Store the URL
-                        .property(property) // Link back to the property
-                        .build();
+                String imageUrl = imgbbService.upload(file);
+                return Photo.builder().photoUrl(imageUrl).property(savedProperty).build();
             }).collect(Collectors.toList());
-
-            property.setPhotos(photoEntities);
+            savedProperty.setPhotos(photoEntities);
         }
 
-        return propertyRepo.save(property);
+        return propertyRepo.save(savedProperty);
     }
 }

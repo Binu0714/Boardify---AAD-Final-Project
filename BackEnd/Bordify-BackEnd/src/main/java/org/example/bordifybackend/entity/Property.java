@@ -58,7 +58,7 @@ public class Property {
     @Column(name = "nearest_campus")
     private String nearestCampus;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
     @JoinTable(
             name = "property_amenities", // This is the name of the new linking table that will be created
             joinColumns = @JoinColumn(name = "property_id"), // This column in the linking table points to a Property

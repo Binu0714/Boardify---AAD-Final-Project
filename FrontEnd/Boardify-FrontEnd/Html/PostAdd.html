@@ -83,19 +83,19 @@
             <label for="ad-property-type">Property Type</label>
             <select id="ad-property-type" required>
               <option value="">Select Type</option>
-              <option value="single">Single Room</option>
-              <option value="shared">Shared Room</option>
-              <option value="annex">Annex</option>
-              <option value="house">House</option>
+              <option value="SINGLE_ROOM">Single Room</option>
+              <option value="SHARED_ROOM">Shared Room</option>
+              <option value="ANNEX">Annex</option>
+              <option value="HOUSE">House</option>
             </select>
           </div>
             <div class="form-group">
               <label for="ad-listed-for">Listed For</label>
               <select id="ad-listed-for" required>
                 <option value="">Select Option</option>
-                <option value="any">Anyone</option>
-                <option value="boys">Boys Only</option>
-                <option value="girls">Girls Only</option>
+                <option value="ANYONE">Anyone</option>
+                <option value="BOYS">Boys</option>
+                <option value="GIRLS">Girls</option>
               </select>
             </div>
           </div>
@@ -108,7 +108,12 @@
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
-                <option value="5+">5+</option>
+                <option value="5+">5</option>
+                <option value="5+">6</option>
+                <option value="5+">7</option>
+                <option value="5+">8</option>
+                <option value="5+">9</option>
+                <option value="5+">10</option>
               </select>
             </div>
             <div class="form-group">
@@ -118,7 +123,13 @@
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
-                <option value="4+">4+</option>
+                <option value="4">4</option>
+                <option value="5+">5</option>
+                <option value="5+">6</option>
+                <option value="5+">7</option>
+                <option value="5+">8</option>
+                <option value="5+">9</option>
+                <option value="5+">10</option>
               </select>
             </div>
           </div>
@@ -267,19 +278,29 @@
 
       <!-- Section 3: Photos -->
       <div class="content-card">
-        <div class="card-header"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><h3>Upload Photos</h3></div>
+        <div class="card-header">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+          <h3>Upload Photos</h3>
+        </div>
         <div class="card-body">
-          <p class="upload-instructions">Add up to 5 photos. Good quality images get more responses. The first image will be the cover photo.</p>
+          <!-- UPDATE THE TEXT HERE -->
+          <p class="upload-instructions">You can Add up to 10 photos.The first image will be the cover photo.</p>
+
           <div class="image-uploader">
             <div id="image-preview-container" class="image-preview-container"></div>
-            <label for="image-upload-input" class="image-upload-box" id="image-upload-box"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 5v14m-7-7h14" /></svg><span>Add Photos</span></label>
+            <label for="image-upload-input" class="image-upload-box" id="image-upload-box">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 5v14m-7-7h14" /></svg>
+              <span>Add Photos</span>
+            </label>
             <input type="file" id="image-upload-input" class="file-input" multiple accept="image/*">
           </div>
         </div>
       </div>
+
       <div class="form-actions">
         <button type="submit" id="submit-ad-btn" class="btn-primary">Preview & Submit Listing</button>
       </div>
+
     </form>
   </div>
 </main>
@@ -329,10 +350,49 @@
 </footer>
 
 <!-- External Libraries JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="../JS/PostAdd-LoadMap.js"></script>
 <script src="../JS/PostAdd.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+
+    mobileMenuToggle.addEventListener('click', () => {
+      mobileMenuToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+
+    const profileAvatar = document.getElementById('profile-avatar');
+    const profileDropdown = document.getElementById('profile-dropdown');
+
+    profileAvatar.addEventListener('click', (event) => {
+      event.stopPropagation();
+      profileAvatar.classList.toggle('active');
+      profileDropdown.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!profileDropdown.contains(event.target) && !profileAvatar.contains(event.target)) {
+        profileAvatar.classList.remove('active');
+        profileDropdown.classList.remove('active');
+      }
+    });
+
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('.header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+  });
+</script>
+
 
 </body>
 </html>

@@ -1,0 +1,158 @@
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid #e2e8f0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+}
+
+/* =================================================================
+   MY ADS PAGE SPECIFIC STYLES
+   ================================================================= */
+
+/* Page Header */
+.my-ads-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.my-ads-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+/* Add this to MyAds.css */
+
+.my-ads-header .header-text p {
+    font-size: 1.1rem;
+    color: #718096;
+    margin-top: 0.25rem;
+}
+
+.my-ads-header p {
+    font-size: 1.1rem;
+    color: #718096;
+    margin-top: 0.25rem;
+}
+
+/* Add a class to your ad-card to target it for the overlay */
+.my-ad .ad-image {
+    position: relative; /* Required for the overlay to position correctly */
+}
+
+/* Status Badge Styling */
+.ad-badge-status {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
+    z-index: 2; /* Sits above the image but below the overlay */
+}
+
+.ad-badge-status.available { background: linear-gradient(135deg, #22c55e, #16a34a); } /* Green */
+.ad-badge-status.full { background: linear-gradient(135deg, #ef4444, #dc2626); } /* Red */
+.ad-badge-status.pending { background: linear-gradient(135deg, #f97316, #ea580c); } /* Orange */
+
+/* Management Overlay */
+.management-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 32, 44, 0.6); /* Dark semi-transparent overlay */
+    border-top-left-radius: 20px; /* Match the parent card's border radius */
+    border-top-right-radius: 20px;
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease;
+    z-index: 3;
+}
+
+/* Show the overlay on hover */
+.my-ad:hover .management-overlay {
+    opacity: 1;
+}
+
+a {
+    text-decoration: none;
+}
+
+.btn-action {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-action.edit {
+    background-color: #fff;
+    color: #1a202c;
+}
+
+.btn-action.edit:hover {
+    background-color: #f1f5f9;
+}
+
+.btn-action.delete {
+    background-color: #dc2626; /* Red */
+    color: white;
+}
+
+.btn-action.delete:hover {
+    background-color: #b91c1c;
+}
+
+
+/* =================================================================
+   FOOTER STYLES (CONSISTENT WITH OTHER PAGES)
+   ================================================================= */
+.footer { background-color: #1a202c; color: #a0aec0; padding: 4rem 2rem 2rem; }
+.footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; padding-bottom: 3rem; border-bottom: 1px solid #2d3748; }
+.footer-column .logo { margin-bottom: 1rem; }
+.footer-column p { max-width: 250px; font-size: 0.9rem; line-height: 1.7; }
+.footer-heading { font-size: 1rem; font-weight: 600; color: white; margin-bottom: 1.5rem; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+.footer-links a { color: #a0aec0; text-decoration: none; transition: color 0.2s ease; }
+.footer-links a:hover { color: #4facfe; }
+.social-icons { display: flex; gap: 1rem; margin-top: 1rem; }
+.social-icons a { color: #a0aec0; transition: all 0.2s ease; }
+.social-icons a:hover { color: #4facfe; transform: translateY(-2px); }
+.footer-bottom { max-width: 1400px; margin: 2rem auto 0; text-align: center; font-size: 0.85rem; }

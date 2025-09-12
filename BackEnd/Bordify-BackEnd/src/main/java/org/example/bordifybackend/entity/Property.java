@@ -14,19 +14,13 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-
-// We use 'onlyExplicitlyIncluded = true' to prevent a StackOverflowError caused by the
-// bidirectional @OneToOne relationship with the Property entity.
-// By including ONLY the primary key (locationId) in the equals() and hashCode() methods,
-// we break the infinite loop that would occur if Lombok tried to call property.hashCode().
 
 @Table(name = "properties")
 public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "property_id")
-    @EqualsAndHashCode.Include
+//    @EqualsAndHashCode.Include
     private Long propertyId;
 
     @Column(nullable = false)
@@ -58,11 +52,11 @@ public class Property {
     @Column(name = "nearest_campus")
     private String nearestCampus;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
-            name = "property_amenities", // This is the name of the new linking table that will be created
-            joinColumns = @JoinColumn(name = "property_id"), // This column in the linking table points to a Property
-            inverseJoinColumns = @JoinColumn(name = "amenity_id") // This column in the linking table points to an Amenity
+            name = "property_amenities",
+            joinColumns = @JoinColumn(name = "property_id"),
+            inverseJoinColumns = @JoinColumn(name = "amenity_id")
     )
     private Set<Amenity> amenities = new HashSet<>();
 
@@ -72,6 +66,7 @@ public class Property {
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "location_id", referencedColumnName = "location_id")
+    @EqualsAndHashCode.Exclude
     private Location location;
 
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)

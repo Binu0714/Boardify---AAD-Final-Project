@@ -1,11 +1,8 @@
-// Create this new file: Amenity.java
 package org.example.bordifybackend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.util.Set;
 import java.util.HashSet;
 
@@ -25,9 +22,7 @@ public class Amenity {
     @Column(nullable = false, unique = true)
     private String name;
 
-    // This defines the "other side" of the many-to-many relationship.
-    // It links back to all the properties that have this specific amenity.
-    // 'mappedBy = "amenities"' tells JPA that the 'Property' entity manages the relationship table.
     @ManyToMany(mappedBy = "amenities")
+    @EqualsAndHashCode.Exclude
     private Set<Property> properties = new HashSet<>();
 }

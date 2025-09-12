@@ -14,11 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class PropertyService {
+
     private final PropertyRepo propertyRepo;
     private final UserRepo userRepo;
     private final AmenityRepo amenityRepo;
@@ -54,21 +54,37 @@ public class PropertyService {
 
         location.setProperty(property);
 
-        Property savedProperty = propertyRepo.save(property);
-
         if (propertyDTO.getAmenityIds() != null && !propertyDTO.getAmenityIds().isEmpty()) {
-            Set<Amenity> amenities = new HashSet<>(amenityRepo.findAllById(propertyDTO.getAmenityIds()));
-            savedProperty.setAmenities(amenities);
+
+            Set<Long> ids = new HashSet<>();
+            for (Long id : propertyDTO.getAmenityIds()) {
+                if (id != null) ids.add(id);
+            }
+
+            if (!ids.isEmpty()) {
+                List<Amenity> amenitiesList = amenityRepo.findAllById(ids);
+                Set<Amenity> amenities = new HashSet<>(amenitiesList);
+                property.setAmenities(amenities);
+
+                for (Amenity amenity : amenities) {
+                    amenity.getProperties().add(property);
+                }
+            }
         }
 
         if (images != null && !images.isEmpty()) {
-            List<Photo> photoEntities = images.stream().map(file -> {
-                String imageUrl = imgbbService.upload(file);
-                return Photo.builder().photoUrl(imageUrl).property(savedProperty).build();
-            }).collect(Collectors.toList());
-            savedProperty.setPhotos(photoEntities);
+            List<Photo> photoEntities = images.stream()
+                    .map(file -> {
+                        String imageUrl = imgbbService.upload(file);
+                        return Photo.builder()
+                                .photoUrl(imageUrl)
+                                .property(property)
+                                .build();
+                    })
+                    .toList();
+            property.setPhotos(photoEntities);
         }
 
-        return propertyRepo.save(savedProperty);
+        return propertyRepo.save(property);
     }
 }

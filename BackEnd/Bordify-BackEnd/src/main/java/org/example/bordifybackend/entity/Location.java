@@ -10,12 +10,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "location_id")
-    @EqualsAndHashCode.Include
     private long locationId;
 
     @Column(nullable = false)
@@ -31,6 +29,7 @@ public class Location {
     private BigDecimal longitude;
 
     @OneToOne(mappedBy = "location")
+    @EqualsAndHashCode.Exclude
     private Property property;
 
 }

@@ -144,6 +144,7 @@ function setupFormSubmission() {
             return;
         }
 
+        // Collect property data
         const propertyData = {
             title: $('#ad-title').val(),
             description: $('#ad-description').val(),
@@ -155,23 +156,19 @@ function setupFormSubmission() {
             listedFor: $('#ad-listed-for').val(),
             noOfBeds: parseInt($('#ad-bedrooms').val()),
             noOfBaths: parseInt($('#ad-bathrooms').val()),
-            price: $('#ad-price').val(),
-            latitude: $('#latitude').val(),
-            longitude: $('#longitude').val(),
-
+            price: parseFloat($('#ad-price').val()),
+            latitude: parseFloat($('#latitude').val()),
+            longitude: parseFloat($('#longitude').val()),
             amenityIds: $('input[name="amenities"]:checked').map(function() {
-                return parseInt($(this).val());
-
+                return parseInt($(this).val()); // Must be numbers (DB IDs)
             }).get()
         };
 
+        // FormData for multipart request
         const formData = new FormData();
+        formData.append('propertyData', new Blob([JSON.stringify(propertyData)], { type: "application/json" }));
 
-        formData.append('propertyData', new Blob(
-            [JSON.stringify(propertyData)],
-            { type: "application/json" })
-        );
-
+        // Append images
         const imageFiles = $('#image-upload-input')[0].files;
         for (let i = 0; i < imageFiles.length; i++) {
             formData.append('image', imageFiles[i]);
@@ -181,7 +178,7 @@ function setupFormSubmission() {
             title: 'Submitting...',
             text: 'Please wait.',
             allowOutsideClick: false,
-            didOpen: () => { Swal.showLoading(); }
+            didOpen: () => Swal.showLoading()
         });
 
         $.ajax({
@@ -192,21 +189,14 @@ function setupFormSubmission() {
             processData: false,
             contentType: false,
             success: function(response) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: response.message
-                })
+                Swal.fire('Success', 'Property created successfully!', 'success')
                     .then(() => { window.location.href = 'AllAds.html'; });
             },
             error: function(jqXHR) {
                 const errorMessage = jqXHR.responseJSON?.message || 'Something went wrong.';
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Submission Failed',
-                    text: errorMessage
-                });
+                Swal.fire('Error', errorMessage, 'error');
             }
         });
     });
 }
+

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Single Room - Boardify</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="../Css/ViewAdd.css">
+</head>
+<body>
+
+<!-- Header (Consistent with other pages) -->
+<header class="header">
+    <nav class="nav">
+        <a href="#" class="logo">Boardify</a>
+
+        <div class="nav-menu" id="nav-menu">
+            <ul class="nav-links">
+                <li><a href="Dashboard.html" class="nav-link">Home</a></li>
+                <li><a href="AllAds.html" class="nav-link active">All Ads</a></li>
+                <li><a href="PostAdd.html" class="nav-link">Post Ad</a></li>
+            </ul>
+
+            <div class="user-actions">
+                <div class="notification-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <span class="notification-badge">3</span>
+                </div>
+
+                <div class="profile-container">
+                    <div class="profile-avatar" id="profile-avatar">JS</div>
+
+                    <div class="profile-dropdown" id="profile-dropdown">
+                        <div class="dropdown-header">
+                            <h4>John Smith</h4>
+                            <p>Room Seeker</p>
+                        </div>
+                        <a href="Profile.html" class="dropdown-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            My Profile
+                        </a>
+                        <a href="#" class="dropdown-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                            Saved Ads
+                        </a>
+                        <div class="dropdown-footer">
+                            <a href="LogIn.html" class="dropdown-link" onclick="handleLogout(event)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+</header>
+
+<!-- Main Content -->
+<main class="main-content">
+    <div class="ad-view-container">
+
+        <!-- Breadcrumb Navigation & Back Button -->
+        <nav class="page-navigation">
+
+            <div class="breadcrumbs">
+                <a href="Dashboard.html">Dashboard</a>
+                <span>/</span>
+                <a href="AllAds.html">All Ads</a>
+                <span>/</span>
+                <span id="breadcrumb-ad-title">Modern Single Room...</span>
+            </div>
+        </nav>
+
+        <!-- Ad Header -->
+        <section class="ad-header">
+            <h1 id="ad-title">Modern Single Room near University of Colombo</h1>
+            <div class="ad-location-info">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <span id="ad-location">Wellawatte, Colombo</span>
+            </div>
+        </section>
+
+        <!-- Main Two-Column Layout -->
+        <div class="ad-layout">
+
+            <!-- Left Column: Images and Descriptions -->
+            <div class="ad-main-content">
+
+                <!-- Image Gallery -->
+                <section class="image-gallery">
+                    <div class="main-image-container"><img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=1200" alt="Main property view" id="main-ad-image"></div>
+                    <div class="thumbnail-scroll-container">
+                        <div class="thumbnail-container" id="thumbnail-container">
+                            <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=200" alt="Thumbnail 1" class="thumbnail active">
+                            <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16433d?q=80&w=200" alt="Thumbnail 2" class="thumbnail">
+                            <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=200" alt="Thumbnail 3" class="thumbnail">
+                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=200" alt="Thumbnail 4" class="thumbnail">
+                            <img src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?q=80&w=200" alt="Thumbnail 5" class="thumbnail">
+                            <img src="https://images.unsplash.com/photo-1618221195710-86c1834d89d7?q=80&w=200" alt="Thumbnail 6" class="thumbnail">
+                            <img src="https://images.unsplash.com/photo-1582582494705-150b02028627?q=80&w=200" alt="Thumbnail 7" class="thumbnail">
+                            <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?q=80&w=200" alt="Thumbnail 8" class="thumbnail">
+                            <img src="https://images.unsplash.com/photo-1615875605825-5eb9bb5fea38?q=80&w=200" alt="Thumbnail 9" class="thumbnail">
+                            <img src="https://images.unsplash.com/photo-1594939436137-03a870310a8b?q=80&w=200" alt="Thumbnail 10" class="thumbnail">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- In ViewAd.html -->
+
+                <!-- UPDATED Compact Details Section -->
+                <section class="ad-section">
+                    <h2 class="section-title">Property Details</h2>
+                    <div class="compact-details">
+                        <div class="detail-item">
+                            <div class="detail-icon"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12,3L2,12H5V20H19V12H22L12,3Z" /></svg></div>
+                            <div class="detail-text">
+                                <span class="detail-label">Property Type</span>
+                                <span class="detail-value" id="ad-type">Annex</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg></div>
+                            <div class="detail-text">
+                                <span class="detail-label">Listed For</span>
+                                <span class="detail-value" id="ad-listed-for">Girls Only</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,7H5A2,2 0 0,0 3,9V15A2,2 0 0,0 5,17H19A2,2 0 0,0 21,15V9A2,2 0 0,0 19,7M19,15H5V9H19V15Z" /></svg></div>
+                            <div class="detail-text">
+                                <span class="detail-label">Bedrooms</span>
+                                <span class="detail-value" id="ad-beds">2</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M4,17.27L8.46,12.81L10.32,14.68L13.81,11.19L15.22,12.6L18.71,9.12L20,10.41V4H13.59L12.19,5.41L8.7,8.89L6.84,7L4,9.73V17.27M5,20A2,2 0 0,0 7,22H17A2,2 0 0,0 19,20V12.27L17.29,14L13.8,10.5L12.4,11.91L10.32,9.82L4,16.14V20H5Z" /></svg></div>
+                            <div class="detail-text">
+                                <span class="detail-label">Bathrooms</span>
+                                <span class="detail-value" id="ad-baths">1</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Amenities / Features -->
+                <section class="ad-section">
+                    <h2 class="section-title">Amenities & Features</h2>
+                    <div class="amenities-grid" id="ad-amenities">
+                        <div class="amenity-item"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" /></svg><span>Wi-Fi</span></div>
+                        <div class="amenity-item"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M17,17.5A2.5,2.5 0 0,1 19.5,20A2.5,2.5 0 0,1 17,22.5A2.5,2.5 0 0,1 14.5,20A2.5,2.5 0 0,1 17,17.5M5,17.5A2.5,2.5 0 0,1 7.5,20A2.5,2.5 0 0,1 5,22.5A2.5,2.5 0 0,1 2.5,20A2.5,2.5 0 0,1 5,17.5M5,16H17V11H19.5C20.4,11 21.1,11.7 21.1,12.6V15.4C21.1,16.3 20.4,17 19.5,17H19V19H15V17H7V19H3V12C3,6 8,2 14,2C19.5,2 20.34,5.54 21.34,9H17V16Z" /></svg><span>Parking</span></div>
+                        <div class="amenity-item"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M17,17.5A2.5,2.5 0 0,1 19.5,20A2.5,2.5 0 0,1 17,22.5A2.5,2.5 0 0,1 14.5,20A2.5,2.5 0 0,1 17,17.5M5,17.5A2.5,2.5 0 0,1 7.5,20A2.5,2.5 0 0,1 5,22.5A2.5,2.5 0 0,1 2.5,20A2.5,2.5 0 0,1 5,17.5M5,16H17V11H19.5C20.4,11 21.1,11.7 21.1,12.6V15.4C21.1,16.3 20.4,17 19.5,17H19V19H15V17H7V19H3V12C3,6 8,2 14,2C19.5,2 20.34,5.54 21.34,9H17V16Z" /></svg><span>Parking</span></div>
+                    </div>
+                </section>
+
+                <!-- Description -->
+                <section class="ad-section">
+                    <h2 class="section-title">About This Property</h2>
+                    <p id="ad-description">A clean, modern, and fully-tiled single room available for a student or working professional. Located in a calm and highly residential area with a separate entrance.</p>
+                </section>
+
+                <!-- Location on Map -->
+                <section class="ad-section">
+                    <h2 class="section-title">Location</h2>
+                    <p class="section-subtitle" id="ad-full-address">No. 50, Galle Road, Wellawatte, Colombo</p>
+                    <div id="map"></div>
+                </section>
+            </div>
+
+            <!-- Right Column: Price, Actions -->
+            <aside class="ad-sidebar">
+                <div class="sidebar-card">
+                    <div class="price-info">
+                        <span class="price-period">Monthly Rent</span>
+                        <span class="price-amount" id="ad-price">Rs. 25,000</span>
+                    </div>
+                    <div class="owner-info">
+                        <h3 class="sidebar-title">Listed By</h3>
+                        <div class="owner-details">
+                            <img src="../assets/user.png" alt="Owner Avatar" id="owner-avatar">
+                            <div>
+                                <span class="owner-name" id="owner-name">John Smith</span>
+                                <a href="#" class="btn-secondary">Contact Owner</a>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="request-btn" class="btn-primary">Request to Book</button>
+                </div>
+            </aside>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <a href="#" class="logo">Boardify</a>
+            <p>The smartest way to discover boarding rooms and annexes in Sri Lanka.</p>
+            <div class="social-icons">
+                <a href="#"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/></svg></a>
+                <a href="#"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98-3.56-.18-6.73-1.89-8.84-4.48-.37.63-.58 1.37-.58 2.15 0 1.49.76 2.8 1.91 3.56-.71 0-1.37-.22-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.52 8.52 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06 3.43 2.2 7.5 3.48 11.7 3.48 14.08 0 21.78-11.65 21.78-21.78l-.02-.98c1.5-.09 2.78-1.56 2.78-2.78z"/></svg></a>
+                <a href="#"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8A3.6 3.6 0 0 0 20 16.4V7.6A3.6 3.6 0 0 0 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg></a>
+            </div>
+        </div>
+        <div class="footer-column">
+            <h4 class="footer-heading">Quick Links</h4>
+            <ul class="footer-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">All Ads</a></li>
+                <li><a href="#">Post an Ad</a></li>
+                <li><a href="#">About Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4 class="footer-heading">For Seekers</h4>
+            <ul class="footer-links">
+                <li><a href="#">How to Search</a></li>
+                <li><a href="#">Saved Listings</a></li>
+                <li><a href="#">Safety Tips</a></li>
+                <li><a href="#">FAQs</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4 class="footer-heading">For Owners</h4>
+            <ul class="footer-links">
+                <li><a href="#">How to Post an Ad</a></li>
+                <li><a href="#">My Listings</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Owner Guidelines</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 Boardify. All Rights Reserved. Designed with ❤️ in Sri Lanka.</p>
+    </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../Js/ViewAd.js"></script>
+
+</body>
+</html>

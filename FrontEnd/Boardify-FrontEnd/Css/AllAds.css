@@ -455,6 +455,63 @@ body {
     color: #718096;
 }
 
+.ad-image {
+    width: 100%;
+    height: 250px; /* or whatever height you want */
+    border-radius: 16px;
+    background-color: #4facfe; /* fallback blue */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.ad-image .ad-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.8);
+    font-weight: 600;
+}
+.ad-image .ad-favorite {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.ad-image img.ad-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+.ad-badge.available {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #4facfe;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.ad-badge.booked {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #f56565;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+
 /* Pagination */
 .pagination {
     display: flex;
@@ -463,6 +520,17 @@ body {
     gap: 0.5rem;
     margin-top: 3rem;
 }
+
+.ad-badge.available {
+    background-color: #28a745; /* green */
+    color: white;
+}
+
+.ad-badge.booked {
+    background-color: #dc3545; /* red */
+    color: white;
+}
+
 
 .page-link {
     text-decoration: none;

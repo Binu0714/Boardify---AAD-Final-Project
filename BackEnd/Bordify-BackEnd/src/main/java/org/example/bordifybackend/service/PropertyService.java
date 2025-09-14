@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -87,4 +89,52 @@ public class PropertyService {
 
         return propertyRepo.save(property);
     }
+
+
+    public List<PropertyDTO> getAllProperties() {
+        List<Property> allProperties = propertyRepo.findAll();
+
+        List<PropertyDTO> propertyDTOS = new ArrayList<>();
+
+        for (Property property : allProperties) {
+            PropertyDTO dto = new PropertyDTO();
+
+            dto.setId(property.getPropertyId());
+            dto.setTitle(property.getTitle());
+            dto.setAvailability(property.isAvailability());
+            dto.setDescription(property.getDescription());
+            dto.setPrice(property.getPrice());
+            dto.setPropertyType(property.getType());
+            dto.setListedFor(property.getListedFor());
+            dto.setNoOfBeds(property.getNoOfBeds());
+            dto.setNoOfBaths(property.getNoOfBaths());
+            dto.setNearestCampus(property.getNearestCampus());
+
+            if (property.getLocation() != null) {
+                dto.setCity(property.getLocation().getCity());
+                dto.setDistrict(property.getLocation().getDistrict());
+                dto.setAddress(property.getLocation().getAddress());
+                dto.setLatitude(property.getLocation().getLatitude());
+                dto.setLongitude(property.getLocation().getLongitude());
+            }
+
+            if (property.getAmenities() != null && !property.getAmenities().isEmpty()) {
+                Set<Long> amenityIds = property.getAmenities().stream()
+                        .map(Amenity::getId)
+                        .collect(Collectors.toSet());
+                dto.setAmenityIds(amenityIds);
+            }
+
+            if (property.getPhotos() != null && !property.getPhotos().isEmpty()) {
+                List<String> photoUrls = property.getPhotos().stream()
+                        .map(Photo::getPhotoUrl)
+                        .collect(Collectors.toList());
+                dto.setPhotoUrls(photoUrls);
+            }
+
+            propertyDTOS.add(dto);
+        }
+        return propertyDTOS;
+    }
+
 }

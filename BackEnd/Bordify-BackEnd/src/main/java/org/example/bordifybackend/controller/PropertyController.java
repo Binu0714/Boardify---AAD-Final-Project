@@ -51,4 +51,30 @@ public class PropertyController {
                     );
         }
     }
+
+    @GetMapping("/getAllProperties")
+    public ResponseEntity<ApiResponse> getAllProperties() {
+        try {
+            List<PropertyDTO> properties = propertyService.getAllProperties();
+
+            return ResponseEntity.ok(
+                    new ApiResponse(
+                            200,
+                            "Properties fetched successfully",
+                            properties
+                    )
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(
+                            500,
+                            "Failed to fetch properties",
+                            null
+                            )
+                    );
+        }
+    }
+
 }

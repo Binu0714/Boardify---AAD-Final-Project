@@ -225,7 +225,6 @@
 }
 
 
-
 /* =================================================================
    BASE & FONT STYLES
    ================================================================= */
@@ -318,8 +317,8 @@ body {
    VIEW AD PAGE SPECIFIC STYLES
    ================================================================= */
 .ad-view-container {
-    max-width: 1200px;
-    margin: 2rem auto;
+    max-width: 1400px;
+    margin: 4rem auto;
     padding: 0 1rem;
 }
 
@@ -402,7 +401,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
-    max-width: 930px;
+    max-width: 1050px;
 }
 
 /* Image Gallery */
@@ -412,12 +411,43 @@ body {
     border-radius: 16px;
     overflow: hidden;
     background-color: #e2e8f0;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+/* In ViewAd.css */
+
+/* --- NEW STYLES FOR AVAILABILITY INFO --- */
+
+.availability-info {
+    text-align: center; /* Center the title and badge */
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.status-badge {
+    display: inline-block; /* Allows it to be centered */
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    margin-top: 0.5rem;
+}
+
+/* Color coding for the badge */
+.status-badge.available {
+    background: linear-gradient(135deg, #22c55e, #16a34a); /* Green */
+}
+
+.status-badge.full {
+    background: linear-gradient(135deg, #ef4444, #dc2626); /* Red */
 }
 
 #main-ad-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+
 }
 
 .thumbnail-scroll-container {
@@ -486,6 +516,26 @@ body {
     font-weight: 600;
 }
 
+#ad-description {
+    /* --- Typography & Spacing --- */
+    font-size: 1.1rem;           /* Slightly larger font for readability */
+    line-height: 1.8;            /* Increased line spacing for an airy feel */
+    color: #4a5568;              /* A softer black for less eye strain */
+
+    /* --- Adding some visual interest --- */
+    /* Creates a subtle vertical bar on the left side */
+    padding-left: 1.5rem;
+    border-left: 3px solid #4facfe; /* Uses your primary blue color */
+}
+
+/* You can also style the first letter for a more classic, "story-like" feel */
+#ad-description::first-letter {
+    font-size: 1.5em; /* Makes the first letter bigger */
+    font-weight: 600;
+    color: #1a202c;
+    margin-right: 2px;
+}
+
 /* Amenities Grid */
 .section-title {
     font-size: 1.5rem;
@@ -523,12 +573,21 @@ body {
 
 #map {
     width: 100%;
-    height: 300px;
-    border-radius: 12px;
-    z-index: 1;
-}
+    height: 350px;
+    background-color: #f1f5f9;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    border: 1px solid #cbd5e0;
+    z-index: 1; }
+
 
 /* Sidebar */
+/* In ViewAd.css */
+
+/* =================================================================
+   SIDEBAR STYLES (REVISED)
+   ================================================================= */
+
 .ad-sidebar {
     position: sticky;
     top: 100px;
@@ -538,60 +597,84 @@ body {
     background: white;
     border-radius: 16px;
     padding: 1.5rem;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+    border: 1px solid #e2e8f0;
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    border: 1px solid #e2e8f0;
 }
 
-.sidebar-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #e2e8f0;
-    margin-bottom: 0;
-}
-
+/* Price Section */
 .price-info {
     text-align: left;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 1.5rem;
 }
 
 .price-period {
+    display: block;
     font-size: 1rem;
     color: #718096;
+    margin-bottom: 0.25rem;
 }
 
 .price-amount {
-    font-size: 2.25rem;
+    display: block;
+    font-size: 2.5rem;
     font-weight: 800;
+    background: linear-gradient(135deg, #4facfe, #00f2fe); /* gradient background */
+    -webkit-background-clip: text; /* clip background to text */
+    -webkit-text-fill-color: transparent; /* make text transparent */
+    background-clip: text; /* standard property */
+    color: transparent; /* fallback */
+    line-height: 1.2;
 }
 
-.owner-info .owner-details {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+
+/* Owner Info Section */
+.owner-info {
+    text-align: center; /* This centers all the content inside */
+}
+
+.sidebar-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #718096;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 #owner-avatar {
-    width: 50px;
-    height: 50px;
+    width: 80px; /* Larger avatar */
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
+    margin-bottom: 1rem;
+    border: 4px solid #e2e8f0;
 }
 
 .owner-name {
     display: block;
+    font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: 0.25rem;
 }
 
+.owner-contact {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #4facfe;
+    text-decoration: none;
+}
+
+/* Request Button */
 #request-btn {
     width: 100%;
     padding: 1rem;
     font-size: 1.1rem;
 }
-
 .footer {
     background-color: #1a202c;
     color: #a0aec0;

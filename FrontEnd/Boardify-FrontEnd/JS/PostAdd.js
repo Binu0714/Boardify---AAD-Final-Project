@@ -9,7 +9,6 @@ const LOCATIONIQ_API_KEY = "pk.96f2728aa09caeeee3fc53d7d44d1ab5";
 let map;
 let marker;
 const initialPosition = [7.8731, 80.7718];
-let debounceTimer;
 
 // image upload
 

@@ -48,7 +48,7 @@ function loadPosts() {
                     const badgeText = p.availability ? "Available" : "Booked";
 
                     const card = $(`
-                        <div class="ad-card" data-id="${p.id}">
+                        <div class="ad-card" data-id="${p.propertyId}">
                             <div class="ad-image">
                                 <img src="${coverImage}" alt="${p.title}" class="ad-cover" />
                                 <div class="ad-badge ${p.availability ? "available" : "booked"}">

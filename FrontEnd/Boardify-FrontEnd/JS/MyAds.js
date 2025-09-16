@@ -98,6 +98,12 @@ function loadMyAds() {
                         window.location.href = `viewAdd.html?id=${id}`;
                     });
 
+                    card.find(".delete").on("click", function (e) {
+                        e.stopPropagation(); // prevent card click
+                        const adId = $(this).data("id");
+                        deleteAd(adId);
+                    });
+
                     container.append(card);
                 });
             }
@@ -107,3 +113,37 @@ function loadMyAds() {
         }
     });
 }
+
+function deleteAd(adId) {
+    const token = localStorage.getItem("token");
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `http://localhost:8080/property/delete/${adId}`,
+                method: "DELETE",
+                headers: { 'Authorization': `Bearer ${token}` },
+                success: function() {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your ad has been deleted.',
+                        'success'
+                    );
+                    loadMyAds();
+                },
+                error: function() {
+                    Swal.fire('Error deleting ad!', '', 'error');
+                }
+            });
+        }
+    });
+}
+

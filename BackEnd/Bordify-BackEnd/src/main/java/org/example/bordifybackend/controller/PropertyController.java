@@ -102,4 +102,30 @@ public class PropertyController {
         }
     }
 
+    @GetMapping("/myAds")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse> getMyAds() {
+        try {
+            List<PropertyDTO> properties = propertyService.getMyAds();
+
+            return ResponseEntity.ok(
+                    new ApiResponse(
+                            200,
+                            "Properties fetched successfully",
+                            properties
+                    )
+            );
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(
+                            500,
+                            "Failed to fetch properties",
+                            null
+                            )
+                    );
+        }
+    }
+
 }

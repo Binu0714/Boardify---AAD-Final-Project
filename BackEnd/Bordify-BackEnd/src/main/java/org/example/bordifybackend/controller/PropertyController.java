@@ -77,4 +77,29 @@ public class PropertyController {
         }
     }
 
+    @GetMapping("/getPropertyById/{id}")
+    public ResponseEntity<ApiResponse> getPropertyById(@PathVariable Long id) {
+        try {
+            PropertyDTO property = propertyService.getPropertyById(id);
+
+            return ResponseEntity.ok(
+                    new ApiResponse(
+                            200,
+                            "Property fetched successfully",
+                            property
+                    )
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(
+                            500,
+                            "Failed to fetch property",
+                            null
+                            )
+                    );
+        }
+    }
+
 }

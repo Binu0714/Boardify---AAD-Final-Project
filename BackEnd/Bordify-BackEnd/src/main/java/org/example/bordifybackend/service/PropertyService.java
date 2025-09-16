@@ -137,4 +137,54 @@ public class PropertyService {
         return propertyDTOS;
     }
 
+    public PropertyDTO getPropertyById(Long id) {
+        Property property = propertyRepo.findById(id).orElse(null);
+
+        if (property == null) {
+            throw new RuntimeException("Property not found");
+        }
+
+        PropertyDTO propertyDTO = new PropertyDTO();
+
+        propertyDTO.setId(property.getPropertyId());
+        propertyDTO.setTitle(property.getTitle());
+        propertyDTO.setAvailability(property.isAvailability());
+        propertyDTO.setDescription(property.getDescription());
+        propertyDTO.setPrice(property.getPrice());
+        propertyDTO.setPropertyType(property.getType());
+        propertyDTO.setListedFor(property.getListedFor());
+        propertyDTO.setNoOfBeds(property.getNoOfBeds());
+        propertyDTO.setNoOfBaths(property.getNoOfBaths());
+        propertyDTO.setNearestCampus(property.getNearestCampus());
+
+        if (property.getLocation() != null) {
+            propertyDTO.setCity(property.getLocation().getCity());
+            propertyDTO.setDistrict(property.getLocation().getDistrict());
+            propertyDTO.setAddress(property.getLocation().getAddress());
+            propertyDTO.setLatitude(property.getLocation().getLatitude());
+            propertyDTO.setLongitude(property.getLocation().getLongitude());
+        }
+
+        if (property.getAmenities() != null && !property.getAmenities().isEmpty()) {
+            Set<Long> amenityIds = property.getAmenities().stream()
+                    .map(Amenity::getId)
+                    .collect(Collectors.toSet());
+            propertyDTO.setAmenityIds(amenityIds);
+        }
+
+        if (property.getPhotos() != null && !property.getPhotos().isEmpty()) {
+            List<String> photoUrls = property.getPhotos().stream()
+                    .map(Photo::getPhotoUrl)
+                    .collect(Collectors.toList());
+            propertyDTO.setPhotoUrls(photoUrls);
+        }
+
+        if(property.getUser() != null) {
+            propertyDTO.setOwnerName(property.getUser().getUsername());
+            propertyDTO.setOwnerContact(property.getUser().getMobile());
+            propertyDTO.setOwnerAvatarUrl(property.getUser().getProfilePicUrl());
+        }
+
+        return propertyDTO;
+    }
 }

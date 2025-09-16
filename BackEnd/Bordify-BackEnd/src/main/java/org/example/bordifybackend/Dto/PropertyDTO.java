@@ -33,4 +33,9 @@ public class PropertyDTO {
     //front end eken ewanne amenities set ekk.......
     private Set<Long> amenityIds = new HashSet<>();
     private List<String> photoUrls = new ArrayList<>();
+
+    private String ownerName;
+    private String ownerContact;
+    private String ownerAvatarUrl;
+
 }

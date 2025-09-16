@@ -88,95 +88,39 @@
             <!-- In MyAds.html -->
 
             <!-- Ad Grid (re-uses styles from AllAds.css) -->
-            <div class="ads-grid" id="my-ads-grid-container">
-
-                <!-- My Ad Card 1 -->
-                <div class="ad-card my-ad">
-                    <div class="ad-image" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600');">
-                        <div class="ad-badge-status available">Available</div>
-                        <!-- Management Overlay -->
-                        <div class="management-overlay">
-                            <button class="btn-action edit">Edit</button>
-                            <button class="btn-action delete">Delete</button>
+            <div class="ads-grid" id="ads-grid-container">
+                <!-- Ad Card 1 -->
+                <div class="ad-card" id="ad-card-template" style="display:none;">
+                    <div class="ad-image" id="ad-image">
+                        <div class="ad-badge" id="ad-badge">New</div>
+                        <div class="ad-favorite">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
                         </div>
                     </div>
                     <div class="ad-content">
-                        <h3 class="ad-title">Modern Single Room in Nugegoda</h3>
-                        <div class="ad-location">
-                            <!-- Icon for Location -->
+                        <h3 class="ad-title" id="ad-title">Property Title</h3>
+                        <div class="ad-location" id="ad-location">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                <circle cx="12" cy="10" r="3"></circle>
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle>
                             </svg>
-                            Nugegoda, Colombo
+                            Location
                         </div>
                         <div class="ad-stats">
-                <span>
-                    <!-- Icon for Beds -->
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M2 22v-6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6H2zM2 12V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6H2z"/>
-                    </svg>
-                    1 Bed
-                </span>
-                            <span>
-                    <!-- Icon for Baths -->
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M2 12h20M7 2v10M17 2v10M2 12a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4v-2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"/>
-                    </svg>
-                    1 Bath
-                </span>
+                            <span id="ad-beds">0 Bed</span>
+                            <span id="ad-baths">0 Bath</span>
                         </div>
-                        <div class="ad-features"><span class="feature-tag">Wi-Fi</span><span class="feature-tag">AC</span></div>
+                        <div class="ad-features" id="ad-amenities"></div>
                         <div class="ad-footer">
-                            <div class="ad-price">Rs. 25,000<span>/month</span></div>
-                            <div class="ad-posted">2 days ago</div>
+                            <div class="ad-price" id="ad-price">Rs. 0<span>/month</span></div>
                         </div>
+                    </div>
+                    <div class="my-ad-actions">
+                        <a href="#" class="btn-action edit">Edit</a>
+                        <a href="#" class="btn-action delete">Delete</a>
                     </div>
                 </div>
-
-                <!-- My Ad Card 2 -->
-                <div class="ad-card my-ad">
-                    <div class="ad-image" style="background-image: url('https://images.unsplash.com/photo-1595526114035-0d45ed16433d?q=80&w=600');">
-                        <div class="ad-badge-status full">Full</div>
-                        <div class="management-overlay">
-                            <button class="btn-action edit">Edit</button>
-                            <button class="btn-action delete">Delete</button>
-                        </div>
-                    </div>
-                    <div class="ad-content">
-                        <h3 class="ad-title">Spacious Annex with Garden</h3>
-                        <div class="ad-location">
-                            <!-- Icon for Location -->
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                <circle cx="12" cy="10" r="3"></circle>
-                            </svg>
-                            Kandy
-                        </div>
-                        <div class="ad-stats">
-                <span>
-                    <!-- Icon for Beds -->
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M2 22v-6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6H2zM2 12V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6H2z"/>
-                    </svg>
-                    2 Beds
-                </span>
-                            <span>
-                    <!-- Icon for Baths -->
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M2 12h20M7 2v10M17 2v10M2 12a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4v-2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"/>
-                    </svg>
-                    1 Bath
-                </span>
-                        </div>
-                        <div class="ad-features"><span class="feature-tag">Parking</span></div>
-                        <div class="ad-footer">
-                            <div class="ad-price">Rs. 35,000<span>/month</span></div>
-                            <div class="ad-posted">1 week ago</div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
             <!-- Placeholder for when there are no ads -->

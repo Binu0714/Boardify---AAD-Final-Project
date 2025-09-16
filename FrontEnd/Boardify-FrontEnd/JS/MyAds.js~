@@ -92,7 +92,7 @@ function loadMyAds() {
                             </div>
                         </div>
                     `);
-
+                    
                     card.find(".ad-image, .ad-title").on("click", function () {
                         const id = $(this).closest(".ad-card").data("id");
                         window.location.href = `viewAdd.html?id=${id}`;

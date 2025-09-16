@@ -231,4 +231,8 @@ public class PropertyService {
         }
         return propertyDTOs;
     }
+
+    public void deleteProperty(Long id) {
+        propertyRepo.deleteById(id);
+    }
 }

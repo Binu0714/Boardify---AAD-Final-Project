@@ -128,4 +128,29 @@ public class PropertyController {
         }
     }
 
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse> deleteProperty(@PathVariable Long id) {
+        try {
+            propertyService.deleteProperty(id);
+            return ResponseEntity.ok(
+                    new ApiResponse(
+                            200,
+                            "Property deleted successfully",
+                            null
+                    )
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(
+                            500,
+                            "Failed to delete property",
+                            null
+                            )
+                    );
+        }
+    }
+
 }

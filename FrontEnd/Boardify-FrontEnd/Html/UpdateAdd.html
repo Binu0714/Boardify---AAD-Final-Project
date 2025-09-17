@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Ad - Boardify</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- External Libraries CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Your Custom CSS File -->
+  <link rel="stylesheet" href="../Css/UpdateAdd.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <nav class="nav">
+    <a href="Dashboard.html" class="logo">Boardify</a>
+    <div class="nav-menu" id="nav-menu">
+      <ul class="nav-links">
+        <li><a href="Dashboard.html" class="nav-link">Home</a></li>
+        <li><a href="AllAds.html" class="nav-link">All Ads</a></li>
+        <li><a href="PostAdd.html" class="nav-link active">Post Ad</a></li>
+      </ul>
+      <div class="user-actions">
+        <div class="notification-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span class="notification-badge">3</span>
+        </div>
+        <div class="profile-container">
+          <div class="profile-avatar" id="profile-avatar">JS</div>
+          <div class="profile-dropdown" id="profile-dropdown">
+            <div class="dropdown-header"><h4>John Smith</h4><p>Room Seeker</p></div>
+            <a href="Profile.html" class="dropdown-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>My Profile</a>
+            <a href="SavedAds.html" class="dropdown-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>Saved Ads</a>
+            <div class="dropdown-footer"><a href="LogIn.html" class="dropdown-link" onclick="handleLogout(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>Logout</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-menu-toggle" id="mobile-menu-toggle"><span></span><span></span><span></span></div>
+  </nav>
+</header>
+
+<!-- Main Content -->
+<main class="main-content">
+  <div class="post-ad-container">
+    <div class="page-header">
+      <h1>Update Your Property</h1>
+      <p>Fill in the details below to reach thousands of potential tenants.</p>
+    </div>
+    <div class="stepper">
+      <div class="step active"><div class="step-number">1</div><div class="step-label">Details</div></div>
+      <div class="step-line"></div>
+      <div class="step"><div class="step-number">2</div><div class="step-label">Amenities</div></div>
+      <div class="step-line"></div>
+      <div class="step"><div class="step-number">3</div><div class="step-label">Location</div></div>
+      <div class="step-line"></div>
+      <div class="step"><div class="step-number">3</div><div class="step-label">Photos</div></div>
+    </div>
+    <form id="post-ad-form">
+      <!-- Section 1: Property Details -->
+      <div class="content-card">
+        <div class="card-header"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><h3>Property Details</h3></div>
+        <div class="card-body">
+          <div class="form-group full-width">
+            <label for="ad-title">Ad Title</label>
+            <div class="input-with-icon">
+              <input type="text" id="ad-title" placeholder="e.g., Modern Single Room in Nugegoda" required>
+            </div>
+          </div>
+          <div class="form-group full-width">
+            <label for="ad-description">Description</label>
+            <textarea id="ad-description" rows="6" placeholder="Describe the property, its features, and any rules." required></textarea>
+          </div>
+          <div class="form-row"><div class="form-group">
+            <label for="ad-property-type">Property Type</label>
+            <select id="ad-property-type" required>
+              <option value="">Select Type</option>
+              <option value="SINGLE_ROOM">Single Room</option>
+              <option value="SHARED_ROOM">Shared Room</option>
+              <option value="ANNEX">Annex</option>
+              <option value="HOUSE">House</option>
+            </select>
+          </div>
+            <div class="form-group">
+              <label for="ad-listed-for">Listed For</label>
+              <select id="ad-listed-for" required>
+                <option value="">Select Option</option>
+                <option value="ANYONE">Anyone</option>
+                <option value="BOYS">Boys</option>
+                <option value="GIRLS">Girls</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ad-bedrooms">Bedrooms</label>
+              <select id="ad-bedrooms" required>
+                <option value="">Select Count</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5+">5</option>
+                <option value="5+">6</option>
+                <option value="5+">7</option>
+                <option value="5+">8</option>
+                <option value="5+">9</option>
+                <option value="5+">10</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="ad-bathrooms">Bathrooms</label>
+              <select id="ad-bathrooms" required>
+                <option value="">Select Count</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5+">5</option>
+                <option value="5+">6</option>
+                <option value="5+">7</option>
+                <option value="5+">8</option>
+                <option value="5+">9</option>
+                <option value="5+">10</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ad-price">Monthly Rent (LKR)</label>
+              <div class="input-with-icon">
+                <span>LKR</span>
+                <input type="number" id="ad-price" placeholder="e.g., 25000" min="0" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="ad-uni">Nearest University</label>
+              <div class="input-with-icon">
+                <input type="text" id="ad-uni" placeholder="e.g., University Of Colombo">
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <h3>Availability Status</h3>
+        </div>
+        <div class="card-body">
+          <p class="section-subtitle">Set whether your property is currently available for booking or full.</p>
+          <div class="availability-toggle">
+
+            <input type="radio" id="status-available" name="availability" value="true" checked>
+            <label for="status-available" class="toggle-option available">
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M16.59,7.58L10,14.17L7.41,11.59L6,13L10,17L18,9L16.59,7.58Z" /></svg>
+              <span>Available</span>
+            </label>
+
+            <input type="radio" id="status-booked" name="availability" value="false">
+            <label for="status-booked" class="toggle-option booked">
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M17,13H7V11H17V13Z" /></svg>
+              <span>Booked / Full</span>
+            </label>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- == PASTE THIS NEW "AMENITIES" CARD INTO YOUR FORM              == -->
+      <!-- =================================================================== -->
+      <div class="content-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <h3>Amenities</h3>
+        </div>
+        <div class="card-body">
+          <p class="section-subtitle">Select the amenities and features available at your property.</p>
+          <div class="amenities-grid" id="amenities-grid">
+
+            <!-- These are the selectable amenity buttons -->
+            <!-- Each 'label' acts as a button for a hidden checkbox -->
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="1">
+              <span>Wi-Fi</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="2">
+              <span>Parking</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="3">
+              <span>Furnished</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="4">
+              <span>Bills Included</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="5">
+              <span>Air Conditioning (A/C)</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="6">
+              <span>Attached Bathroom</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="7">
+              <span>Washing Machine</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="8">
+              <span>Separate Entrance</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="9">
+              <span>Hot Water</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="10">
+              <span>Kitchen Access</span>
+            </label>
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="11">
+              <span>CCTV Security</span>
+            </label>
+
+
+            <label class="amenity-btn">
+              <input type="checkbox" name="amenities" value="12">
+              <span>Meals Provided</span>
+            </label>
+
+          </div>
+        </div>
+      </div>
+
+      <!--location section-->
+      <!-- =================================================================== -->
+      <!-- == FINAL "LOCATION" CARD (MANUAL INPUT & CORRECT LAYOUT)         == -->
+      <!-- =================================================================== -->
+      <div class="content-card">
+        <div class="card-header">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <h3>Location</h3>
+        </div>
+        <div class="card-body">
+
+          <!-- Row for City and District (Manual Input) -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ad-city">City</label>
+              <input type="text" id="ad-city" placeholder="e.g., Wellawatte" required>
+            </div>
+            <div class="form-group">
+              <label for="ad-district">District</label>
+              <input type="text" id="ad-district" placeholder="e.g., Colombo" required>
+            </div>
+          </div>
+
+          <!-- Street Address on its own line below -->
+          <div class="form-group full-width">
+            <label for="ad-address">Street Address</label>
+            <input type="text" id="ad-address" placeholder="e.g., No. 123, Galle Road, Galle" required>
+          </div>
+
+          <!-- Map Placeholder -->
+          <div class="form-group full-width">
+            <label>Map Location Preview</label>
+            <div id="map"></div>
+          </div>
+
+          <!-- Hidden input fields -->
+          <input type="hidden" id="latitude" name="latitude">
+          <input type="hidden" id="longitude" name="longitude">
+        </div>
+      </div>
+
+      <!-- Section 3: Photos -->
+      <div class="content-card">
+        <div class="card-header">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+          <h3>Upload Photos</h3>
+        </div>
+        <div class="card-body">
+          <!-- UPDATE THE TEXT HERE -->
+          <p class="upload-instructions">You can Add up to 10 photos.The first image will be the cover photo.</p>
+
+          <div class="image-uploader">
+            <div id="image-preview-container" class="image-preview-container"></div>
+            <label for="image-upload-input" class="image-upload-box" id="image-upload-box">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 5v14m-7-7h14" /></svg>
+              <span>Add Photos</span>
+            </label>
+            <input type="file" id="image-upload-input" class="file-input" multiple accept="image/*">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" id="submit-ad-btn" class="btn-primary">Update Property</button>
+      </div>
+
+    </form>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-column">
+      <a href="#" class="logo">Boardify</a>
+      <p>The smartest way to discover boarding rooms and annexes in Sri Lanka.</p>
+      <div class="social-icons">
+        <a href="#"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/></svg></a>
+        <a href="#"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98-3.56-.18-6.73-1.89-8.84-4.48-.37.63-.58 1.37-.58 2.15 0 1.49.76 2.8 1.91 3.56-.71 0-1.37-.22-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.52 8.52 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06 3.43 2.2 7.5 3.48 11.7 3.48 14.08 0 21.78-11.65 21.78-21.78l-.02-.98c1.5-.09 2.78-1.56 2.78-2.78z"/></svg></a>
+        <a href="#"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8A3.6 3.6 0 0 0 20 16.4V7.6A3.6 3.6 0 0 0 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-column">
+      <h4 class="footer-heading">Quick Links</h4>
+      <ul class="footer-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">All Ads</a></li>
+        <li><a href="#">Post an Ad</a></li>
+        <li><a href="#">About Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h4 class="footer-heading">For Seekers</h4>
+      <ul class="footer-links">
+        <li><a href="#">How to Search</a></li>
+        <li><a href="#">Saved Listings</a></li>
+        <li><a href="#">Safety Tips</a></li>
+        <li><a href="#">FAQs</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h4 class="footer-heading">For Owners</h4>
+      <ul class="footer-links">
+        <li><a href="#">How to Post an Ad</a></li>
+        <li><a href="#">My Listings</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">Owner Guidelines</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Boardify. All Rights Reserved. Designed with ❤️ in Sri Lanka.</p>
+  </div>
+</footer>
+
+<!-- External Libraries JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../JS/UpdateAdd.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+
+    mobileMenuToggle.addEventListener('click', () => {
+      mobileMenuToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+
+    const profileAvatar = document.getElementById('profile-avatar');
+    const profileDropdown = document.getElementById('profile-dropdown');
+
+    profileAvatar.addEventListener('click', (event) => {
+      event.stopPropagation();
+      profileAvatar.classList.toggle('active');
+      profileDropdown.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!profileDropdown.contains(event.target) && !profileAvatar.contains(event.target)) {
+        profileAvatar.classList.remove('active');
+        profileDropdown.classList.remove('active');
+      }
+    });
+
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('.header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+  });
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

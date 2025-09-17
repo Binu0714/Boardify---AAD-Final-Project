@@ -87,9 +87,10 @@ function loadMyAds() {
                                 </div>
                             </div>
                             <div class="my-ad-actions">
-                                <a href="PostAdd.html?id=${p.id}" class="btn-action edit">Edit</a>
+                                <a href="../Html/UpdateAdd.html?id=${p.id}" class="btn-action edit">Edit</a>
                                 <a href="#" class="btn-action delete" data-id="${p.id}">Delete</a>
                             </div>
+
                         </div>
                     `);
 

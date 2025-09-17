@@ -179,7 +179,7 @@ public class PropertyService {
             propertyDTO.setPhotoUrls(photoUrls);
         }
 
-        if(property.getUser() != null) {
+        if (property.getUser() != null) {
             propertyDTO.setOwnerName(property.getUser().getUsername());
             propertyDTO.setOwnerContact(property.getUser().getMobile());
         }
@@ -302,6 +302,59 @@ public class PropertyService {
         }
 
         propertyRepo.save(property);
+    }
+
+    public List<PropertyDTO> searchProperties(String keyword) {
+        // 1. Call the custom query method in your repository
+        List<Property> foundProperties = propertyRepo.searchProperties(keyword);
+
+        // 2. Create an empty list to hold the results that will be sent to the frontend
+        List<PropertyDTO> propertyDTOs = new ArrayList<>();
+
+        // 3. Loop through each Property entity found by the search
+        for (Property property : foundProperties) {
+            // For each entity, create and populate a new DTO
+            PropertyDTO dto = new PropertyDTO();
+
+            dto.setId(property.getPropertyId());
+            dto.setTitle(property.getTitle());
+            dto.setAvailability(property.isAvailability());
+            dto.setDescription(property.getDescription());
+            dto.setPrice(property.getPrice());
+            dto.setPropertyType(property.getType());
+            dto.setListedFor(property.getListedFor());
+            dto.setNoOfBeds(property.getNoOfBeds());
+            dto.setNoOfBaths(property.getNoOfBaths());
+            dto.setNearestCampus(property.getNearestCampus());
+
+            if (property.getLocation() != null) {
+                dto.setCity(property.getLocation().getCity());
+                dto.setDistrict(property.getLocation().getDistrict());
+                dto.setAddress(property.getLocation().getAddress());
+                dto.setLatitude(property.getLocation().getLatitude());
+                dto.setLongitude(property.getLocation().getLongitude());
+            }
+
+            if (property.getAmenities() != null && !property.getAmenities().isEmpty()) {
+                Set<Long> amenityIds = property.getAmenities().stream()
+                        .map(Amenity::getId)
+                        .collect(Collectors.toSet());
+                dto.setAmenityIds(amenityIds);
+            }
+
+            if (property.getPhotos() != null && !property.getPhotos().isEmpty()) {
+                List<String> photoUrls = property.getPhotos().stream()
+                        .map(Photo::getPhotoUrl)
+                        .collect(Collectors.toList());
+                dto.setPhotoUrls(photoUrls);
+            }
+
+            // 4. Add the fully populated DTO to our results list
+            propertyDTOs.add(dto);
+        }
+
+        // 5. Return the final list of DTOs
+        return propertyDTOs;
     }
 
 }

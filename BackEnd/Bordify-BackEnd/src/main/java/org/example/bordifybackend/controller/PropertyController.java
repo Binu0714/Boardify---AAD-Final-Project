@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import lombok.RequiredArgsConstructor;
 import org.example.bordifybackend.Dto.ApiResponse;
 import org.example.bordifybackend.Dto.PropertyDTO;
+import org.example.bordifybackend.entity.Property;
 import org.example.bordifybackend.service.PropertyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -177,6 +178,30 @@ public class PropertyController {
                             500,
                             "Failed to update property",
                             null
+                            )
+                    );
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse> searchProperties(@RequestParam("keyword") String keyword) {
+        try {
+            List<PropertyDTO> searchResults = propertyService.searchProperties(keyword);
+            return ResponseEntity.ok(
+                    new ApiResponse(
+                            200,
+                            "Properties found: " + searchResults.size(),
+                            searchResults
+                    )
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(
+                                    500,
+                                    "An error occurred during search: " + e.getMessage(),
+                                    null
                             )
                     );
         }

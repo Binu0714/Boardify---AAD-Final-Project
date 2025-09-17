@@ -919,11 +919,13 @@ body {
     font-weight: 500; /* A nice medium weight, not too heavy */
 }
 
+
+/* Your existing message styles, slightly updated for consistency */
 .no-results-message, .error-message {
     text-align: center;
     padding: 40px;
     font-size: 1.1em;
-    color: #718096;
+    color: #718096; /* A softer gray for messages */
 }
 
 @media (max-width: 768px) {

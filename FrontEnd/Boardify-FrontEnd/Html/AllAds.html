@@ -69,14 +69,21 @@
 
     <!-- NEW Top Search Bar -->
     <section class="top-search-section">
+
         <div class="search-container">
             <h1>Find Your Perfect Stay</h1>
             <p>Search from over 127 verified listings across Sri Lanka</p>
+
             <div class="search-bar">
                 <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 <input type="text" id="main-search-input" placeholder="Enter a location, property type, or keyword...">
                 <button id="main-search-button" class="search-button">Search</button>
             </div>
+
+            <div id="suggestions-container" class="suggestions-box"></div>
+
+            <div id="ads-container"></div>
+
         </div>
     </section>
 
@@ -91,6 +98,11 @@
                 <div class="filter-group">
                     <label for="filter-location">Location</label>
                     <input type="text" id="filter-location" placeholder="e.g., Colombo, Kandy">
+                </div>
+
+                <div class="filter-group">
+                    <label for="filter-uni">Nearest University</label>
+                    <input type="text" id="filter-uni" placeholder="e.g., SLITT , NSBM">
                 </div>
 
                 <div class="filter-group">
@@ -255,7 +267,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../JS/AllAds.js"></script>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {

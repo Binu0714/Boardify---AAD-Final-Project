@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -235,4 +236,72 @@ public class PropertyService {
     public void deleteProperty(Long id) {
         propertyRepo.deleteById(id);
     }
+
+    @Transactional
+    public void updateProperty(Long id, PropertyDTO propertyDTO, List<MultipartFile> images) {
+        Property property = propertyRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Property not found"));
+
+        property.setTitle(propertyDTO.getTitle());
+        property.setDescription(propertyDTO.getDescription());
+        property.setPrice(propertyDTO.getPrice());
+        property.setType(propertyDTO.getPropertyType());
+        property.setListedFor(propertyDTO.getListedFor());
+        property.setNoOfBeds(propertyDTO.getNoOfBeds());
+        property.setNoOfBaths(propertyDTO.getNoOfBaths());
+        property.setNearestCampus(propertyDTO.getNearestCampus());
+        property.setAvailability(propertyDTO.isAvailability());
+
+        Location location = property.getLocation();
+        if (location == null) {
+            location = new Location();
+            property.setLocation(location);
+            location.setProperty(property);
+        }
+        location.setAddress(propertyDTO.getAddress());
+        location.setCity(propertyDTO.getCity());
+        location.setDistrict(propertyDTO.getDistrict());
+        location.setLatitude(propertyDTO.getLatitude());
+        location.setLongitude(propertyDTO.getLongitude());
+
+        if (propertyDTO.getAmenityIds() != null && !propertyDTO.getAmenityIds().isEmpty()) {
+            Set<Long> ids = propertyDTO.getAmenityIds().stream()
+                    .filter(idVal -> idVal != null)
+                    .collect(Collectors.toSet());
+
+            if (!ids.isEmpty()) {
+                List<Amenity> amenitiesList = amenityRepo.findAllById(ids);
+                Set<Amenity> amenities = new HashSet<>(amenitiesList);
+                property.setAmenities(amenities);
+
+                for (Amenity amenity : amenities) {
+                    amenity.getProperties().add(property);
+                }
+            }
+        } else {
+            property.setAmenities(new HashSet<>());
+        }
+
+        if (images != null && !images.isEmpty()) {
+            if (property.getPhotos() != null) {
+                property.getPhotos().clear();
+            } else {
+                property.setPhotos(new ArrayList<>());
+            }
+
+            List<Photo> photoEntities = images.stream()
+                    .map(file -> {
+                        String imageUrl = imgbbService.upload(file);
+                        return Photo.builder()
+                                .photoUrl(imageUrl)
+                                .property(property)
+                                .build();
+                    })
+                    .toList();
+            property.getPhotos().addAll(photoEntities);
+        }
+
+        propertyRepo.save(property);
+    }
+
 }

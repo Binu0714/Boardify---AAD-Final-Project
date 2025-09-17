@@ -21,7 +21,7 @@ public class PropertyController {
     private final PropertyService propertyService;
 
     @PostMapping("/create")
-    @PreAuthorize("isAuthenticated()") //this checks user logged in or not
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> createProperty(
             @RequestPart("propertyData")PropertyDTO propertyDTO,
             @RequestPart("image")List<MultipartFile> images
@@ -147,6 +147,35 @@ public class PropertyController {
                     .body(new ApiResponse(
                             500,
                             "Failed to delete property",
+                            null
+                            )
+                    );
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse> updateProperty(
+            @PathVariable Long id,
+            @RequestPart("propertyData")PropertyDTO propertyDTO,
+            @RequestPart(value = "image", required = false)List<MultipartFile> images
+    ) {
+        try {
+            propertyService.updateProperty(id,propertyDTO,images);
+            return ResponseEntity.ok(
+                    new ApiResponse(
+                            200,
+                            "Property updated successfully",
+                            null
+                    )
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(
+                            500,
+                            "Failed to update property",
                             null
                             )
                     );

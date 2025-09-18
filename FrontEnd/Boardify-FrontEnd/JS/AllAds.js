@@ -1,5 +1,3 @@
-// --- STATE & CONFIG (Global Scope) ---
-// MOVED HERE: These variables are now accessible by all functions in this file.
 const allCities = new Set();
 const allCampuses = new Set();
 const allTypes = new Set();
@@ -7,11 +5,24 @@ const allTypes = new Set();
 let debounceTimer;
 
 $(document).ready(function () {
-    // --- INITIALIZATION ---
-    // The call to the function remains here.
+
+    populateFilterDropdowns();
+
+    // 2. Listen for when the "Apply Filters" button is clicked
+    $('#filter-form').on('submit', function (e) {
+        e.preventDefault(); // This stops the page from reloading
+        applyFilters();
+    });
+
+    // 3. Listen for when the "Clear All" link is clicked
+    $('#filter-clear-btn').on('click', function(e) {
+        e.preventDefault();
+        $('#filter-form')[0].reset(); // This resets the form fields
+        loadInitialDataAndSetup(); // This reloads all the original ads (assumes you have this function)
+    });
+
     loadInitialDataAndSetup();
 
-    // --- EVENT LISTENERS ---
     $('#main-search-input').on('keyup', function () {
         const keyword = $(this).val();
 
@@ -188,4 +199,88 @@ function createAdCard(p) {
     });
 
     return card;
+}
+
+/**
+ * Fetches data for the Location and University dropdowns from the backend
+ * and populates the <select> elements.
+ */
+function populateFilterDropdowns() {
+    // Fetch and populate cities
+    $.ajax({
+        url: "http://localhost:8080/property/cities",
+        method: "GET",
+        success: function(res) {
+            if (res.status === 200 && res.data) {
+                const locationSelect = $('#filter-location');
+                res.data.forEach(city => {
+                    locationSelect.append(`<option value="${city}">${city}</option>`);
+                });
+            }
+        }
+    });
+
+    // Fetch and populate universities
+    $.ajax({
+        url: "http://localhost:8080/property/universities",
+        method: "GET",
+        success: function(res) {
+            if (res.status === 200 && res.data) {
+                const uniSelect = $('#filter-uni');
+                res.data.forEach(uni => {
+                    uniSelect.append(`<option value="${uni}">${uni}</option>`);
+                });
+            }
+        }
+    });
+}
+
+
+/**
+ * Gathers all data from the filter form, sends it to the backend,
+ * and renders the results using your existing renderAds function.
+ */
+function applyFilters() {
+    // 1. Build the filter object from form values, matching your FilterDTO
+    const filters = {
+        location: $('#filter-location').val(),
+        university: $('#filter-uni').val(),
+        listedFor: $('#filter-listed-for').val(),
+        propertyType: $('#filter-property-type').val(),
+        bedrooms: $('#filter-bedrooms').val(),
+        bathrooms: $('#filter-bathrooms').val()
+    };
+
+    const minPrice = parseInt($('#filter-price-min').val());
+    if (!isNaN(minPrice) && minPrice > 0) filters.minPrice = minPrice;
+
+    const maxPrice = parseInt($('#filter-price-max').val());
+    if (!isNaN(maxPrice) && maxPrice > 0) filters.maxPrice = maxPrice;
+
+    const billsIncluded = $('#filter-bills-included').val();
+    if (billsIncluded === 'yes') {
+        filters.billsIncluded = true;
+    } else if (billsIncluded === 'no') {
+        filters.billsIncluded = false;
+    }
+
+    // 2. Send the filters to the backend via a POST request
+    $.ajax({
+        url: "http://localhost:8080/property/filter",
+        method: "POST",
+        contentType: "application/json", // Important: Tell the server we're sending JSON
+        data: JSON.stringify(filters),   // Convert the JS object to a JSON string
+        success: function(res) {
+            if (res.status === 200 && res.data) {
+                // 3. Use your existing renderAds function to display the filtered results
+                // This assumes you have a function called renderAds that takes a list of properties.
+                renderAds(res.data);
+            }
+        },
+        error: function(err) {
+            console.error("Error applying filters:", err);
+            // Make sure you have a container with this ID to show errors
+            $('#ads-container').html('<p class="error-message">Could not apply filters. Please try again.</p>');
+        }
+    });
 }

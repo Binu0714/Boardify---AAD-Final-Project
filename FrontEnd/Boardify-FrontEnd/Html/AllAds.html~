@@ -94,10 +94,10 @@
                 <h3>Filters</h3>
                 <a href="#" id="filter-clear-btn" class="clear-filters">Clear All</a>
             </div>
-
             <form id="filter-form">
                 <div class="filter-group">
                     <label for="filter-location">Location</label>
+<!--                    <input type="text" id="filter-location" placeholder="e.g., Colombo, Kandy">-->
                     <select id="filter-location">
                         <option>Any</option>
                     </select>
@@ -105,7 +105,8 @@
 
                 <div class="filter-group">
                     <label for="filter-uni">Nearest University</label>
-                    <select id="filter-uni" >
+<!--                    <input type="text" id="filter-uni" placeholder="e.g., SLITT , NSBM">-->
+                    <select id="filter-uni" placeholder="e.g., SLITT , NSBM">
                         <option>Any</option>
                     </select>
                 </div>

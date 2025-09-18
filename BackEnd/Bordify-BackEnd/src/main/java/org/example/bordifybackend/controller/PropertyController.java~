@@ -233,6 +233,7 @@ public class PropertyController {
     }
 
     @PostMapping("/filter")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> filterProperties(@RequestBody FilterDTO filters) {
         List<PropertyDTO> filteredProperties = propertyService.filterProperties(filters);
         return ResponseEntity.ok(

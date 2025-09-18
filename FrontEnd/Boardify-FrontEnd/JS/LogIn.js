@@ -21,6 +21,7 @@ $("#login-form").submit(function (event) {
 
             if (token) {
                 localStorage.setItem("token", token);
+                localStorage.setItem("username", username);
                 Swal.fire({
                     icon: 'success',
                     title: 'Login Successful',

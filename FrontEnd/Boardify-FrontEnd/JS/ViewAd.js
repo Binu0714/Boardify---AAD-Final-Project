@@ -123,6 +123,16 @@ function populateSidebarDetails(property) {
     } else {
         $("#owner-contact").text("Not Provided");
     }
+
+    const loggedInUsername = localStorage.getItem("username");
+
+    const requestButton = $("#request-btn");
+
+    if (loggedInUsername && property.ownerName === loggedInUsername) {
+        requestButton.text("This is Your Ad");
+        requestButton.prop("disabled", true);
+        requestButton.addClass("btn-disabled");
+    }
 }
 
 function loadMap(property) {

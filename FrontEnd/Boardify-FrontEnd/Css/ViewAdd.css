@@ -675,6 +675,17 @@ body {
     padding: 1rem;
     font-size: 1.1rem;
 }
+
+/* Add this to your main CSS file */
+
+.btn-disabled {
+    background: #e2e8f0; /* A light gray background */
+    color: #a0aec0;      /* A lighter text color */
+    cursor: not-allowed; /* Show a "not allowed" mouse cursor on hover */
+    box-shadow: none;    /* Remove any shadow */
+    pointer-events: none; /* A fail-safe to prevent clicks */
+}
+
 .footer {
     background-color: #1a202c;
     color: #a0aec0;

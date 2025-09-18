@@ -3,6 +3,7 @@ package org.example.bordifybackend.controller;
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import lombok.RequiredArgsConstructor;
 import org.example.bordifybackend.Dto.ApiResponse;
+import org.example.bordifybackend.Dto.FilterDTO;
 import org.example.bordifybackend.Dto.PropertyDTO;
 import org.example.bordifybackend.entity.Property;
 import org.example.bordifybackend.service.PropertyService;
@@ -205,6 +206,43 @@ public class PropertyController {
                             )
                     );
         }
+    }
+
+    @GetMapping("/cities")
+    public ResponseEntity<ApiResponse> getCities() {
+        List<String> cities = propertyService.getAllCities();
+        return ResponseEntity.ok(
+                new ApiResponse(
+                        200,
+                        "Cities fetched",
+                        cities
+                )
+        );
+    }
+
+    @GetMapping("/universities")
+    public ResponseEntity<ApiResponse> getUniversities() {
+        List<String> universities = propertyService.getAllUniversities();
+        return ResponseEntity.ok(
+                new ApiResponse(
+                        200,
+                        "Universities fetched",
+                        universities
+                )
+        );
+    }
+
+    @PostMapping("/filter")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse> filterProperties(@RequestBody FilterDTO filters) {
+        List<PropertyDTO> filteredProperties = propertyService.filterProperties(filters);
+        return ResponseEntity.ok(
+                new ApiResponse(
+                        200,
+                        "Properties filtered",
+                        filteredProperties
+                )
+        );
     }
 
 }

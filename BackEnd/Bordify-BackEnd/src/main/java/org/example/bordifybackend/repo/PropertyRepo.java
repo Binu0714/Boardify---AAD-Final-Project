@@ -18,5 +18,11 @@ public interface PropertyRepo extends JpaRepository<Property, Long> {
             "   OR LOWER(p.nearestCampus) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
             "   OR LOWER(CAST(p.type AS string)) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Property> searchProperties(@Param("keyword") String keyword);
+
+    @Query("SELECT DISTINCT l.city FROM Property p JOIN p.location l ORDER BY l.city ASC")
+    List<String> findDistinctCities();
+
+    @Query("SELECT DISTINCT p.nearestCampus FROM Property p ORDER BY p.nearestCampus ASC")
+    List<String> findDistinctUniversities();
 }
 

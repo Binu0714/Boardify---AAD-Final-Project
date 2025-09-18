@@ -40,7 +40,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/**").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/property/**").permitAll()
-//                        .requestMatchers(HttpMethod.PUT, "/property/update/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/property/filter").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

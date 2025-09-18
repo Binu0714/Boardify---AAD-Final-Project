@@ -215,6 +215,7 @@
 
                 </div>
             </aside>
+
         </div>
     </div>
 </main>
@@ -263,10 +264,72 @@
     </div>
 </footer>
 
+<!-- ========================================================== -->
+<!-- == NEW & CREATIVE POPUP MODAL                            == -->
+<!-- == Place this entire block at the end of your <body> tag == -->
+<!-- ========================================================== -->
+<div id="popup-overlay" class="modal-overlay">
+    <div class="modal-container">
+        <div id="popup-box" class="modal-box">
+
+            <button id="close-popup-btn" class="modal-close-btn">&times;</button>
+
+            <div class="modal-header">
+                <svg class="modal-header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 22h-2v-2a3 3 0 0 0-3-3H9a3 3 0 0 0-3 3v2H4v-2a5 5 0 0 1 5-5h6a5 5 0 0 1 5 5v2zm-8-9a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
+                </svg>
+                <h2>Request to Book</h2>
+                <p>Submit your details and the owner will contact you shortly.</p>
+                <br>
+            </div>
+
+
+            <form id="booking-request-form" class="modal-form">
+
+                <div class="form-grid">
+                    <!-- Name (Grid Item 1) -->
+                    <div class="form-group">
+                        <label for="requester-name">Full Name</label>
+                        <input type="text" id="requester-name" placeholder="Your Name" required>
+                    </div>
+
+                    <!-- Mobile Number (Grid Item 2) -->
+                    <div class="form-group">
+                        <label for="requester-mobile">Mobile Number</label>
+                        <input type="tel" id="requester-mobile" placeholder="077-123-4567" required>
+                    </div>
+
+                    <!-- Email (Grid Item 3) -->
+                    <div class="form-group">
+                        <label for="requester-email">Email Address</label>
+                        <input type="email" id="requester-email" placeholder="you@email.com" required>
+                    </div>
+
+                    <!-- Date (Grid Item 4) -->
+                    <div class="form-group">
+                        <label for="request-date">Request Date</label>
+                        <input type="text" id="request-date" readonly>
+                    </div>
+
+                    <!-- Message (Full Width) -->
+                    <div class="form-group full-width">
+                        <label for="requester-message">Message (Optional)</label>
+                        <textarea id="requester-message" rows="3" placeholder="Add a short message..."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="modal-submit-btn">Send Request</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../JS/ViewAd.js"></script>
+<script src="../JS/Booking.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -306,6 +369,7 @@
                 header.classList.remove('scrolled');
             }
         });
+
 
     });
 </script>

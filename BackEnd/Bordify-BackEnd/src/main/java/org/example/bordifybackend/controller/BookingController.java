@@ -40,4 +40,27 @@ public class BookingController {
         }
     }
 
+    @PostMapping("/accept/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse> acceptBookingRequest(@PathVariable long id){
+        try {
+            bookingService.acceptBookingRequest(id);
+            return ResponseEntity.ok(
+                    new ApiResponse(
+                            200,
+                            "Booking request accepted successfully",
+                            null
+                    )
+            );
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(
+                            500,
+                            "An unexpected error occurred: " + e.getMessage(),
+                            null
+                    ));
+        }
+    }
+
 }

@@ -7,11 +7,14 @@ import org.example.bordifybackend.entity.BookingStatus;
 import org.example.bordifybackend.entity.Property;
 import org.example.bordifybackend.entity.User;
 import org.example.bordifybackend.repo.BookingRepo;
+import org.example.bordifybackend.repo.NotificationRepo;
 import org.example.bordifybackend.repo.PropertyRepo;
 import org.example.bordifybackend.repo.UserRepo;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +23,7 @@ public class BookingService {
     private final PropertyRepo propertyRepo;
     private final BookingRepo bookingRepo;
     private final NotificationService notificationService;
+    private final NotificationRepo notificationRepo;
 
     @Transactional
     public void createBookingRequest(BookingRequestDTO requestDTO) {
@@ -47,5 +51,50 @@ public class BookingService {
         String messageToOwner = seeker.getUsername() + " has sent a booking request for your ad: '" + property.getTitle() + "'";
 
         notificationService.createNotification(seeker, owner, messageToOwner, savedReq);
+    }
+
+    @Transactional
+    public void acceptBookingRequest(Long bookingId) {
+        BookingReq acceptedRequest = bookingRepo.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Booking request not found"));
+
+        Property property = acceptedRequest.getProperty();
+        User owner = property.getUser();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User currentUser = userRepo.findByUsername(username).orElseThrow();
+
+        if (!owner.equals(currentUser)) {
+            throw new IllegalStateException("You are not authorized to accept requests for this property.");
+        }
+
+        notificationRepo.findByBookingReq_Id(acceptedRequest.getId())
+                        .ifPresent(notification -> {
+                            notification.setRead(true);
+                            notificationRepo.save(notification);
+                        });
+
+        acceptedRequest.setStatus(BookingStatus.APPROVED);
+        property.setAvailability(false);
+        propertyRepo.save(property);
+
+        List<BookingReq> otherPendingRequests = bookingRepo.findByProperty_PropertyIdAndStatusAndIdNot(
+                property.getPropertyId(),
+                BookingStatus.PENDING,
+                acceptedRequest.getId()
+        );
+
+        if (!otherPendingRequests.isEmpty()) {
+            otherPendingRequests.forEach(requestToDecline -> {
+                String declineMessage = "Your request for '" + property.getTitle() + "' was declined as the property is now booked.";
+                notificationService.createNotification(owner, requestToDecline.getUser(), declineMessage, requestToDecline);
+            });
+
+            bookingRepo.deleteAll(otherPendingRequests);
+        }
+
+        User seeker = acceptedRequest.getUser();
+        String acceptanceMessage = "Your booking request for '" + property.getTitle() + "' has been ACCEPTED!";
+        notificationService.createNotification(owner, seeker, acceptanceMessage, acceptedRequest);
     }
 }

@@ -25,7 +25,6 @@ public class Review {
     @Column(name = "review_date", updatable = false)
     private LocalDateTime reviewDate;
 
-    @Column(nullable = false)
     private int rating;
 
     @Lob // Use @Lob for long text fields

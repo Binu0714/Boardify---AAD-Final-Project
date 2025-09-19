@@ -22,8 +22,9 @@ public class BookingReq {
     @Column(name = "booking_req_id")
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private BookingStatus status;
 
     @CreationTimestamp
     @Column(name = "request_date", updatable = false)

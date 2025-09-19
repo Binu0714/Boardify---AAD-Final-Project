@@ -1,6 +1,7 @@
 package org.example.bordifybackend.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.bordifybackend.Dto.BookingRequestDTO;
 import org.example.bordifybackend.Dto.FilterDTO;
 import org.example.bordifybackend.Dto.PropertyDTO;
 import org.example.bordifybackend.entity.*;

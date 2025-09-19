@@ -20,7 +20,7 @@ public class BookingController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> submitBookingRequest(@RequestBody BookingRequestDTO requestDTO) {
         try {
-            bookingService.submitBookingRequest(requestDTO);
+            bookingService.createBookingRequest(requestDTO);
             return ResponseEntity.ok(
                     new ApiResponse(
                             200,
@@ -28,16 +28,15 @@ public class BookingController {
                             null
                     )
             );
-        } catch (Exception e) {
+        }catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse(
                             500,
-                            "Failed to submit booking request",
+                            "An unexpected error occurred: " + e.getMessage(),
                             null
-                            )
-                    );
+                    ));
         }
     }
 

@@ -20,7 +20,6 @@ public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "property_id")
-//    @EqualsAndHashCode.Include
     private Long propertyId;
 
     @Column(nullable = false)

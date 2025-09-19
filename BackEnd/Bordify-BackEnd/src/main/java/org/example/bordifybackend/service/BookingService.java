@@ -19,21 +19,33 @@ public class BookingService {
     private final UserRepo userRepo;
     private final PropertyRepo propertyRepo;
     private final BookingRepo bookingRepo;
+    private final NotificationService notificationService;
 
     @Transactional
-    public BookingReq submitBookingRequest(BookingRequestDTO requestDTO) {
-        User currentUser = userRepo.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName())
+    public void createBookingRequest(BookingRequestDTO requestDTO) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User seeker = userRepo.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Property property = propertyRepo.findById(requestDTO.getPropertyId())
                 .orElseThrow(() -> new RuntimeException("Property not found"));
 
+        User owner = property.getUser();
+
+        if (seeker.equals(owner)) {
+            throw new RuntimeException("You cannot book your own property");
+        }
+
         BookingReq newBookingReq = BookingReq.builder()
                 .status(BookingStatus.PENDING)
-                .user(currentUser)
+                .user(seeker)
                 .property(property)
                 .build();
 
-        return bookingRepo.save(newBookingReq);
+        BookingReq savedReq = bookingRepo.save(newBookingReq);
+
+        String messageToOwner = seeker.getUsername() + " has sent a booking request for your ad: '" + property.getTitle() + "'";
+
+        notificationService.createNotification(seeker, owner, messageToOwner, savedReq);
     }
 }

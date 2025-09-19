@@ -39,8 +39,8 @@ function loadUser() {
                     $("#form-avatar-preview").attr("src", fullImgUrl);
                     $("#sidebar-avatar").attr("src", fullImgUrl);
                 } else {
-                    $("#form-avatar-preview").attr("src", "default-profile.png");
-                    $("#sidebar-avatar").attr("src", "default-profile.png");
+                    $("#form-avatar-preview").attr("src", "../assets/user.png");
+                    $("#sidebar-avatar").attr("src", "../assets/user.png");
                 }
             } else {
                 Swal.fire({

@@ -66,6 +66,62 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function loadMyInquiries() {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error("No token found. User is not logged in.");
+            return;
+        }
+
+        const container = document.getElementById('booking-requests');
+        if (!container) {
+            console.error("The container '#my-inquiries' was not found on the page.");
+            return;
+        }
+
+        $.ajax({
+            url: 'http://localhost:8080/notification/unread',
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') },
+            success: function(res) {
+                // Clear any static example content from the container
+                container.innerHTML = '';
+
+                if (res.status === 200 && res.data && res.data.length > 0) {
+
+                    // --- THE FIX IS HERE ---
+                    // Filter the results to get ONLY inquiry status updates
+                    const myInquiries = res.data.filter(notif =>
+                        !notif.message.includes("sent you a booking request")
+                    );
+
+                    // Update the count in the tab button
+                    updateTabCount('my-inquiries', myInquiries.length);
+
+                    if (myInquiries.length > 0) {
+                        // Loop through the filtered list and build the HTML
+                        myInquiries.forEach(notif => {
+                            const notifHtml = createMyInquiryHtml(notif);
+                            container.insertAdjacentHTML('beforeend', notifHtml);
+                        });
+                    } else {
+                        // Show a message if there are no inquiry updates
+                        container.innerHTML = '<div class="empty-notification-message"><p>No new updates on your inquiries.</p></div>';
+                    }
+
+                } else {
+                    // This handles when there are no unread notifications at all
+                    container.innerHTML = '<div class="empty-notification-message"><p>No new updates on your inquiries.</p></div>';
+                    updateTabCount('my-inquiries', 0);
+                }
+            },
+            error: function(err) {
+                console.error("Failed to load notifications:", err);
+                container.innerHTML = '<div class="empty-notification-message"><p>Error loading inquiries. Please try again.</p></div>';
+            }
+        });
+    }
+
     function createBookingRequestHtml(notif) {
         const iconHtml = `
         <div class="notification-icon-container">
@@ -117,6 +173,39 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
+    function createMyInquiryHtml(notif) {
+        let iconClass = 'pending'; // Default
+        let iconSvg = '<svg>...</svg>'; // Your pending/default icon SVG
+
+        // Determine the icon and styling based on the message content
+        if (notif.message.toLowerCase().includes('accepted')) {
+            iconClass = 'accepted';
+            iconSvg = '<svg xmlns="http://www.w.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+        } else if (notif.message.toLowerCase().includes('declined')) {
+            iconClass = 'rejected';
+            iconSvg = '<svg xmlns="http://www.w.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
+        }
+
+        // We will make the status ("ACCEPTED") bold if found.
+        const styledMessage = notif.message
+            .replace(/ACCEPTED/gi, '<strong class="status-accepted">ACCEPTED</strong>')
+            .replace(/DECLINED/gi, '<strong class="status-declined">DECLINED</strong>');
+
+        return `
+        <div class="notification-item ${notif.isRead ? '' : 'unread'}">
+          <div class="notification-icon-container ${iconClass}">
+            ${iconSvg}
+          </div>
+          <div class="notification-content">
+            <p class="notification-text">
+              ${styledMessage}
+            </p>
+            <span class="notification-time">${notif.timeAgo}</span>
+          </div>
+        </div>
+    `;
+    }
+
     requestsContainer.addEventListener('click', function(event) {
         const button = event.target.closest('.btn-action');
         if (button) {
@@ -131,11 +220,80 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    function handleAcceptRequest(requestId, notificationItem) {
-        console.log(`Accepting request ID: ${requestId}`);
+    // In your Notifications.js file
 
-        Swal.fire('Accepted!', 'The request has been accepted.', 'success');
-        notificationItem.remove();
+    /**
+     * Handles the logic for accepting a booking request.
+     * It shows a confirmation, sends the request to the backend,
+     * and provides clear feedback to the user.
+     *
+     * @param {string} requestId - The ID of the booking request to accept.
+     * @param {HTMLElement} notificationItem - The HTML element of the notification, to be removed on success.
+     */
+    function handleAcceptRequest(requestId, notificationItem) {
+        // For debugging, confirm we have the correct ID.
+        console.log(`User initiated "Accept" for request ID: ${requestId}`);
+
+        // --- Step 1: Confirm the Action ---
+        // Use SweetAlert2 to ask the user if they are sure before making a permanent change.
+        Swal.fire({
+            title: 'Are you sure you want to accept?',
+            text: "This will book the property and automatically decline other pending requests.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745', // A positive green color
+            cancelButtonColor: '#6c757d', // A neutral gray
+            confirmButtonText: 'Yes, Accept It!'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Processing Request...',
+                    text: 'Please wait while we update the booking status.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                // --- Step 3: Make the AJAX Call to the Backend ---
+                $.ajax({
+                    // The URL is now correct and matches your BookingController's full path.
+                    url: `http://localhost:8080/booking/accept/${requestId}`,
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    success: function(response) {
+                        // --- Step 4 (Success): Show a success message and update the UI ---
+                        Swal.fire(
+                            'Accepted!',
+                            'The booking request has been successfully accepted.',
+                            'success'
+                        );
+
+                        // Remove the notification from the list for instant visual feedback.
+                        notificationItem.remove();
+
+                        // TODO: You might want to update the notification count here.
+                        // e.g., updateTabCount('booking-requests', newCount);
+                    },
+                    error: function(err) {
+                        console.error("Failed to accept request:", err);
+
+                        // Get the specific error message from the backend response, or show a generic one.
+                        const errorMessage = err.responseJSON ? err.responseJSON.message : "An unknown error occurred.";
+
+                        // --- Step 4 (Failure): Show a helpful error message ---
+                        Swal.fire(
+                            'Action Failed',
+                            errorMessage,
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
     }
 
     function handleDeclineRequest(requestId, notificationItem) {
@@ -166,4 +324,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     loadBookingRequests();
+    loadMyInquiries();
 });

@@ -295,6 +295,7 @@
 .notification-time { font-size: 0.85rem; color: #94a3b8; margin-top: 0.25rem; display: block; }
 .view-request-btn { flex-shrink: 0; margin-left: auto; padding: 0.6rem 1rem; }
 
+
 /* --- Empty State Message (For when a tab is empty) --- */
 .empty-notification-message {
     padding: 3rem 1.5rem;
@@ -396,4 +397,50 @@
 
 a{
     text-decoration: none;
+}
+
+/*
+ * =================================================================
+ *   STYLES FOR IN-LINE NOTIFICATION ACTION BUTTONS
+ * =================================================================
+*/
+
+.notification-actions {
+    display: flex;
+    gap: 0.75rem; /* Space between the two buttons */
+    align-items: center;
+    flex-shrink: 0; /* Prevents buttons from wrapping on small screens */
+    margin-left: auto; /* Pushes the buttons to the far right */
+}
+
+.btn-action {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* --- Styling for the "Decline" button --- */
+.btn-action.decline {
+    background-color: #f1f5f9; /* A neutral light gray */
+    color: #475569; /* A soft dark gray text */
+}
+
+.btn-action.decline:hover {
+    background-color: #fee2e2; /* On hover, hint at the destructive action with light red */
+    color: #b91c1c; /* Dark red text */
+}
+
+/* --- Styling for the "Accept" button --- */
+.btn-action.accept {
+    background-color: #dcfce7; /* A positive light green */
+    color: #166534; /* A strong green text */
+}
+
+.btn-action.accept:hover {
+    background-color: #bbf7d0; /* A slightly brighter green on hover */
+    color: #15803d;
 }

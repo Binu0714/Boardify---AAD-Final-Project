@@ -298,6 +298,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../JS/Dashboard.js"></script>
+<script src="../JS/LogOut.js"></script>
 
 <script>
 
@@ -342,24 +343,6 @@
     });
 </script>
 
-<script>
-    function handleLogout(event) {
-        event.preventDefault();
-
-        // Clear specific keys
-        localStorage.removeItem("token");
-        localStorage.removeItem("username");
-        // add more if needed
-
-        // Or nuke everything
-        localStorage.clear();
-
-        console.log("Storage after logout:", localStorage);
-
-        window.location.href = "LogIn.html";
-    }
-
-</script>
 
 </body>
 </html>

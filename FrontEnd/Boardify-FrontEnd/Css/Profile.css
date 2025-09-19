@@ -352,6 +352,31 @@ body {
 .social-icons a:hover { color: #4facfe; transform: translateY(-2px); }
 .footer-bottom { max-width: 1400px; margin: 2rem auto 0; text-align: center; font-size: 0.85rem; }
 
+/*
+ * =================================================================
+ *   LOGOUT BUTTON SPECIFIC STYLES
+ * =================================================================
+*/
+
+/* --- Add a top border to visually separate the logout button --- */
+.logout-link {
+    margin-top: 0.5rem;
+    padding-top: 1.3rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* --- Style the logout button on hover --- */
+/* This targets the link and its SVG icon specifically when hovered */
+.logout-link:hover {
+    /* Use a red color scheme to indicate a destructive action */
+    background: rgba(239, 68, 68, 0.08); /* A light, soft red */
+    color: #ef4444; /* A vibrant red for the text */
+}
+
+.logout-link:hover svg {
+    color: #ef4444; /* Make the SVG icon red on hover too */
+}
+
 /* =================================================================
    RESPONSIVE STYLES
    ================================================================= */

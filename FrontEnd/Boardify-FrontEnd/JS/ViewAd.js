@@ -14,11 +14,11 @@ function loadAddDetails() {
     const id = urlParams.get("id");
     console.log("adId:", id);
 
-    if (!id || id === "undefined") {
-        alert("Property ID not found!");
-        window.location.href = "AllAds.html";
-        return;
-    }
+    // if (!id || id === "undefined") {
+    //     alert("Property ID not found!");
+    //     window.location.href = "AllAds.html";
+    //     return;
+    // }
 
     $.ajax({
         url: `http://localhost:8080/property/getPropertyById/${id}`,
@@ -132,6 +132,8 @@ function populateSidebarDetails(property) {
         requestButton.text("This is Your Ad");
         requestButton.prop("disabled", true);
         requestButton.addClass("btn-disabled");
+    }else {
+        $(document).trigger('bookingButtonReady');
     }
 }
 

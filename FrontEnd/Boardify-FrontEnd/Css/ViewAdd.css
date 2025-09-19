@@ -945,6 +945,12 @@ body {
     box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
 }
 
+/* Ensure SweetAlert is always above your custom modal */
+.swal2-container {
+    z-index: 20000 !important; /* Higher than your modal (which is ~9999–10000) */
+}
+
+
 /* Responsive: Stack the grid to one column on smaller screens */
 @media (max-width: 576px) {
     .form-grid {

@@ -25,10 +25,6 @@
             </ul>
 
             <div class="user-actions">
-                <div class="notification-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                    <span class="notification-badge">3</span>
-                </div>
 
                 <div class="profile-container">
                     <div class="profile-avatar" id="profile-avatar">JS</div>
@@ -283,26 +279,13 @@
                 <br>
             </div>
 
-
             <form id="booking-request-form" class="modal-form">
 
                 <div class="form-grid">
                     <!-- Name (Grid Item 1) -->
                     <div class="form-group">
                         <label for="requester-name">Full Name</label>
-                        <input type="text" id="requester-name" placeholder="Your Name" required>
-                    </div>
-
-                    <!-- Mobile Number (Grid Item 2) -->
-                    <div class="form-group">
-                        <label for="requester-mobile">Mobile Number</label>
-                        <input type="tel" id="requester-mobile" placeholder="077-123-4567" required>
-                    </div>
-
-                    <!-- Email (Grid Item 3) -->
-                    <div class="form-group">
-                        <label for="requester-email">Email Address</label>
-                        <input type="email" id="requester-email" placeholder="you@email.com" required>
+                        <input type="text" id="requester-name" placeholder="Your Name" readonly>
                     </div>
 
                     <!-- Date (Grid Item 4) -->
@@ -311,11 +294,6 @@
                         <input type="text" id="request-date" readonly>
                     </div>
 
-                    <!-- Message (Full Width) -->
-                    <div class="form-group full-width">
-                        <label for="requester-message">Message (Optional)</label>
-                        <textarea id="requester-message" rows="3" placeholder="Add a short message..."></textarea>
-                    </div>
                 </div>
 
                 <button type="submit" class="modal-submit-btn">Send Request</button>

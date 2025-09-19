@@ -4,7 +4,7 @@ $("#login-form").submit(function (event) {
    const username = $("#name").val();
    const password = $("#password").val();
 
-    localStorage.removeItem("token");
+    localStorage.clear();
 
     $.ajax({
         url: "http://localhost:8080/user/login",

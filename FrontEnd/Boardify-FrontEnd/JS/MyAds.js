@@ -57,7 +57,7 @@ function loadMyAds() {
                                 <div class="ad-badge ${p.availability ? "available" : "booked"}">
                                     ${badgeText}
                                 </div>
-                                <div class="ad-favorite">❤️</div>
+                                
                             </div>
                             <div class="ad-content">
                                 <h3 class="ad-title">${p.title}</h3>

@@ -174,7 +174,7 @@ function createAdCard(p) {
             <div class="ad-image">
                 <img src="${coverImage}" alt="${p.title}" class="ad-cover" />
                 <div class="ad-badge ${p.availability ? 'available' : 'booked'}">${badgeText}</div>
-                <div class="ad-favorite">❤️</div>
+               
             </div>
             <div class="ad-content">
                 <h3 class="ad-title">${p.title}</h3>

@@ -393,3 +393,7 @@
 .logout-link:hover svg {
     color: #ef4444; /* Make the SVG icon red on hover too */
 }
+
+a{
+    text-decoration: none;
+}

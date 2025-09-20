@@ -1,6 +1,7 @@
 package org.example.bordifybackend.repo;
 
 import org.example.bordifybackend.entity.Property;
+import org.example.bordifybackend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -31,5 +32,13 @@ public interface PropertyRepo extends JpaRepository<Property, Long> {
     long countByAvailabilityTrue();
 
     List<Property> findAllByVerifiedFalse();
+
+    long countByVerifiedTrue();
+
+    long countByUser(User user);
+
+    long countByUserAndVerifiedTrue(User user);
+
+
 }
 

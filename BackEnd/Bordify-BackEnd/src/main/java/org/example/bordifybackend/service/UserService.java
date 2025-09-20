@@ -1,15 +1,14 @@
 package org.example.bordifybackend.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.bordifybackend.Dto.AuthDTO;
-import org.example.bordifybackend.Dto.AuthResponseDTO;
-import org.example.bordifybackend.Dto.RegisterDTO;
-import org.example.bordifybackend.Dto.UserDTO;
+import org.example.bordifybackend.Dto.*;
 import org.example.bordifybackend.entity.Role;
 import org.example.bordifybackend.entity.User;
+import org.example.bordifybackend.repo.PropertyRepo;
 import org.example.bordifybackend.repo.UserRepo;
 import org.example.bordifybackend.util.JwtUtil;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +18,7 @@ public class UserService {
     private final UserRepo userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final PropertyRepo propertyRepo;
 
     public AuthResponseDTO authenticate(AuthDTO authDTO){
 
@@ -100,5 +100,23 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
+    }
+
+
+    public UserStatsDTO getUserDashboardStats() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        long totalAds = propertyRepo.countByVerifiedTrue();
+        long myAds = propertyRepo.countByUser(user);
+        long approvedAds = propertyRepo.countByUserAndVerifiedTrue(user);
+
+        return UserStatsDTO.builder()
+                .totalAds(totalAds)
+                .myTotalAds(myAds)
+                .myApprovedAds(approvedAds)
+                .build();
     }
 }

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.bordifybackend.Dto.*;
 import org.example.bordifybackend.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -128,6 +129,31 @@ public class UserController {
                             )
                     );
         }
+    }
+
+    @GetMapping("/stats")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse> getDashboardStats(){
+        try{
+            UserStatsDTO stats = userService.getUserDashboardStats();
+            return ResponseEntity.ok(
+                    new ApiResponse(
+                            200,
+                            "Stats fetched successfully",
+                            stats
+                    )
+            );
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity
+                    .status(500)
+                    .body(new ApiResponse(
+                            500,
+                            "An unexpected error occurred: " + e.getMessage(),
+                            null
+                    ));
+        }
+
     }
 
 }

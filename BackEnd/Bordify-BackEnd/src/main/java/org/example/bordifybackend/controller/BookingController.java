@@ -57,7 +57,30 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse(
                             500,
-                            "An unexpected error occurred: " + e.getMessage(),
+                            "An unexpected error occurred when accept the request: " + e.getMessage(),
+                            null
+                    ));
+        }
+    }
+
+    @PostMapping("/decline/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse> declineBookingRequest(@PathVariable long id){
+        try {
+            bookingService.declineBookingRequest(id);
+            return ResponseEntity.ok(
+                    new ApiResponse(
+                            200,
+                            "Booking request declined successfully",
+                            null
+                    )
+            );
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(
+                            500,
+                            "An unexpected error occurred when decline the request: " + e.getMessage(),
                             null
                     ));
         }

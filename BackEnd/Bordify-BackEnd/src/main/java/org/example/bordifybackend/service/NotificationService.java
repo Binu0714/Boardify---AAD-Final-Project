@@ -60,4 +60,33 @@ public class NotificationService {
 
     }
 
+    @Transactional
+    public List<NotificationDTO> getUnreadAndMarkAsRead() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userRepo.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<Notification> unreadNotifications = notificationRepo.findByRecipientAndIsReadFalse(currentUser);
+
+        List<NotificationDTO> notificationDTOs = new ArrayList<>();
+        for (Notification notification : unreadNotifications) {
+            User sender = notification.getSender();
+
+            NotificationDTO dto = NotificationDTO.builder()
+                    .id(notification.getId())
+                    .message(notification.getMessage())
+                    .isRead(notification.isRead())
+                    .senderName(sender.getUsername())
+                    .createdDate(notification.getCreatedDate())
+                    .bookingRequestId(notification.getBookingReq().getId())
+                    .build();
+
+            notificationDTOs.add(dto);
+
+            notification.setRead(true);
+        }
+            notificationRepo.saveAll(unreadNotifications);
+
+        return notificationDTOs;
+    }
 }

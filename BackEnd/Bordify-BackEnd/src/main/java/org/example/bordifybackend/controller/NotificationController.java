@@ -30,4 +30,16 @@ public class NotificationController {
         ));
     }
 
+    @GetMapping("/markAsRead")
+    public ResponseEntity<ApiResponse> getUnreadAndMarkAsRead() {
+        List<NotificationDTO> notifications = notificationService.getUnreadAndMarkAsRead();
+        return ResponseEntity.ok(
+                new ApiResponse(
+                        200,
+                        "Unread notifications fetched",
+                        notifications
+        ));
+    }
+
+
 }

@@ -97,4 +97,34 @@ public class BookingService {
         String acceptanceMessage = "Your booking request for '" + property.getTitle() + "' has been ACCEPTED!";
         notificationService.createNotification(owner, seeker, acceptanceMessage, acceptedRequest);
     }
+
+    @Transactional
+    public void declineBookingRequest(long id) {
+        BookingReq declinedRequest = bookingRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Booking request not found"));
+
+        Property property = declinedRequest.getProperty();
+        User owner = property.getUser();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User currentUser = userRepo.findByUsername(username).orElseThrow();
+
+        if (!owner.equals(currentUser)) {
+            throw new IllegalStateException("You are not authorized to decline requests for this property.");
+        }
+
+        notificationRepo.findByBookingReq_Id(declinedRequest.getId())
+                .ifPresent(notification -> {
+                    notification.setRead(true);
+                    notificationRepo.save(notification);
+                });
+
+        declinedRequest.setStatus(BookingStatus.DECLINED);
+        bookingRepo.save(declinedRequest);
+
+        User seeker = declinedRequest.getUser();
+        String declineMessage = "Unfortunately, your booking request for '" + property.getTitle() + "' was DECLINED.";
+        notificationService.createNotification(owner, seeker, declineMessage, declinedRequest);
+
+    }
 }

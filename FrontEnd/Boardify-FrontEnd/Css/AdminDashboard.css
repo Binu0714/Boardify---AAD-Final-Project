@@ -402,3 +402,21 @@ tbody tr:nth-child(4n+4) .user-avatar { background-color: #f59e0b; }
 .admin-actions .btn-reject:hover {
     background-color: #fee2e2;
 }
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This ensures the image covers the circle without distortion */
+    border-radius: 50%; /* This is important to keep the image circular */
+}
+
+/* Style for the disabled text button in the actions cell */
+.btn-text-disabled {
+    background: none;
+    border: none;
+    color: #a0aec0; /* A muted gray color */
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: not-allowed; /* Shows a "not allowed" cursor on hover */
+    padding: 0.5rem;
+}

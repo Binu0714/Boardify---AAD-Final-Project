@@ -55,7 +55,7 @@
 <main class="admin-main-content">
     <div class="main-content-header">
         <h1 class="main-title">User Management</h1>
-        <p class="main-subtitle">Add, view, edit, and remove users from the platform.</p>
+        <p class="main-subtitle">View and Remove users from the Boardify platform.</p>
     </div>
 
     <!-- User Management Table Section -->
@@ -63,10 +63,6 @@
         <div class="table-container">
             <div class="table-header">
                 <h3 class="section-block-title">All Users</h3>
-                <div class="table-actions">
-                    <input type="text" class="search-input" placeholder="Search by name, email, or role...">
-                    <button class="btn btn-primary">Add New User</button>
-                </div>
             </div>
             <div class="table-wrapper">
                 <table class="data-table">
@@ -80,7 +76,7 @@
                         <th>Actions</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="user-table-body">
                     <tr>
                         <td>#1024</td>
                         <td>
@@ -115,49 +111,8 @@
                             </button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>#1026</td>
-                        <td>
-                            <div class="user-profile-cell">
-                                <div class="user-avatar">MP</div>
-                                <span class="user-name">Michael Perera</span>
-                            </div>
-                        </td>
-                        <td>michael.p@example.com</td>
-                        <td>+94 76 555 6789</td>
-                        <td><span class="role-tag owner">Property Owner</span></td>
-                        <td class="actions-cell">
-                            <button class="btn-icon btn-icon-danger" title="Delete User">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#1027</td>
-                        <td>
-                            <div class="user-profile-cell">
-                                <div class="user-avatar">FD</div>
-                                <span class="user-name">Fatima Silva</span>
-                            </div>
-                        </td>
-                        <td>fatima.ds@example.com</td>
-                        <td>+94 77 987 6543</td>
-                        <td><span class="role-tag seeker">Room Seeker</span></td>
-                        <td class="actions-cell">
-                            <button class="btn-icon btn-icon-danger" title="Delete User">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                            </button>
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
-            </div>
-            <div class="pagination-footer">
-                <div class="pagination-summary">Showing 1 to 4 of 128 users</div>
-                <div class="pagination-nav">
-                    <button class="btn-pagination" disabled>&laquo; Previous</button>
-                    <button class="btn-pagination">Next &raquo;</button>
-                </div>
             </div>
         </div>
     </section>

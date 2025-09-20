@@ -4,28 +4,32 @@ const allTypes = new Set();
 
 let debounceTimer;
 
+// --- Pagination globals ---
+let allProperties = [];
+let currentPage = 1;
+const itemsPerPage = 6;
+
 $(document).ready(function () {
 
     populateFilterDropdowns();
 
     // 2. Listen for when the "Apply Filters" button is clicked
     $('#filter-form').on('submit', function (e) {
-        e.preventDefault(); // This stops the page from reloading
+        e.preventDefault();
         applyFilters();
     });
 
     // 3. Listen for when the "Clear All" link is clicked
     $('#filter-clear-btn').on('click', function(e) {
         e.preventDefault();
-        $('#filter-form')[0].reset(); // This resets the form fields
-        loadInitialDataAndSetup(); // This reloads all the original ads (assumes you have this function)
+        $('#filter-form')[0].reset();
+        loadInitialDataAndSetup();
     });
 
     loadInitialDataAndSetup();
 
     $('#main-search-input').on('keyup', function () {
         const keyword = $(this).val();
-
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
             performSearch(keyword);
@@ -44,12 +48,17 @@ $(document).ready(function () {
             $('#suggestions-container').hide();
         }
     });
+
+    // --- Pagination click handling ---
+    $(document).on("click", ".page-link", function (e) {
+        e.preventDefault();
+        const page = parseInt($(this).data("page"));
+        if (!isNaN(page) && page >= 1 && page <= Math.ceil(allProperties.length / itemsPerPage)) {
+            renderAds(allProperties, page);
+        }
+    });
 });
 
-
-/**
- * Fetches all data on page load to build master suggestion lists.
- */
 function loadInitialDataAndSetup() {
     $.ajax({
         url: "http://localhost:8080/property/getAllProperties",
@@ -57,8 +66,6 @@ function loadInitialDataAndSetup() {
         success: function (res) {
             if (res.status === 200 && res.data) {
                 renderAds(res.data);
-
-                // This code will now work because allCities is in the global scope
                 res.data.forEach(p => {
                     if (p.city) allCities.add(p.city);
                     if (p.nearestCampus) allCampuses.add(p.nearestCampus);
@@ -73,9 +80,6 @@ function loadInitialDataAndSetup() {
     });
 }
 
-/**
- * Performs a search for ads based on a keyword and renders the results.
- */
 function performSearch(keyword) {
     const searchUrl = (keyword && keyword.trim() !== '')
         ? `http://localhost:8080/property/search?keyword=${encodeURIComponent(keyword)}`
@@ -95,21 +99,14 @@ function performSearch(keyword) {
     });
 }
 
-/**
- * Updates the suggestions dropdown based on the master lists.
- */
 function updateSuggestions(keyword) {
     const suggestionsContainer = $('#suggestions-container');
-
     if (!keyword || keyword.trim() === '') {
         suggestionsContainer.empty().hide();
         return;
     }
-
     suggestionsContainer.empty().show();
     const lowerCaseKeyword = keyword.toLowerCase();
-
-    // This code also works because it can access the global master lists
     const citySuggestions = [...allCities].filter(c => c.toLowerCase().includes(lowerCaseKeyword));
     const campusSuggestions = [...allCampuses].filter(c => c.toLowerCase().includes(lowerCaseKeyword));
     const typeSuggestions = [...allTypes].filter(t => t.toLowerCase().includes(lowerCaseKeyword));
@@ -133,37 +130,59 @@ function updateSuggestions(keyword) {
     }
 }
 
+// --- Updated renderAds with pagination ---
+function renderAds(properties, page = 1) {
+    allProperties = properties;
+    currentPage = page;
 
-// --- The helper functions below remain unchanged ---
-function renderAds(properties) {
     const container = $("#ads-grid-container");
     container.empty();
 
     if (properties.length === 0) {
         container.html('<p class="no-results-message">No properties found matching your criteria.</p>');
+        $("#pagination-container").empty();
         return;
     }
 
-    properties.forEach(p => {
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedItems = properties.slice(start, end);
+
+    paginatedItems.forEach(p => {
         const card = createAdCard(p);
         container.append(card);
     });
+
+    renderPagination(properties.length, page);
 }
 
+// --- New pagination rendering ---
+function renderPagination(totalItems, currentPage) {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const paginationContainer = $("#pagination-container");
+    paginationContainer.empty();
+
+    if (totalPages <= 1) return;
+
+    const prevClass = currentPage === 1 ? "disabled" : "";
+    paginationContainer.append(`<a href="#" class="page-link ${prevClass}" data-page="${currentPage - 1}">Previous</a>`);
+
+    for (let i = 1; i <= totalPages; i++) {
+        const activeClass = currentPage === i ? "active" : "";
+        paginationContainer.append(`<a href="#" class="page-link ${activeClass}" data-page="${i}">${i}</a>`);
+    }
+
+    const nextClass = currentPage === totalPages ? "disabled" : "";
+    paginationContainer.append(`<a href="#" class="page-link ${nextClass}" data-page="${currentPage + 1}">Next</a>`);
+}
+
+
+// --- Your existing helper functions remain unchanged ---
 function createAdCard(p) {
     const amenityMap = {
-        1: "Wi-Fi",
-        2: "Parking",
-        3: "Furnished",
-        4: "Bills Included",
-        5: "A/C",
-        6: "Attached Bathroom",
-        7: "Washing Machine",
-        8: "Separate Entrance",
-        9: "Hot Water",
-        10: "Kitchen Access",
-        11: "CCTV",
-        12: "Meals Provided"
+        1: "Wi-Fi", 2: "Parking", 3: "Furnished", 4: "Bills Included", 5: "A/C",
+        6: "Attached Bathroom", 7: "Washing Machine", 8: "Separate Entrance",
+        9: "Hot Water", 10: "Kitchen Access", 11: "CCTV", 12: "Meals Provided"
     };
     const amenities = (p.amenityIds || []).slice(0, 2).map(id => `<span class="feature-tag">${amenityMap[id] || ""}</span>`).join(" ");
     const coverImage = (p.photoUrls && p.photoUrls.length > 0) ? p.photoUrls[0] : "https://dummyimage.com/400x250/cccccc/000000&text=No+Image";
@@ -174,7 +193,6 @@ function createAdCard(p) {
             <div class="ad-image">
                 <img src="${coverImage}" alt="${p.title}" class="ad-cover" />
                 <div class="ad-badge ${p.availability ? 'available' : 'booked'}">${badgeText}</div>
-               
             </div>
             <div class="ad-content">
                 <h3 class="ad-title">${p.title}</h3>
@@ -203,12 +221,7 @@ function createAdCard(p) {
     return card;
 }
 
-/**
- * Fetches data for the Location and University dropdowns from the backend
- * and populates the <select> elements.
- */
 function populateFilterDropdowns() {
-    // Fetch and populate cities
     $.ajax({
         url: "http://localhost:8080/property/cities",
         method: "GET",
@@ -222,7 +235,6 @@ function populateFilterDropdowns() {
         }
     });
 
-    // Fetch and populate universities
     $.ajax({
         url: "http://localhost:8080/property/universities",
         method: "GET",
@@ -237,13 +249,7 @@ function populateFilterDropdowns() {
     });
 }
 
-
-/**
- * Gathers all data from the filter form, sends it to the backend,
- * and renders the results using your existing renderAds function.
- */
 function applyFilters() {
-    // 1. Build the filter object from form values, matching your FilterDTO
     const filters = {
         location: $('#filter-location').val(),
         university: $('#filter-uni').val(),
@@ -266,22 +272,18 @@ function applyFilters() {
         filters.billsIncluded = false;
     }
 
-    // 2. Send the filters to the backend via a POST request
     $.ajax({
         url: "http://localhost:8080/property/filter",
         method: "POST",
-        contentType: "application/json", // Important: Tell the server we're sending JSON
-        data: JSON.stringify(filters),   // Convert the JS object to a JSON string
+        contentType: "application/json",
+        data: JSON.stringify(filters),
         success: function(res) {
             if (res.status === 200 && res.data) {
-                // 3. Use your existing renderAds function to display the filtered results
-                // This assumes you have a function called renderAds that takes a list of properties.
                 renderAds(res.data);
             }
         },
         error: function(err) {
             console.error("Error applying filters:", err);
-            // Make sure you have a container with this ID to show errors
             $('#ads-container').html('<p class="error-message">Could not apply filters. Please try again.</p>');
         }
     });

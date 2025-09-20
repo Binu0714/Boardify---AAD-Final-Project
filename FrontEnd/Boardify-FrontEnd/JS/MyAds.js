@@ -1,5 +1,18 @@
+let allMyAds = [];
+let currentPage = 1;
+const itemsPerPage = 4;
+
 $(document).ready(function () {
     loadMyAds();
+
+    // Pagination click handling
+    $(document).on("click", ".page-link", function (e) {
+        e.preventDefault();
+        const page = parseInt($(this).data("page"));
+        if (!isNaN(page) && page >= 1 && page <= Math.ceil(allMyAds.length / itemsPerPage)) {
+            renderMyAds(allMyAds, page);
+        }
+    });
 });
 
 function loadMyAds() {
@@ -13,100 +26,13 @@ function loadMyAds() {
     $.ajax({
         url: "http://localhost:8080/property/myAds",
         method: "GET",
-        headers: {
-            "Authorization": `Bearer ${token}`
-        },
+        headers: { "Authorization": `Bearer ${token}` },
         success: function (res) {
             console.log("API response:", res);
 
             if (res.status === 200 && res.data) {
-                const container = $("#ads-grid-container");
-                container.empty();
-
-                const amenityMap = {
-                    1: "Wi-Fi",
-                    2: "Parking",
-                    3: "Furnished",
-                    4: "Bills Included",
-                    5: "A/C",
-                    6: "Attached Bathroom",
-                    7: "Washing Machine",
-                    8: "Separate Entrance",
-                    9: "Hot Water",
-                    10: "Kitchen Access",
-                    11: "CCTV",
-                    12: "Meals Provided"
-                };
-
-                res.data.forEach(p => {
-                    const amenities = (p.amenityIds || [])
-                        .slice(0, 2)
-                        .map(id => `<span class="feature-tag">${amenityMap[id] || "Amenity"}</span>`)
-                        .join(" ");
-
-                    const coverImage = (p.photoUrls && p.photoUrls.length > 0)
-                        ? p.photoUrls[0]
-                        : "https://dummyimage.com/400x250/cccccc/000000&text=No+Image";
-
-                    const badgeText = p.availability ? "Available" : "Booked";
-
-                    const card = $(`
-                        <div class="ad-card" data-id="${p.id}">
-                            <div class="ad-image">
-                                <img src="${coverImage}" alt="${p.title}" class="ad-cover" />
-                                <div class="ad-badge ${p.availability ? "available" : "booked"}">
-                                    ${badgeText}
-                                </div>
-                                
-                            </div>
-                            <div class="ad-content">
-                                <h3 class="ad-title">${p.title}</h3>
-                                <div class="ad-location">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                        <circle cx="12" cy="10" r="3"></circle>
-                                    </svg>
-                                    ${p.city}, ${p.district}
-                                </div>
-                                <div class="ad-stats">
-                                    <span>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M2 22v-6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6H2zM2 12V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6H2z"/>
-                                        </svg>${p.noOfBeds} Beds
-                                    </span>
-                                    <span>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M2 12h20M7 2v10M17 2v10M2 12a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4v-2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"/>
-                                        </svg>${p.noOfBaths} Baths
-                                    </span>
-                                </div>
-                                <div class="ad-features">${amenities}</div>
-                                <div class="ad-footer">
-                                    <div class="ad-price">Rs. ${p.price}<span>/month</span></div>
-                                    <div class="ad-posted">Just now</div>
-                                </div>
-                            </div>
-                            <div class="my-ad-actions">
-                                <a href="../Html/UpdateAdd.html?id=${p.id}" class="btn-action edit">Edit</a>
-                                <a href="#" class="btn-action delete" data-id="${p.id}">Delete</a>
-                            </div>
-
-                        </div>
-                    `);
-
-                    card.find(".ad-image, .ad-title").on("click", function () {
-                        const id = $(this).closest(".ad-card").data("id");
-                        window.location.href = `viewAdd.html?id=${id}`;
-                    });
-
-                    card.find(".delete").on("click", function (e) {
-                        e.stopPropagation(); // prevent card click
-                        const adId = $(this).data("id");
-                        deleteAd(adId);
-                    });
-
-                    container.append(card);
-                });
+                allMyAds = res.data;
+                renderMyAds(allMyAds, 1); // Load first page
             }
         },
         error: function (err) {
@@ -115,6 +41,105 @@ function loadMyAds() {
     });
 }
 
+// --- Render ads with pagination ---
+function renderMyAds(properties, page = 1) {
+    allMyAds = properties;
+    currentPage = page;
+
+    const container = $("#ads-grid-container");
+    container.empty();
+
+    if (properties.length === 0) {
+        container.html('<p class="no-results-message">No ads found.</p>');
+        $("#pagination-container").empty();
+        return;
+    }
+
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedAds = properties.slice(start, end);
+
+    const amenityMap = {
+        1: "Wi-Fi", 2: "Parking", 3: "Furnished", 4: "Bills Included", 5: "A/C",
+        6: "Attached Bathroom", 7: "Washing Machine", 8: "Separate Entrance",
+        9: "Hot Water", 10: "Kitchen Access", 11: "CCTV", 12: "Meals Provided"
+    };
+
+    paginatedAds.forEach(p => {
+        const amenities = (p.amenityIds || [])
+            .slice(0, 2)
+            .map(id => `<span class="feature-tag">${amenityMap[id] || "Amenity"}</span>`)
+            .join(" ");
+
+        const coverImage = (p.photoUrls && p.photoUrls.length > 0)
+            ? p.photoUrls[0]
+            : "https://dummyimage.com/400x250/cccccc/000000&text=No+Image";
+
+        const badgeText = p.availability ? "Available" : "Booked";
+
+        const card = $(`
+            <div class="ad-card" data-id="${p.id}">
+                <div class="ad-image">
+                    <img src="${coverImage}" alt="${p.title}" class="ad-cover" />
+                    <div class="ad-badge ${p.availability ? "available" : "booked"}">${badgeText}</div>
+                </div>
+                <div class="ad-content">
+                    <h3 class="ad-title">${p.title}</h3>
+                    <div class="ad-location">${p.city}, ${p.district}</div>
+                    <div class="ad-stats">
+                        <span>${p.noOfBeds} Beds</span>
+                        <span>${p.noOfBaths} Baths</span>
+                    </div>
+                    <div class="ad-features">${amenities}</div>
+                    <div class="ad-footer">
+                        <div class="ad-price">Rs. ${p.price}<span>/month</span></div>
+                        <div class="ad-posted">Just now</div>
+                    </div>
+                </div>
+                <div class="my-ad-actions">
+                    <a href="../Html/UpdateAdd.html?id=${p.id}" class="btn-action edit">Edit</a>
+                    <a href="#" class="btn-action delete" data-id="${p.id}">Delete</a>
+                </div>
+            </div>
+        `);
+
+        card.find(".ad-image, .ad-title").on("click", function () {
+            const id = $(this).closest(".ad-card").data("id");
+            window.location.href = `viewAdd.html?id=${id}`;
+        });
+
+        card.find(".delete").on("click", function (e) {
+            e.stopPropagation();
+            deleteAd($(this).data("id"));
+        });
+
+        container.append(card);
+    });
+
+    renderPagination(properties.length, page);
+}
+
+// --- Render pagination controls ---
+function renderPagination(totalItems, page) {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const paginationContainer = $("#pagination-container");
+    paginationContainer.empty();
+
+    if (totalPages <= 1) return;
+
+    const prevClass = page === 1 ? "disabled" : "";
+    paginationContainer.append(`<a href="#" class="page-link ${prevClass}" data-page="${page - 1}">Previous</a>`);
+
+    for (let i = 1; i <= totalPages; i++) {
+        const activeClass = page === i ? "active" : "";
+        paginationContainer.append(`<a href="#" class="page-link ${activeClass}" data-page="${i}">${i}</a>`);
+    }
+
+    const nextClass = page === totalPages ? "disabled" : "";
+    paginationContainer.append(`<a href="#" class="page-link ${nextClass}" data-page="${page + 1}">Next</a>`);
+}
+
+// --- Delete function remains unchanged ---
 function deleteAd(adId) {
     const token = localStorage.getItem("token");
 
@@ -133,11 +158,7 @@ function deleteAd(adId) {
                 method: "DELETE",
                 headers: { 'Authorization': `Bearer ${token}` },
                 success: function() {
-                    Swal.fire(
-                        'Deleted!',
-                        'Your ad has been deleted.',
-                        'success'
-                    );
+                    Swal.fire('Deleted!', 'Your ad has been deleted.', 'success');
                     loadMyAds();
                 },
                 error: function() {
@@ -147,4 +168,3 @@ function deleteAd(adId) {
         }
     });
 }
-

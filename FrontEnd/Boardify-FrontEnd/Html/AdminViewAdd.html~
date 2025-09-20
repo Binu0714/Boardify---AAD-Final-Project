@@ -20,7 +20,7 @@
 
     <div class="nav-menu" id="nav-menu">
       <ul class="nav-links">
-        <li><a href="#" class="nav-link">Dashboard</a></li>
+        <li><a href="#" class="nav-link active">Dashboard</a></li>
         <li><a href="UserManagement.html" class="nav-link">User Management</a></li>
         <li><a href="Listings.html" class="nav-link">Pending Approvals</a></li>
         <li><a href="AllAdsAdmin.html" class="nav-link">All Listings</a></li>

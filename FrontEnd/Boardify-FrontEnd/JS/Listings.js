@@ -1,4 +1,28 @@
 $(document).ready(function() {
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    }
+
+    const profileAvatar = document.getElementById('profile-avatar');
+    const profileDropdown = document.getElementById('profile-dropdown');
+    if (profileAvatar) {
+        profileAvatar.addEventListener('click', (event) => {
+            event.stopPropagation();
+            profileDropdown.classList.toggle('active');
+        });
+    }
+
+    document.addEventListener('click', (event) => {
+        if (profileDropdown && !profileDropdown.contains(event.target) && !profileAvatar.contains(event.target)) {
+            profileDropdown.classList.remove('active');
+        }
+    });
+
     const token = localStorage.getItem("token");
     if (!token) {
         window.location.href = "Login.html";

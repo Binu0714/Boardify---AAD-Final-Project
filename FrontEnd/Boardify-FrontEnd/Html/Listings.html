@@ -50,108 +50,60 @@
     </div>
 
     <!-- Listings Grid -->
+    <!-- In admin_listings.html -->
     <section class="listings-container">
-        <div class="ads-grid">
-
-            <!-- Card Wrapper 1 -->
-            <div class="admin-card-wrapper">
-                <!-- Ad Card (Exact structure from AllAds.html) -->
-                <div class="ad-card">
-                    <div class="ad-image" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=800');">
-                        <div class="ad-badge unverified">Unverified</div>
-                    </div>
-                    <div class="ad-content">
-                        <h3 class="ad-title">Spacious Annex in Maharagama</h3>
-                        <div class="ad-location">
-                            <svg width="16" height="16" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            Maharagama, Colombo
-                        </div>
-                        <div class="ad-stats">
-                            <span>2 Beds</span>
-                            <span>1 Bath</span>
-                        </div>
-                        <div class="ad-features">
-                            <span class="feature-tag">Parking</span>
-                            <span class="feature-tag">Kitchen</span>
-                        </div>
-                        <div class="ad-footer">
-                            <div class="ad-price">Rs. 35,000<span>/month</span></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Admin Actions for this card -->
-                <div class="admin-actions">
-                    <button class="btn btn-approve">Approve</button>
-                    <button class="btn btn-reject">Reject</button>
-                </div>
-            </div>
-
-            <!-- Card Wrapper 2 -->
-            <div class="admin-card-wrapper">
-                <div class="ad-card">
-                    <div class="ad-image" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800');">
-                        <div class="ad-badge unverified">Unverified</div>
-                    </div>
-                    <div class="ad-content">
-                        <h3 class="ad-title">Single Room for Students</h3>
-                        <div class="ad-location">
-                            <svg width="16" height="16" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            Nugegoda, Colombo
-                        </div>
-                        <div class="ad-stats">
-                            <span>1 Bed</span>
-                            <span>1 Bath</span>
-                        </div>
-                        <div class="ad-features">
-                            <span class="feature-tag">Wi-Fi</span>
-                            <span class="feature-tag">AC</span>
-                        </div>
-                        <div class="ad-footer">
-                            <div class="ad-price">Rs. 15,000<span>/month</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="admin-actions">
-                    <button class="btn btn-approve">Approve</button>
-                    <button class="btn btn-reject">Reject</button>
-                </div>
-            </div>
-
-            <!-- Card Wrapper 3 -->
-            <div class="admin-card-wrapper">
-                <div class="ad-card">
-                    <div class="ad-image" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800');">
-                        <div class="ad-badge unverified">Unverified</div>
-                    </div>
-                    <div class="ad-content">
-                        <h3 class="ad-title">Modern House for Rent</h3>
-                        <div class="ad-location">
-                            <svg width="16" height="16" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            Kottawa, Colombo
-                        </div>
-                        <div class="ad-stats">
-                            <span>3 Beds</span>
-                            <span>2 Baths</span>
-                        </div>
-                        <div class="ad-features">
-                            <span class="feature-tag">Garden</span>
-                            <span class="feature-tag">Security</span>
-                        </div>
-                        <div class="ad-footer">
-                            <div class="ad-price">Rs. 50,000<span>/month</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="admin-actions">
-                    <button class="btn btn-approve">Approve</button>
-                    <button class="btn btn-reject">Reject</button>
-                </div>
-            </div>
-
+        <!-- The JavaScript will dynamically add the ad cards here -->
+        <div class="ads-grid" id="pending-ads-grid">
+            <p class="loading-message" style="text-align: center; width: 100%;">Loading pending listings...</p>
         </div>
     </section>
 </main>
 
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <a href="#" class="logo">Boardify</a>
+            <p>The smartest way to discover boarding rooms and annexes in Sri Lanka.</p>
+            <div class="social-icons">
+                <a href="#"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/></svg></a>
+                <a href="#"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98-3.56-.18-6.73-1.89-8.84-4.48-.37.63-.58 1.37-.58 2.15 0 1.49.76 2.8 1.91 3.56-.71 0-1.37-.22-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.52 8.52 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06 3.43 2.2 7.5 3.48 11.7 3.48 14.08 0 21.78-11.65 21.78-21.78l-.02-.98c1.5-.09 2.78-1.56 2.78-2.78z"/></svg></a>
+                <a href="#"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8A3.6 3.6 0 0 0 20 16.4V7.6A3.6 3.6 0 0 0 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg></a>
+            </div>
+        </div>
+        <div class="footer-column">
+            <h4 class="footer-heading">Quick Links</h4>
+            <ul class="footer-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">All Ads</a></li>
+                <li><a href="#">Post an Ad</a></li>
+                <li><a href="#">About Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4 class="footer-heading">For Seekers</h4>
+            <ul class="footer-links">
+                <li><a href="#">How to Search</a></li>
+                <li><a href="#">Saved Listings</a></li>
+                <li><a href="#">Safety Tips</a></li>
+                <li><a href="#">FAQs</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4 class="footer-heading">For Owners</h4>
+            <ul class="footer-links">
+                <li><a href="#">How to Post an Ad</a></li>
+                <li><a href="#">My Listings</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Owner Guidelines</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 Boardify. All Rights Reserved. Designed with ❤️ in Sri Lanka.</p>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../JS/Listings.js"></script>
 <script src="../JS/LogOut.js"></script>

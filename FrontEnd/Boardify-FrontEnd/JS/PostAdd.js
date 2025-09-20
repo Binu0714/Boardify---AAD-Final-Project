@@ -187,10 +187,18 @@ function setupFormSubmission() {
             data: formData,
             processData: false,
             contentType: false,
+
             success: function(response) {
-                Swal.fire('Success', 'Property created successfully!', 'success')
-                    .then(() => { window.location.href = 'AllAds.html'; });
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Submitted for Approval!',
+                    text: 'Your property has been sent to our admin team for review. You will be notified once it is approved.',
+                    confirmButtonText: 'Great, Thanks!'
+                }).then(() => {
+                    window.location.href = 'Dashboard.html';
+                });
             },
+
             error: function(jqXHR) {
                 const errorMessage = jqXHR.responseJSON?.message || 'Something went wrong.';
                 Swal.fire('Error', errorMessage, 'error');

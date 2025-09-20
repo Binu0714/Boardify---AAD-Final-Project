@@ -420,3 +420,77 @@ tbody tr:nth-child(4n+4) .user-avatar { background-color: #f59e0b; }
     cursor: not-allowed; /* Shows a "not allowed" cursor on hover */
     padding: 0.5rem;
 }
+
+/* --- NEW FOOTER STYLES --- */
+.footer {
+    background-color: #1a202c;
+    color: #a0aec0;
+    padding: 4rem 2rem 2rem;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #2d3748;
+}
+
+.footer-column .logo {
+    margin-bottom: 1rem;
+}
+
+.footer-column p {
+    max-width: 250px;
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.footer-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+.footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.footer-links a {
+    color: #a0aec0;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: #4facfe;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-icons a {
+    color: #a0aec0;
+    transition: all 0.2s ease;
+}
+
+.social-icons a:hover {
+    color: #4facfe;
+    transform: translateY(-2px);
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    text-align: center;
+    font-size: 0.85rem;
+}

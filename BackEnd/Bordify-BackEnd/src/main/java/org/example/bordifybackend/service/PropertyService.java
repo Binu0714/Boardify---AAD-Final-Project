@@ -147,47 +147,50 @@ public class PropertyService {
             throw new RuntimeException("Property not found");
         }
 
-        PropertyDTO propertyDTO = new PropertyDTO();
+        return mapToPropertyDTO(property);
 
-        propertyDTO.setId(property.getPropertyId());
-        propertyDTO.setTitle(property.getTitle());
-        propertyDTO.setAvailability(property.isAvailability());
-        propertyDTO.setDescription(property.getDescription());
-        propertyDTO.setPrice(property.getPrice());
-        propertyDTO.setPropertyType(property.getType());
-        propertyDTO.setListedFor(property.getListedFor());
-        propertyDTO.setNoOfBeds(property.getNoOfBeds());
-        propertyDTO.setNoOfBaths(property.getNoOfBaths());
-        propertyDTO.setNearestCampus(property.getNearestCampus());
 
-        if (property.getLocation() != null) {
-            propertyDTO.setCity(property.getLocation().getCity());
-            propertyDTO.setDistrict(property.getLocation().getDistrict());
-            propertyDTO.setAddress(property.getLocation().getAddress());
-            propertyDTO.setLatitude(property.getLocation().getLatitude());
-            propertyDTO.setLongitude(property.getLocation().getLongitude());
-        }
-
-        if (property.getAmenities() != null && !property.getAmenities().isEmpty()) {
-            Set<Long> amenityIds = property.getAmenities().stream()
-                    .map(Amenity::getId)
-                    .collect(Collectors.toSet());
-            propertyDTO.setAmenityIds(amenityIds);
-        }
-
-        if (property.getPhotos() != null && !property.getPhotos().isEmpty()) {
-            List<String> photoUrls = property.getPhotos().stream()
-                    .map(Photo::getPhotoUrl)
-                    .collect(Collectors.toList());
-            propertyDTO.setPhotoUrls(photoUrls);
-        }
-
-        if (property.getUser() != null) {
-            propertyDTO.setOwnerName(property.getUser().getUsername());
-            propertyDTO.setOwnerContact(property.getUser().getMobile());
-        }
-
-        return propertyDTO;
+//        PropertyDTO propertyDTO = new PropertyDTO();
+//
+//        propertyDTO.setId(property.getPropertyId());
+//        propertyDTO.setTitle(property.getTitle());
+//        propertyDTO.setAvailability(property.isAvailability());
+//        propertyDTO.setDescription(property.getDescription());
+//        propertyDTO.setPrice(property.getPrice());
+//        propertyDTO.setPropertyType(property.getType());
+//        propertyDTO.setListedFor(property.getListedFor());
+//        propertyDTO.setNoOfBeds(property.getNoOfBeds());
+//        propertyDTO.setNoOfBaths(property.getNoOfBaths());
+//        propertyDTO.setNearestCampus(property.getNearestCampus());
+//
+//        if (property.getLocation() != null) {
+//            propertyDTO.setCity(property.getLocation().getCity());
+//            propertyDTO.setDistrict(property.getLocation().getDistrict());
+//            propertyDTO.setAddress(property.getLocation().getAddress());
+//            propertyDTO.setLatitude(property.getLocation().getLatitude());
+//            propertyDTO.setLongitude(property.getLocation().getLongitude());
+//        }
+//
+//        if (property.getAmenities() != null && !property.getAmenities().isEmpty()) {
+//            Set<Long> amenityIds = property.getAmenities().stream()
+//                    .map(Amenity::getId)
+//                    .collect(Collectors.toSet());
+//            propertyDTO.setAmenityIds(amenityIds);
+//        }
+//
+//        if (property.getPhotos() != null && !property.getPhotos().isEmpty()) {
+//            List<String> photoUrls = property.getPhotos().stream()
+//                    .map(Photo::getPhotoUrl)
+//                    .collect(Collectors.toList());
+//            propertyDTO.setPhotoUrls(photoUrls);
+//        }
+//
+//        if (property.getUser() != null) {
+//            propertyDTO.setOwnerName(property.getUser().getUsername());
+//            propertyDTO.setOwnerContact(property.getUser().getMobile());
+//        }
+//
+//        return propertyDTO;
     }
 
     public List<PropertyDTO> getMyAds() {
@@ -465,6 +468,7 @@ public class PropertyService {
         dto.setId(property.getPropertyId());
         dto.setTitle(property.getTitle());
         dto.setAvailability(property.isAvailability());
+        dto.setVerified(property.isVerified());
         dto.setDescription(property.getDescription());
 
         dto.setPrice(property.getPrice());
@@ -509,4 +513,30 @@ public class PropertyService {
         return dto;
     }
 
+    public List<PropertyDTO> getUnverifiedProperties() {
+        List<Property> unverifiedProperties = propertyRepo.findAllByVerifiedFalse();
+
+        return unverifiedProperties.stream()
+                .map(this::mapToPropertyDTO)
+                .collect(Collectors.toList());
+    }
+
+    public void approveProperty(Long id) {
+        Property property = propertyRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Property not found with id : " + id));
+
+        property.setVerified(true);
+
+        propertyRepo.save(property);
+    }
+
+    public void rejectProperty(Long id) {
+        boolean exist = propertyRepo.existsById(id);
+
+        if (!exist) {
+            throw new RuntimeException("Property not found with id : " + id);
+        }
+
+        propertyRepo.deleteById(id);
+    }
 }

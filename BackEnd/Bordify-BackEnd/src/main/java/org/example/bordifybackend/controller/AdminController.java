@@ -20,7 +20,7 @@ public class AdminController {
     private final AdminService adminService;
 
     @GetMapping("/stats")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> getStats() {
         try {
             StatsDTO stats = adminService.getDashboardStats();
@@ -44,7 +44,7 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> getAllUsers() {
         try {
             List<UserInfoDTO> users = adminService.getAllUsers();

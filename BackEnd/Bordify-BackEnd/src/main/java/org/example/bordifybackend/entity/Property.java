@@ -34,6 +34,9 @@ public class Property {
 
     private boolean availability;
 
+    @Column(nullable = false)
+    private boolean verified = false;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PropertyType type;

@@ -29,5 +29,7 @@ public interface PropertyRepo extends JpaRepository<Property, Long> {
     long countByAvailabilityFalse();
 
     long countByAvailabilityTrue();
+
+    List<Property> findAllByVerifiedFalse();
 }
 

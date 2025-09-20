@@ -246,4 +246,43 @@ public class PropertyController {
         );
     }
 
+    @GetMapping("/unverified")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse> getUnverifiedProperties() {
+        List<PropertyDTO> properties = propertyService.getUnverifiedProperties();
+        return ResponseEntity.ok(
+                new ApiResponse(
+                        200,
+                        "Unverified properties fetched",
+                        properties
+                )
+        );
+    }
+
+    @PostMapping("/approve/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse> approveProperty(@PathVariable Long id) {
+        propertyService.approveProperty(id);
+        return ResponseEntity.ok(
+                new ApiResponse(
+                        200,
+                        "Property approved successfully",
+                        null
+                )
+        );
+    }
+
+    @DeleteMapping("/reject/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse> rejectProperty(@PathVariable Long id) {
+        propertyService.rejectProperty(id);
+        return ResponseEntity.ok(
+                new ApiResponse(
+                        200,
+                        "Property rejected and deleted successfully",
+                        null
+                )
+        );
+    }
+
 }

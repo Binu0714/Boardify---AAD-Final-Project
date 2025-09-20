@@ -36,4 +36,6 @@ public class PropertyDTO {
 
     private String ownerName;
     private String ownerContact;
+
+    private boolean verified;
 }

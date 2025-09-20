@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boardify - Listing Management</title>
+    <!-- CSS files are linked to reuse existing styles -->
+    <link rel="stylesheet" href="../Css/Dashboard.css">
+    <link rel="stylesheet" href="../Css/AdminDashboard.css">
+    <link rel="stylesheet" href="../Css/AllAds.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Admin Header Navigation -->
+<header class="header">
+    <nav class="nav">
+        <a href="#" class="logo">Boardify</a>
+        <div class="nav-menu" id="nav-menu">
+            <ul class="nav-links">
+                <li><a href="admin_dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="user_management.html" class="nav-link">User Management</a></li>
+                <li><a href="admin_listings.html" class="nav-link active">Listings</a></li>
+                <li><a href="#" class="nav-link">Reports</a></li>
+                <li><a href="#" class="nav-link">Settings</a></li>
+            </ul>
+        </div>
+        <div class="user-actions">
+            <div class="profile-container">
+                <div class="profile-avatar" id="profile-avatar">AD</div>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <div class="dropdown-header"><h4>Admin User</h4><p>System Administrator</p></div>
+                    <a href="#" class="dropdown-link">My Profile</a>
+                    <a href="#" class="dropdown-link">Logout</a>
+                </div>
+            </div>
+            <div class="mobile-menu-toggle" id="mobile-menu-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+</header>
+
+<!-- Main Content -->
+<main class="admin-main-content">
+    <div class="main-content-header">
+        <h1 class="main-title">Listing Management</h1>
+        <p class="main-subtitle">Review new unverified listings submitted by property owners.</p>
+    </div>
+
+    <!-- Listings Grid -->
+    <section class="listings-container">
+        <div class="ads-grid">
+
+            <!-- Card Wrapper 1 -->
+            <div class="admin-card-wrapper">
+                <!-- Ad Card (Exact structure from AllAds.html) -->
+                <div class="ad-card">
+                    <div class="ad-image" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=800');">
+                        <div class="ad-badge unverified">Unverified</div>
+                    </div>
+                    <div class="ad-content">
+                        <h3 class="ad-title">Spacious Annex in Maharagama</h3>
+                        <div class="ad-location">
+                            <svg width="16" height="16" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Maharagama, Colombo
+                        </div>
+                        <div class="ad-stats">
+                            <span>2 Beds</span>
+                            <span>1 Bath</span>
+                        </div>
+                        <div class="ad-features">
+                            <span class="feature-tag">Parking</span>
+                            <span class="feature-tag">Kitchen</span>
+                        </div>
+                        <div class="ad-footer">
+                            <div class="ad-price">Rs. 35,000<span>/month</span></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Admin Actions for this card -->
+                <div class="admin-actions">
+                    <button class="btn btn-approve">Approve</button>
+                    <button class="btn btn-reject">Reject</button>
+                </div>
+            </div>
+
+            <!-- Card Wrapper 2 -->
+            <div class="admin-card-wrapper">
+                <div class="ad-card">
+                    <div class="ad-image" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800');">
+                        <div class="ad-badge unverified">Unverified</div>
+                    </div>
+                    <div class="ad-content">
+                        <h3 class="ad-title">Single Room for Students</h3>
+                        <div class="ad-location">
+                            <svg width="16" height="16" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Nugegoda, Colombo
+                        </div>
+                        <div class="ad-stats">
+                            <span>1 Bed</span>
+                            <span>1 Bath</span>
+                        </div>
+                        <div class="ad-features">
+                            <span class="feature-tag">Wi-Fi</span>
+                            <span class="feature-tag">AC</span>
+                        </div>
+                        <div class="ad-footer">
+                            <div class="ad-price">Rs. 15,000<span>/month</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-actions">
+                    <button class="btn btn-approve">Approve</button>
+                    <button class="btn btn-reject">Reject</button>
+                </div>
+            </div>
+
+            <!-- Card Wrapper 3 -->
+            <div class="admin-card-wrapper">
+                <div class="ad-card">
+                    <div class="ad-image" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800');">
+                        <div class="ad-badge unverified">Unverified</div>
+                    </div>
+                    <div class="ad-content">
+                        <h3 class="ad-title">Modern House for Rent</h3>
+                        <div class="ad-location">
+                            <svg width="16" height="16" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Kottawa, Colombo
+                        </div>
+                        <div class="ad-stats">
+                            <span>3 Beds</span>
+                            <span>2 Baths</span>
+                        </div>
+                        <div class="ad-features">
+                            <span class="feature-tag">Garden</span>
+                            <span class="feature-tag">Security</span>
+                        </div>
+                        <div class="ad-footer">
+                            <div class="ad-price">Rs. 50,000<span>/month</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-actions">
+                    <button class="btn btn-approve">Approve</button>
+                    <button class="btn btn-reject">Reject</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../JS/Listings.js"></script>
+
+</body>
+</html>

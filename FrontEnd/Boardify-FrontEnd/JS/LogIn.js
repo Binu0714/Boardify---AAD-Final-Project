@@ -18,16 +18,22 @@ $("#login-form").submit(function (event) {
             console.log("Login response:", response);
 
             const token = response.data?.accessToken;
+            const role = response.data?.role;
 
-            if (token) {
+            if (token && role) {
                 localStorage.setItem("token", token);
+                localStorage.setItem("role", role);
                 localStorage.setItem("username", username);
                 Swal.fire({
                     icon: 'success',
                     title: 'Login Successful',
                     text: 'Redirecting...'
                 }).then(() => {
-                    window.location.href = "Dashboard.html";
+                    if (role === 'ADMIN') {
+                        window.location.href = "AdminDashboard.html";
+                    } else {
+                        window.location.href = "Dashboard.html";
+                    }
                 });
             } else {
                 Swal.fire("Login Failed", "Token not found!", "error");

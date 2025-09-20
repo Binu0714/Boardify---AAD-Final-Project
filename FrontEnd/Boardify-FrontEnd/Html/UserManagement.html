@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boardify - User Management</title>
+    <link rel="stylesheet" href="../Css/AdminDashboard.css">
+    <link rel="stylesheet" href="../Css/Dashboard.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Admin Header Navigation -->
+<header class="header">
+    <nav class="nav">
+        <a href="#" class="logo">Boardify</a>
+
+        <div class="nav-menu" id="nav-menu">
+            <ul class="nav-links">
+                <li><a href="admin_dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="user_management.html" class="nav-link active">User Management</a></li>
+                <li><a href="#" class="nav-link">Listings</a></li>
+                <li><a href="#" class="nav-link">Reports</a></li>
+                <li><a href="#" class="nav-link">Settings</a></li>
+            </ul>
+        </div>
+
+        <div class="user-actions">
+            <div class="profile-container">
+                <div class="profile-avatar" id="profile-avatar">AD</div>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <div class="dropdown-header">
+                        <h4>Admin User</h4>
+                        <p>System Administrator</p>
+                    </div>
+                    <a href="#" class="dropdown-link">My Profile</a>
+                    <a href="#" class="dropdown-link">Logout</a>
+                </div>
+            </div>
+            <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<!-- Main Content -->
+<main class="admin-main-content">
+    <div class="main-content-header">
+        <h1 class="main-title">User Management</h1>
+        <p class="main-subtitle">Add, view, edit, and remove users from the platform.</p>
+    </div>
+
+    <!-- User Management Table Section -->
+    <section class="admin-functions-section">
+        <div class="table-container">
+            <div class="table-header">
+                <h3 class="section-block-title">All Users</h3>
+                <div class="table-actions">
+                    <input type="text" class="search-input" placeholder="Search by name, email, or role...">
+                    <button class="btn btn-primary">Add New User</button>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>#1024</td>
+                        <td>
+                            <div class="user-profile-cell">
+                                <div class="user-avatar">JS</div>
+                                <span class="user-name">John Smith</span>
+                            </div>
+                        </td>
+                        <td>john.smith@example.com</td>
+                        <td>+94 77 123 4567</td>
+                        <td><span class="role-tag seeker">Room Seeker</span></td>
+                        <td class="actions-cell">
+                            <button class="btn-icon btn-icon-danger" title="Delete User">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#1025</td>
+                        <td>
+                            <div class="user-profile-cell">
+                                <div class="user-avatar">AW</div>
+                                <span class="user-name">Aisha Williams</span>
+                            </div>
+                        </td>
+                        <td>aisha.w@example.com</td>
+                        <td>+94 71 890 1234</td>
+                        <td><span class="role-tag owner">Property Owner</span></td>
+                        <td class="actions-cell">
+                            <button class="btn-icon btn-icon-danger" title="Delete User">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#1026</td>
+                        <td>
+                            <div class="user-profile-cell">
+                                <div class="user-avatar">MP</div>
+                                <span class="user-name">Michael Perera</span>
+                            </div>
+                        </td>
+                        <td>michael.p@example.com</td>
+                        <td>+94 76 555 6789</td>
+                        <td><span class="role-tag owner">Property Owner</span></td>
+                        <td class="actions-cell">
+                            <button class="btn-icon btn-icon-danger" title="Delete User">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#1027</td>
+                        <td>
+                            <div class="user-profile-cell">
+                                <div class="user-avatar">FD</div>
+                                <span class="user-name">Fatima Silva</span>
+                            </div>
+                        </td>
+                        <td>fatima.ds@example.com</td>
+                        <td>+94 77 987 6543</td>
+                        <td><span class="role-tag seeker">Room Seeker</span></td>
+                        <td class="actions-cell">
+                            <button class="btn-icon btn-icon-danger" title="Delete User">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination-footer">
+                <div class="pagination-summary">Showing 1 to 4 of 128 users</div>
+                <div class="pagination-nav">
+                    <button class="btn-pagination" disabled>&laquo; Previous</button>
+                    <button class="btn-pagination">Next &raquo;</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../JS/UserManagement.js"></script>
+
+</body>
+</html>

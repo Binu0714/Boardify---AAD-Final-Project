@@ -2,13 +2,18 @@ package org.example.bordifybackend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.bordifybackend.Dto.StatsDTO;
+import org.example.bordifybackend.Dto.UserInfoDTO;
 import org.example.bordifybackend.entity.BookingStatus;
+import org.example.bordifybackend.entity.User;
 import org.example.bordifybackend.repo.BookingRepo;
 import org.example.bordifybackend.repo.PropertyRepo;
 import org.example.bordifybackend.repo.UserRepo;
 import org.springframework.stereotype.Service;
 
-    @Service
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
     @RequiredArgsConstructor
     public class AdminService {
 
@@ -23,7 +28,26 @@ import org.springframework.stereotype.Service;
         long availableListings = propertyRepo.countByAvailabilityTrue();
         long bookedListings = propertyRepo.countByAvailabilityFalse(); // Assuming 'false' means booked
 
-        // Create and return the new DTO with the calculated values
         return new StatsDTO(totalUsers, totalListings, availableListings, bookedListings);
     }
-}
+
+        public List<UserInfoDTO> getAllUsers() {
+            List<User> allUsers = userRepo.findAll();
+
+            List<UserInfoDTO> userInfoDTOS = new ArrayList<>();
+
+            for (User user : allUsers) {
+                UserInfoDTO dto = UserInfoDTO.builder()
+                        .id(user.getId())
+                        .username(user.getUsername())
+                        .email(user.getEmail())
+                        .mobile(user.getMobile())
+                        .role(user.getRole())
+                        .profilePicUrl(user.getProfilePicUrl())
+                        .build();
+
+                userInfoDTOS.add(dto);
+            }
+            return userInfoDTOS;
+        }
+    }

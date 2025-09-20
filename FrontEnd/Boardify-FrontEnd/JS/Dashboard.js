@@ -2,6 +2,7 @@ $(document).ready(function() {
     const token = localStorage.getItem("token");
 
     if (!token) {
+        alert("fuck you...")
         window.location.href = "LogIn.html";
         return;
     }

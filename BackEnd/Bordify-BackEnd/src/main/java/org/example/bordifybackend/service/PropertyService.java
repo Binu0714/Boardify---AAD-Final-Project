@@ -29,6 +29,8 @@ public class PropertyService {
     private final UserRepo userRepo;
     private final AmenityRepo amenityRepo;
     private final ImgbbService imgbbService;
+    private final SmsService smsService;
+    private final PhoneNumberService phoneNumberService;
 
     @Transactional
     public Property createProperty(PropertyDTO propertyDTO, List<MultipartFile> images) {
@@ -100,42 +102,43 @@ public class PropertyService {
         List<PropertyDTO> propertyDTOS = new ArrayList<>();
 
         for (Property property : allProperties) {
-            PropertyDTO dto = new PropertyDTO();
 
-            dto.setId(property.getPropertyId());
-            dto.setTitle(property.getTitle());
-            dto.setAvailability(property.isAvailability());
-            dto.setDescription(property.getDescription());
-            dto.setPrice(property.getPrice());
-            dto.setPropertyType(property.getType());
-            dto.setListedFor(property.getListedFor());
-            dto.setNoOfBeds(property.getNoOfBeds());
-            dto.setNoOfBaths(property.getNoOfBaths());
-            dto.setNearestCampus(property.getNearestCampus());
+        if (property.isVerified() && property.isAvailability()) {
+                PropertyDTO dto = new PropertyDTO();
+                dto.setId(property.getPropertyId());
+                dto.setTitle(property.getTitle());
+                dto.setAvailability(property.isAvailability());
+                dto.setDescription(property.getDescription());
+                dto.setPrice(property.getPrice());
+                dto.setPropertyType(property.getType());
+                dto.setListedFor(property.getListedFor());
+                dto.setNoOfBeds(property.getNoOfBeds());
+                dto.setNoOfBaths(property.getNoOfBaths());
+                dto.setNearestCampus(property.getNearestCampus());
 
-            if (property.getLocation() != null) {
-                dto.setCity(property.getLocation().getCity());
-                dto.setDistrict(property.getLocation().getDistrict());
-                dto.setAddress(property.getLocation().getAddress());
-                dto.setLatitude(property.getLocation().getLatitude());
-                dto.setLongitude(property.getLocation().getLongitude());
+                if (property.getLocation() != null) {
+                    dto.setCity(property.getLocation().getCity());
+                    dto.setDistrict(property.getLocation().getDistrict());
+                    dto.setAddress(property.getLocation().getAddress());
+                    dto.setLatitude(property.getLocation().getLatitude());
+                    dto.setLongitude(property.getLocation().getLongitude());
+                }
+
+                if (property.getAmenities() != null && !property.getAmenities().isEmpty()) {
+                    Set<Long> amenityIds = property.getAmenities().stream()
+                            .map(Amenity::getId)
+                            .collect(Collectors.toSet());
+                    dto.setAmenityIds(amenityIds);
+                }
+
+                if (property.getPhotos() != null && !property.getPhotos().isEmpty()) {
+                    List<String> photoUrls = property.getPhotos().stream()
+                            .map(Photo::getPhotoUrl)
+                            .collect(Collectors.toList());
+                    dto.setPhotoUrls(photoUrls);
+                }
+                propertyDTOS.add(dto);
             }
-
-            if (property.getAmenities() != null && !property.getAmenities().isEmpty()) {
-                Set<Long> amenityIds = property.getAmenities().stream()
-                        .map(Amenity::getId)
-                        .collect(Collectors.toSet());
-                dto.setAmenityIds(amenityIds);
-            }
-
-            if (property.getPhotos() != null && !property.getPhotos().isEmpty()) {
-                List<String> photoUrls = property.getPhotos().stream()
-                        .map(Photo::getPhotoUrl)
-                        .collect(Collectors.toList());
-                dto.setPhotoUrls(photoUrls);
-            }
-
-            propertyDTOS.add(dto);
         }
         return propertyDTOS;
     }
@@ -149,48 +152,6 @@ public class PropertyService {
 
         return mapToPropertyDTO(property);
 
-
-//        PropertyDTO propertyDTO = new PropertyDTO();
-//
-//        propertyDTO.setId(property.getPropertyId());
-//        propertyDTO.setTitle(property.getTitle());
-//        propertyDTO.setAvailability(property.isAvailability());
-//        propertyDTO.setDescription(property.getDescription());
-//        propertyDTO.setPrice(property.getPrice());
-//        propertyDTO.setPropertyType(property.getType());
-//        propertyDTO.setListedFor(property.getListedFor());
-//        propertyDTO.setNoOfBeds(property.getNoOfBeds());
-//        propertyDTO.setNoOfBaths(property.getNoOfBaths());
-//        propertyDTO.setNearestCampus(property.getNearestCampus());
-//
-//        if (property.getLocation() != null) {
-//            propertyDTO.setCity(property.getLocation().getCity());
-//            propertyDTO.setDistrict(property.getLocation().getDistrict());
-//            propertyDTO.setAddress(property.getLocation().getAddress());
-//            propertyDTO.setLatitude(property.getLocation().getLatitude());
-//            propertyDTO.setLongitude(property.getLocation().getLongitude());
-//        }
-//
-//        if (property.getAmenities() != null && !property.getAmenities().isEmpty()) {
-//            Set<Long> amenityIds = property.getAmenities().stream()
-//                    .map(Amenity::getId)
-//                    .collect(Collectors.toSet());
-//            propertyDTO.setAmenityIds(amenityIds);
-//        }
-//
-//        if (property.getPhotos() != null && !property.getPhotos().isEmpty()) {
-//            List<String> photoUrls = property.getPhotos().stream()
-//                    .map(Photo::getPhotoUrl)
-//                    .collect(Collectors.toList());
-//            propertyDTO.setPhotoUrls(photoUrls);
-//        }
-//
-//        if (property.getUser() != null) {
-//            propertyDTO.setOwnerName(property.getUser().getUsername());
-//            propertyDTO.setOwnerContact(property.getUser().getMobile());
-//        }
-//
-//        return propertyDTO;
     }
 
     public List<PropertyDTO> getMyAds() {
@@ -521,13 +482,32 @@ public class PropertyService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public void approveProperty(Long id) {
         Property property = propertyRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Property not found with id : " + id));
 
         property.setVerified(true);
-
         propertyRepo.save(property);
+
+        User owner = property.getUser();
+        if (owner != null && owner.getMobile() != null && !owner.getMobile().isEmpty()) {
+
+            // 1. Convert the local number from the DB (071...) to the international format (+9471...)
+            String e164Number = phoneNumberService.formatToE164(owner.getMobile(), "LK");
+
+            // 2. Only proceed if the number was valid and converted successfully
+            if (e164Number != null) {
+                String messageBody = String.format(
+                        "Boardify: Congratulations, %s! Your ad '%s' has been approved and is now live.",
+                        owner.getUsername(),
+                        property.getTitle()
+                );
+
+                // 3. Send the SMS to the correctly formatted number
+                smsService.sendSms(e164Number, messageBody);
+            }
+        }
     }
 
     public void rejectProperty(Long id) {

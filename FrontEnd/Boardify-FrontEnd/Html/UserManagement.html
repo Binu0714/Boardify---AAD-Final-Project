@@ -20,11 +20,9 @@
 
         <div class="nav-menu" id="nav-menu">
             <ul class="nav-links">
-                <li><a href="admin_dashboard.html" class="nav-link">Dashboard</a></li>
-                <li><a href="user_management.html" class="nav-link active">User Management</a></li>
-                <li><a href="#" class="nav-link">Listings</a></li>
-                <li><a href="#" class="nav-link">Reports</a></li>
-                <li><a href="#" class="nav-link">Settings</a></li>
+                <li><a href="AdminDashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="#" class="nav-link active">User Management</a></li>
+                <li><a href="Listings.html" class="nav-link">Listings</a></li>
             </ul>
         </div>
 
@@ -36,8 +34,11 @@
                         <h4>Admin User</h4>
                         <p>System Administrator</p>
                     </div>
-                    <a href="#" class="dropdown-link">My Profile</a>
-                    <a href="#" class="dropdown-link">Logout</a>
+                    <a href="AdminProfile.html" class="dropdown-link">My Profile</a>
+                    <a href="#" class="dropdown-link" onclick="handleLogout(event)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        Logout
+                    </a>
                 </div>
             </div>
             <div class="mobile-menu-toggle" id="mobile-menu-toggle">
@@ -165,6 +166,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../JS/UserManagement.js"></script>
+<script src="../JS/LogOut.js"></script>
 
 </body>
 </html>

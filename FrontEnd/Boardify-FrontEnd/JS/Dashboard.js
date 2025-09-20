@@ -14,7 +14,36 @@ $(document).ready(function() {
 
     checkAndShowNotifications();
 
+    fetchUserDashboardStats(token);
+
 });
+
+function fetchUserDashboardStats(token) {
+    $.ajax({
+        url: 'http://localhost:8080/user/stats',
+        method: 'GET',
+        headers: { 'Authorization': 'Bearer ' + token },
+        success: function(res) {
+            if (res.status === 200 && res.data) {
+                const stats = res.data;
+
+                // Update HTML with correct field names
+                $('#new-ads').text(stats.totalAds);
+                $('#my-ads').text(stats.myTotalAds);
+                $('#pending-ads').text(stats.myApprovedAds); // ✅ fixed case
+
+                console.log(stats.totalAds);
+                console.log(stats.myTotalAds);
+                console.log(stats.myApprovedAds); // ✅ fixed case
+            }
+        },
+        error: function(err) {
+            console.error("Could not fetch user dashboard stats:", err);
+            $('.stat-number').text('--'); // Show error state
+        }
+    });
+}
+
 
 function parseJwt(token) {
     try {

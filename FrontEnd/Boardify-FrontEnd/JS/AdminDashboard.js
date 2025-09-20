@@ -120,8 +120,29 @@ function setupLeafletMap() {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        L.marker([6.9271, 79.8612]).addTo(map).bindPopup('Colombo Central Listing.');
-        L.marker([6.8665, 79.8817]).addTo(map).bindPopup('Dehiwala-Mount Lavinia Listing.');
+        // --- University / Listing Markers ---
+        L.marker([6.83, 79.91]).addTo(map)
+            .bindPopup('KDU, Werahera');
+
+        L.marker([6.90, 79.86]).addTo(map)
+            .bindPopup('University of Colombo');
+
+        L.marker([6.92, 79.97]).addTo(map)
+            .bindPopup('SLIIT Malabe Campus');
+
+        L.marker([6.97, 79.92]).addTo(map)
+            .bindPopup('University of Kelaniya');
+
+        L.marker([7.26, 80.60]).addTo(map)
+            .bindPopup('University of Peradeniya');
+
+        L.marker([6.71, 79.91]).addTo(map)
+            .bindPopup('Grace Peiris Rd, Panadura');
+
+        L.marker([6.87, 79.88]).addTo(map)
+            .bindPopup('Kohuwala Listing');
+
+
     } catch(e) {
         console.error("Failed to initialize Leaflet map:", e);
     }

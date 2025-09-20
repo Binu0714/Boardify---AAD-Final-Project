@@ -72,16 +72,16 @@
             </div>
             <div class="quick-stats">
                 <div class="stat-card">
-                    <div class="stat-number">24</div>
+                    <div class="stat-number" id="new-ads">24</div>
                     <div class="stat-label">New Listings</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">12</div>
-                    <div class="stat-label">Saved</div>
+                    <div class="stat-number" id="my-ads">12</div>
+                    <div class="stat-label">Your Ads</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">Applied</div>
+                    <div class="stat-number" id="pending-ads">3</div>
+                    <div class="stat-label">Pending Ads</div>
                 </div>
             </div>
         </div>
@@ -146,108 +146,7 @@
     </section>
 
     <!-- Latest Ads Section -->
-    <section class="latest-ads">
-        <div class="ads-container">
-            <div class="section-header">
-                <h2 class="section-title">Latest Boarding Listings</h2>
-                <a href="AllAds.html" class="view-all-btn">View All</a>
-            </div>
-
-            <div class="ads-grid">
-                <!-- Ad Card 1 -->
-                <div class="ad-card">
-                    <div class="ad-image">
-                        <div class="ad-badge">New</div>
-                        <div class="ad-favorite">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="ad-content">
-                        <h3 class="ad-title">Modern Single Room near University of Colombo</h3>
-                        <div class="ad-location">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                <circle cx="12" cy="10" r="3"></circle>
-                            </svg>
-                            Wellawatte, Colombo
-                        </div>
-                        <div class="ad-features">
-                            <span class="feature-tag">Wi-Fi</span>
-                            <span class="feature-tag">AC</span>
-                            <span class="feature-tag">Parking</span>
-                        </div>
-                        <div class="ad-footer">
-                            <div class="ad-price">Rs. 25,000<span>/month</span></div>
-                            <div class="ad-posted">2 hours ago</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Ad Card 2 -->
-                <div class="ad-card">
-                    <div class="ad-image">
-                        <div class="ad-badge featured">Featured</div>
-                        <div class="ad-favorite active">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="ad-content">
-                        <h3 class="ad-title">Luxury Studio Apartment - Fully Furnished</h3>
-                        <div class="ad-location">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                <circle cx="12" cy="10" r="3"></circle>
-                            </svg>
-                            Nugegoda, Colombo
-                        </div>
-                        <div class="ad-features">
-                            <span class="feature-tag">Kitchen</span>
-                            <span class="feature-tag">Balcony</span>
-                            <span class="feature-tag">Security</span>
-                        </div>
-                        <div class="ad-footer">
-                            <div class="ad-price">Rs. 45,000<span>/month</span></div>
-                            <div class="ad-posted">5 hours ago</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Ad Card 3 -->
-                <div class="ad-card">
-                    <div class="ad-image">
-                        <div class="ad-favorite">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="ad-content">
-                        <h3 class="ad-title">Shared Room for Female Students</h3>
-                        <div class="ad-location">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                <circle cx="12" cy="10" r="3"></circle>
-                            </svg>
-                            Colombo 03
-                        </div>
-                        <div class="ad-features">
-                            <span class="feature-tag">Female Only</span>
-                            <span class="feature-tag">Meals</span>
-                            <span class="feature-tag">Laundry</span>
-                        </div>
-                        <div class="ad-footer">
-                            <div class="ad-price">Rs. 18,000<span>/month</span></div>
-                            <div class="ad-posted">1 day ago</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <
 </main>
 
 <footer class="footer">

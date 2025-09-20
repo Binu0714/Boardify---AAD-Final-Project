@@ -2,24 +2,28 @@ package org.example.bordifybackend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.bordifybackend.Dto.StatsDTO;
+import org.example.bordifybackend.entity.BookingStatus;
 import org.example.bordifybackend.repo.BookingRepo;
 import org.example.bordifybackend.repo.PropertyRepo;
 import org.example.bordifybackend.repo.UserRepo;
 import org.springframework.stereotype.Service;
 
-@Service
-@RequiredArgsConstructor
-public class AdminService {
+    @Service
+    @RequiredArgsConstructor
+    public class AdminService {
+
     private final UserRepo userRepo;
     private final PropertyRepo propertyRepo;
     private final BookingRepo bookingRepo;
+
 
     public StatsDTO getDashboardStats() {
         long totalUsers = userRepo.count();
         long totalListings = propertyRepo.count();
         long availableListings = propertyRepo.countByAvailabilityTrue();
-        long bookedListings = bookingRepo.countByStatus("BOOKED");
+        long bookedListings = propertyRepo.countByAvailabilityFalse(); // Assuming 'false' means booked
 
+        // Create and return the new DTO with the calculated values
         return new StatsDTO(totalUsers, totalListings, availableListings, bookedListings);
     }
 }

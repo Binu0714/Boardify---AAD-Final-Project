@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class StatsDTO {
     private long totalUsers;
-    private long activeListings;
+    private long TotalListings;
     private long availableListings;
     private long bookedListings;
 }

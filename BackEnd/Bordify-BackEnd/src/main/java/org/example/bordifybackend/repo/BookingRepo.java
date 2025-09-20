@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface BookingRepo extends JpaRepository<BookingReq, Long> {
     List<BookingReq> findByProperty_PropertyIdAndStatusAndIdNot(Long propertyId, BookingStatus status, Long idToExclude);
+
+    long countByStatus(String booked);
 }

@@ -24,5 +24,7 @@ public interface PropertyRepo extends JpaRepository<Property, Long> {
 
     @Query("SELECT DISTINCT p.nearestCampus FROM Property p ORDER BY p.nearestCampus ASC")
     List<String> findDistinctUniversities();
+
+    long countByAvailabilityTrue();
 }
 

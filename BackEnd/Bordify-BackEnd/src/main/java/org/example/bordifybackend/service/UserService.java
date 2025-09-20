@@ -21,21 +21,19 @@ public class UserService {
     private final JwtUtil jwtUtil;
 
     public AuthResponseDTO authenticate(AuthDTO authDTO){
-        // validate credentials
+
         User user=userRepository.findByUsername(authDTO.getUsername())
                 .orElseThrow(()->new RuntimeException("User not found"));
-        // check password
+
         if (!passwordEncoder.matches(
                 authDTO.getPassword(),
                 user.getPassword())){
             throw new BadCredentialsException("Invalid credentials");
         }
-        // generate token
         String token=jwtUtil.generateToken(authDTO.getUsername(), user.getRole());
-        return new AuthResponseDTO(token);
+        return new AuthResponseDTO(token, user.getRole());
     }
 
-    // register user
     public String register(RegisterDTO registerDTO){
         if (userRepository.findByUsername(registerDTO.getUsername())
                 .isPresent()){

@@ -19,6 +19,9 @@ $(document).ready(function() {
     }
 
     fetchDashboardStats(token);
+
+    createUserGrowthChart();
+
     setupLeafletMap();
 
 });
@@ -97,10 +100,10 @@ function fetchDashboardStats(token) {
         success: function (response) {
             if (response.status === 200 && response.data) {
                 const stats = response.data;
-                $("#total-users").text(stats.totalUsers.toLocaleString());
-                $("#total-ads").text(stats.totalListings.toLocaleString());
-                $("#available-ads").text(stats.availableListings.toLocaleString());
-                $("#booked-ads").text(stats.bookedListings.toLocaleString());
+                $("#users-count").text(stats.totalUsers.toLocaleString());
+                $("#listing-count").text(stats.totalListings.toLocaleString());
+                $("#available-listings").text(stats.availableListings.toLocaleString());
+                $("#booked-listings").text(stats.bookedListings.toLocaleString());
             }
         },
         error: function (xhr) {
@@ -122,4 +125,94 @@ function setupLeafletMap() {
     } catch(e) {
         console.error("Failed to initialize Leaflet map:", e);
     }
+}
+
+function createUserGrowthChart() {
+    const ctx = document.getElementById('userRegistrationsChart');
+    if (!ctx) return; // Exit if the canvas element doesn't exist
+
+    // --- 1. Generate Fake Data ---
+    const labels = [];
+    const dataPoints = [];
+    let cumulativeUsers = Math.floor(Math.random() * 2) + 2; // Start with a random base of 100-150 users
+
+    for (let i = 29; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+
+        // Format the date for the label (e.g., "Aug 15")
+        labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+
+        // Add a random number of new users for that day (between 2 and 14)
+        const newUsersToday = Math.floor(Math.random() * 13) + 2;
+        cumulativeUsers += newUsersToday;
+        dataPoints.push(cumulativeUsers);
+    }
+
+
+    // --- 2. Configure the Chart ---
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Total Users',
+                data: dataPoints,
+                fill: true, // Creates the beautiful gradient area under the line
+                backgroundColor: 'rgba(79, 172, 254, 0.1)', // Light blue, semi-transparent
+                borderColor: 'rgba(79, 172, 254, 1)', // Solid blue line
+                pointBackgroundColor: 'rgba(79, 172, 254, 1)', // Solid blue points
+                pointBorderColor: '#fff', // White border on points
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(79, 172, 254, 1)',
+                tension: 0.3, // Makes the line smooth and curved
+                borderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: false, // Start the Y-axis near the lowest data point
+                    grid: {
+                        color: '#e2e8f0' // Lighter grid lines
+                    },
+                    ticks: {
+                        color: '#64748b' // Softer color for axis labels
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false // Hide vertical grid lines for a cleaner look
+                    },
+                    ticks: {
+                        color: '#64748b',
+                        maxRotation: 0, // Keep labels horizontal
+                        autoSkip: true, // Automatically hide some labels if they overlap
+                        maxTicksLimit: 10 // Show a maximum of 10 labels on the X-axis
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false // Hide the "Total Users" legend to save space
+                },
+                tooltip: {
+                    backgroundColor: '#1e293b',
+                    titleColor: '#fff',
+                    bodyColor: '#cbd5e1',
+                    padding: 10,
+                    cornerRadius: 8,
+                    displayColors: false // Hide the little color box in the tooltip
+                }
+            },
+            interaction: {
+                mode: 'index',
+                intersect: false
+            }
+        }
+    });
 }

@@ -494,3 +494,36 @@ tbody tr:nth-child(4n+4) .user-avatar { background-color: #f59e0b; }
     text-align: center;
     font-size: 0.85rem;
 }
+
+/* =================================================================
+   CHART.JS LAYOUT & SIZING FIX (IMPROVED)
+   ================================================================= */
+
+/* --- 1. Style the main container --- */
+.chart-container {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    border: 1px solid #e2e8f0;
+
+    /* --- NEW FLEXBOX LAYOUT --- */
+    display: flex;
+    flex-direction: column; /* Arrange children vertically (title on top, chart below) */
+    /*height: 400px;         !* Set the total height for the entire component *!*/
+}
+
+/* --- 2. Style the title (this is your existing h3 style) --- */
+.section-block-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    flex-shrink: 0; /* Prevents the title from shrinking if space is tight */
+}
+
+/* --- 3. Create a new wrapper for the canvas --- */
+/* We need a new div to handle the chart's flexible growth. */
+.chart-wrapper {
+    position: relative;
+    flex-grow: 1; /* Allows this wrapper to grow and fill the remaining space */
+    width: 100%;
+}

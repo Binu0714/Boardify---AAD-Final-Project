@@ -1,0 +1,358 @@
+/* =================================================================
+   BASE & FONT STYLES
+   ================================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #ffffff;
+    color: #1a202c;
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevents horizontal scrollbars */
+}
+
+/* =================================================================
+   HEADER
+   ================================================================= */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    /* Use a smoother, professional easing for transitions */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header.scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 4px
+    20px rgba(0, 0, 0, 0.08);
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.875rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    transition: transform 0.2s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.header-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.btn-header-login, .btn-header-signup {
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.95rem;
+}
+
+.btn-header-login {
+    color: rgba(255, 255, 255, 0.9);
+    background: transparent;
+}
+.btn-header-login:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Scrolled state for login button */
+.header.scrolled .btn-header-login {
+    color: #4a5568;
+}
+.header.scrolled .btn-header-login:hover {
+    color: #4facfe;
+    background: rgba(79, 172, 254, 0.08);
+}
+
+.btn-header-signup {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.btn-header-signup:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Scrolled state for sign up button */
+.header.scrolled .btn-header-signup {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+.header.scrolled .btn-header-signup:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+}
+
+/* =================================================================
+   HERO SECTION
+   ================================================================= */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 2rem;
+    color: white;
+    /* Replace with your preferred high-quality image */
+    background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1400');
+    background-size: cover;
+    background-position: center;
+    /* Parallax effect on scroll */
+    background-attachment: fixed;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* A smoother, more professional gradient */
+    background: linear-gradient(135deg, rgba(79, 172, 254, 0.8), rgba(0, 242, 254, 0.6)),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6));
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    /* Apply the animation */
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.gradient-text {
+    /* Use a slightly different gradient for more contrast */
+    background: linear-gradient(135deg, #ffffff, #e2e8f0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    opacity: 0.95;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    line-height: 1.6;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    /* Use a solid color for better readability, shadow provides depth */
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.stat-label {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.hero-btn {
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 1.25rem 2.5rem;
+    border-radius: 16px;
+    border: 2px solid transparent;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.hero-btn.primary {
+    background: white;
+    color: #4facfe;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+.hero-btn.primary:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    background: #f8fafc;
+}
+
+.hero-btn.primary svg {
+    transition: transform 0.3s ease;
+}
+.hero-btn.primary:hover svg {
+    transform: translateX(4px);
+}
+
+.hero-btn.secondary {
+    background: transparent;
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+}
+.hero-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: white;
+    transform: translateY(-2px);
+}
+
+/* =================================================================
+   FEATURES SECTION
+   ================================================================= */
+.features-section { padding: 4rem 2rem; }
+.features-container { max-width: 1200px; margin: 0 auto; }
+.features-header { text-align: center; margin-bottom: 4rem; }
+.features-title { font-size: 2.5rem; font-weight: 800; color: #1a202c; margin-bottom: 1rem; }
+.features-subtitle { font-size: 1.2rem; color: #718096; max-width: 600px; margin: 0 auto; }
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
+.feature-card { background: white; padding: 2.5rem 2rem; border-radius: 24px; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0; text-align: center; }
+.feature-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(79, 172, 254, 0.1); }
+.feature-icon { width: 70px; height: 70px; background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1)); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: #4facfe; transition: all 0.3s ease; }
+.feature-card:hover .feature-icon { transform: scale(1.1); background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3); }
+.feature-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.75rem; }
+.feature-description { color: #718096; }
+
+/* =================================================================
+   FOOTER (Reusing existing, well-styled footer)
+   ================================================================= */
+.footer {
+    background-color: #1a202c;
+    color: #a0aec0;
+    padding: 4rem 2rem 2rem;
+}
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #2d3748;
+}
+.footer-column .logo { margin-bottom: 1rem; }
+.footer-column p { max-width: 250px; font-size: 0.9rem; line-height: 1.7; }
+.footer-heading { font-size: 1rem; font-weight: 600; color: white; margin-bottom: 1.5rem; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+.footer-links a { color: #a0aec0; text-decoration: none; transition: color 0.2s ease; }
+.footer-links a:hover { color: #4facfe; }
+.social-icons { display: flex; gap: 1rem; margin-top: 1rem; }
+.social-icons a { color: #a0aec0; transition: all 0.2s ease; }
+.social-icons a:hover { color: #4facfe; transform: translateY(-2px); }
+.footer-bottom { max-width: 1200px; margin: 2rem auto 0; text-align: center; font-size: 0.85rem; }
+
+
+/* =================================================================
+   ANIMATIONS
+   ================================================================= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =================================================================
+   RESPONSIVE DESIGN
+   ================================================================= */
+@media (max-width: 1024px) {
+    .hero-title { font-size: 3.5rem; }
+    .hero-stats { gap: 2rem; }
+    .features-title { font-size: 2.5rem; }
+}
+
+@media (max-width: 768px) {
+    .nav { padding: 1rem 1.5rem; }
+    .hero-section {
+        height: auto; /* Allow height to adjust to content */
+        min-height: 100vh;
+        padding: 10rem 1.5rem 4rem; /* More padding for content */
+        background-attachment: scroll; /* Disable parallax on mobile for performance */
+    }
+    .hero-title { font-size: 2.5rem; }
+    .hero-subtitle { font-size: 1.1rem; }
+    .hero-stats { flex-direction: column; gap: 1.5rem; }
+    .hero-buttons { flex-direction: column; align-items: center; }
+    .hero-btn { width: 100%; max-width: 300px; justify-content: center; }
+    .features-section { padding: 2rem 1.5rem; }
+    .features-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .features-title { font-size: 2rem; }
+    .footer-container { text-align: center; gap: 2rem; }
+    .footer-column p { margin: 0 auto; }
+    .social-icons { justify-content: center; }
+}
+
+@media (max-width: 480px) {
+    .hero-title { font-size: 2rem; }
+    .stat-number { font-size: 2rem; }
+    .features-title { font-size: 1.8rem; }
+    .feature-card { padding: 2rem 1.5rem; }
+}

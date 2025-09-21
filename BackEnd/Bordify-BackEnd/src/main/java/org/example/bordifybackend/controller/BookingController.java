@@ -3,7 +3,7 @@ package org.example.bordifybackend.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.bordifybackend.Dto.ApiResponse;
 import org.example.bordifybackend.Dto.BookingRequestDTO;
-import org.example.bordifybackend.service.BookingService;
+import org.example.bordifybackend.service.impl.BookingServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/booking")
 public class BookingController {
-    private final BookingService bookingService;
+    private final BookingServiceImpl bookingService;
 
     @PostMapping("/request")
     @PreAuthorize("isAuthenticated()")

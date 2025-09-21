@@ -1,19 +1,18 @@
-package org.example.bordifybackend.service;
+package org.example.bordifybackend.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.bordifybackend.Dto.BookingRequestDTO;
 import org.example.bordifybackend.Dto.FilterDTO;
 import org.example.bordifybackend.Dto.PropertyDTO;
 import org.example.bordifybackend.entity.*;
 import org.example.bordifybackend.repo.AmenityRepo;
 import org.example.bordifybackend.repo.PropertyRepo;
 import org.example.bordifybackend.repo.UserRepo;
+import org.example.bordifybackend.service.PropertyService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class PropertyService {
+public class PropertyServiceImpl implements PropertyService {
 
     private final PropertyRepo propertyRepo;
     private final UserRepo userRepo;

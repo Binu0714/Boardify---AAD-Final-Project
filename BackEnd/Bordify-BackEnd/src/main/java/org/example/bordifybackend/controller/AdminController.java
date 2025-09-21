@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.bordifybackend.Dto.ApiResponse;
 import org.example.bordifybackend.Dto.StatsDTO;
 import org.example.bordifybackend.Dto.UserInfoDTO;
-import org.example.bordifybackend.service.AdminService;
+import org.example.bordifybackend.service.impl.AdminServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
-    private final AdminService adminService;
+    private final AdminServiceImpl adminService;
 
     @GetMapping("/stats")
     @PreAuthorize("isAuthenticated()")

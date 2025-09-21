@@ -1,14 +1,10 @@
 package org.example.bordifybackend.controller;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import lombok.RequiredArgsConstructor;
 import org.example.bordifybackend.Dto.ApiResponse;
-import org.example.bordifybackend.Dto.BookingRequestDTO;
 import org.example.bordifybackend.Dto.FilterDTO;
 import org.example.bordifybackend.Dto.PropertyDTO;
-import org.example.bordifybackend.entity.Property;
-import org.example.bordifybackend.service.BookingService;
-import org.example.bordifybackend.service.PropertyService;
+import org.example.bordifybackend.service.impl.PropertyServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/property")
 public class PropertyController {
-    private final PropertyService propertyService;
+    private final PropertyServiceImpl propertyService;
 
     @PostMapping("/create")
     @PreAuthorize("isAuthenticated()")

@@ -1,13 +1,13 @@
-package org.example.bordifybackend.service;
+package org.example.bordifybackend.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.bordifybackend.Dto.StatsDTO;
 import org.example.bordifybackend.Dto.UserInfoDTO;
-import org.example.bordifybackend.entity.BookingStatus;
 import org.example.bordifybackend.entity.User;
 import org.example.bordifybackend.repo.BookingRepo;
 import org.example.bordifybackend.repo.PropertyRepo;
 import org.example.bordifybackend.repo.UserRepo;
+import org.example.bordifybackend.service.AdminService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
     @RequiredArgsConstructor
-    public class AdminService {
+    public class AdminServiceImpl implements AdminService {
 
     private final UserRepo userRepo;
     private final PropertyRepo propertyRepo;
@@ -50,4 +50,4 @@ import java.util.List;
             }
             return userInfoDTOS;
         }
-    }
+}

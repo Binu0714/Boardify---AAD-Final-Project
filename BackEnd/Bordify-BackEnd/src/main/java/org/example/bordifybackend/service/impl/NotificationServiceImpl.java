@@ -1,4 +1,4 @@
-package org.example.bordifybackend.service;
+package org.example.bordifybackend.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.bordifybackend.Dto.NotificationDTO;
@@ -7,6 +7,7 @@ import org.example.bordifybackend.entity.Notification;
 import org.example.bordifybackend.entity.User;
 import org.example.bordifybackend.repo.NotificationRepo;
 import org.example.bordifybackend.repo.UserRepo;
+import org.example.bordifybackend.service.NotificationService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class NotificationService {
+public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepo notificationRepo;
     private final UserRepo userRepo;
 

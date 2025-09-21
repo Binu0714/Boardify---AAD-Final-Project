@@ -1,4 +1,4 @@
-package org.example.bordifybackend.service;
+package org.example.bordifybackend.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.bordifybackend.Dto.*;
@@ -6,6 +6,7 @@ import org.example.bordifybackend.entity.Role;
 import org.example.bordifybackend.entity.User;
 import org.example.bordifybackend.repo.PropertyRepo;
 import org.example.bordifybackend.repo.UserRepo;
+import org.example.bordifybackend.service.UserService;
 import org.example.bordifybackend.util.JwtUtil;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserServiceImpl implements UserService {
     private final UserRepo userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;

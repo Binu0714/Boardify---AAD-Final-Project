@@ -119,4 +119,8 @@ public class UserService {
                 .myApprovedAds(approvedAds)
                 .build();
     }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
 }

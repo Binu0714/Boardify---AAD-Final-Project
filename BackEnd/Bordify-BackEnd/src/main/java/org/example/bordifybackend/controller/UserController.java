@@ -156,4 +156,28 @@ public class UserController {
 
     }
 
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse> deleteUser(@PathVariable Long id) {
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.ok(
+                    new ApiResponse(
+                            200,
+                            "User deleted successfully",
+                            null
+                    )
+            );
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity
+                    .status(500)
+                    .body(new ApiResponse(
+                            500,
+                            "An unexpected error occurred: " + e.getMessage(),
+                            null
+                    ));
+        }
+    }
+
 }

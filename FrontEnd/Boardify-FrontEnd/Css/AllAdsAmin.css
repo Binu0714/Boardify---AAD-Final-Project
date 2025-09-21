@@ -1,0 +1,56 @@
+/* =================================================================
+   ADMIN-SPECIFIC STYLES FOR THE "ALL ADS" PAGE
+   ================================================================= */
+
+/* --- 1. Remove the Sidebar Column --- */
+/* On the admin's "All Ads" page, we want the ad grid to take up the full width.
+   This rule overrides the two-column layout from AllAds.css. */
+.page-container {
+    grid-template-columns: 1fr; /* Force a single, full-width column */
+}
+
+/* --- 2. Enforce a 4-Column Grid for Ad Cards --- */
+/* This is the main rule that overrides the default responsive grid. */
+.ads-grid {
+    display: grid;
+    /* On large screens, create 4 equal-width columns. */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem; /* A nice space between the cards */
+}
+
+
+
+/* --- 3. Add Media Queries for Responsiveness --- */
+/* It's crucial that the 4-column layout adapts to smaller screens. */
+
+/* For tablet-sized screens (e.g., less than 1200px wide) */
+@media (max-width: 1200px) {
+    .ads-grid {
+        /* Switch to a 3-column layout */
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* For smaller tablets and large phones (e.g., less than 992px wide) */
+@media (max-width: 992px) {
+    .ads-grid {
+        /* Switch to a 2-column layout */
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* For mobile phones (e.g., less than 576px wide) */
+@media (max-width: 576px) {
+    .ads-grid {
+        /* Switch to a single-column layout for best readability */
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- 4. Admin-Specific Badge for "Unverified" Ads --- */
+/* This style is needed to give unverified ads a distinct look on this page. */
+.ad-badge.unverified {
+    background: linear-gradient(135deg, #f59e0b, #facc15); /* Yellow/Orange */
+    color: #1a202c; /* Dark text for better readability */
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}

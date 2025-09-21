@@ -61,11 +61,7 @@ function fetchAndRenderPendingAds() {
     });
 }
 
-/**
- * Creates the HTML for a single ad card and makes it a link.
- * @param {object} p - A property DTO from the backend.
- * @returns {jQuery} The jQuery object for the clickable ad card.
- */
+
 function createAdCard(p) {
     const amenityMap = { 1: "Wi-Fi", 2: "Parking", 3: "Furnished", 4: "Bills Included", 5: "A/C", 6: "Attached Bathroom", 7: "Washing Machine", 8: "Separate Entrance", 9: "Hot Water", 10: "Kitchen Access", 11: "CCTV", 12: "Meals Provided" };
     const amenities = (p.amenityIds || []).slice(0, 2).map(id => `<span class="feature-tag">${amenityMap[id] || ""}</span>`).join(" ");
@@ -80,12 +76,14 @@ function createAdCard(p) {
             <div class="ad-content">
                 <h3 class="ad-title">${p.title}</h3>
                 <div class="ad-location">
-                    <svg width="16" height="16" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle>
+                    </svg>
                     ${p.city}, ${p.district}
                 </div>
                 <div class="ad-stats">
-                    <span>${p.noOfBeds} Beds</span>
-                    <span>${p.noOfBaths} Baths</span>
+                    <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 22v-6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6H2zM2 12V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6H2z"/></svg>${p.noOfBeds} Beds</span>
+                    <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M7 2v10M17 2v10M2 12a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4v-2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"/></svg>${p.noOfBaths} Baths</span>
                 </div>
                 <div class="ad-features">${amenities}</div>
                 <div class="ad-footer">

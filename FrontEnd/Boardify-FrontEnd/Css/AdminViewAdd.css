@@ -30,19 +30,37 @@
     height: 20px;
     stroke-width: 2.5;
 }
-
 .admin-actions-view .btn-approve {
-    background-color: #28a745;
+    background-color: #22c55e; /* A vibrant, modern green */
     color: white;
-}
-.admin-actions-view .btn-approve:hover {
-    background-color: #218838;
+    border-color: #22c55e;
 }
 
-.admin-actions-view .btn-reject {
-    background-color: #dc3545;
-    color: white;
+.admin-actions-view .btn-approve:hover {
+    background-color: #16a34a; /* A slightly darker green on hover */
+    border-color: #16a34a;
+    transform: translateY(-3px); /* Lift the button on hover */
+    box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3); /* Add a green "glow" on hover */
 }
+
+/* Style for keyboard focus for accessibility */
+.admin-actions-view .btn-reject {
+    background-color: #fef2f2; /* A very light, almost white red */
+    color: #ef4444;            /* A strong red for the text and icon */
+    border: 2px solid #fca5a5;  /* A soft red border */
+    box-shadow: none;           /* No initial shadow for the lighter button */
+}
+
 .admin-actions-view .btn-reject:hover {
-    background-color: #c82333;
+    background-color: #ef4444; /* Fill with solid red on hover */
+    color: white;
+    border-color: #ef4444;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.25); /* Add a red "glow" on hover */
+}
+
+/* Style for keyboard focus for accessibility */
+.admin-actions-view .btn-reject:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.4);
 }

@@ -1,4 +1,4 @@
-package org.example.bordifybackend.service;
+package org.example.bordifybackend.service.impl;
 
 import com.vonage.client.VonageClient;
 import com.vonage.client.sms.MessageStatus;
@@ -26,11 +26,6 @@ public class SmsService {
         this.client = VonageClient.builder().apiKey(apiKey).apiSecret(apiSecret).build();
     }
 
-    /**
-     * Sends an SMS message using the Vonage client.
-     * @param to The recipient's phone number, MUST be in E.164 format.
-     * @param body The text message to send.
-     */
     public void sendSms(String to, String body) {
         try {
             // "Boardify" will be the sender ID

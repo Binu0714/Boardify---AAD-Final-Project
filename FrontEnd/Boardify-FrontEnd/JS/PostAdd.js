@@ -153,9 +153,9 @@ function setupFormSubmission() {
             address: $('#ad-address').val(),
             propertyType: $('#ad-property-type').val(),
             listedFor: $('#ad-listed-for').val(),
-            noOfBeds: parseInt($('#ad-bedrooms').val()),
-            noOfBaths: parseInt($('#ad-bathrooms').val()),
-            price: parseFloat($('#ad-price').val()),
+            noOfBeds: parseInt($('#ad-bedrooms').val()) || 0,
+            noOfBaths: parseInt($('#ad-bathrooms').val()) || 0,
+            price: parseFloat($('#ad-price').val()) || 0,
             latitude: parseFloat($('#latitude').val()),
             longitude: parseFloat($('#longitude').val()),
             amenityIds: $('input[name="amenities"]:checked').map(function() {
@@ -171,6 +171,11 @@ function setupFormSubmission() {
         const imageFiles = $('#image-upload-input')[0].files;
         for (let i = 0; i < imageFiles.length; i++) {
             formData.append('image', imageFiles[i]);
+        }
+
+        if (imageFiles.length === 0) {
+            Swal.fire('Error', 'Please upload at least one image.', 'error');
+            return;
         }
 
         Swal.fire({
@@ -195,7 +200,7 @@ function setupFormSubmission() {
                     text: 'Your property has been sent to our admin team for review. You will be notified once it is approved.',
                     confirmButtonText: 'Great, Thanks!'
                 }).then(() => {
-                    window.location.href = 'Dashboard.html';
+                    window.location.href = 'AllAds.html';
                 });
             },
 

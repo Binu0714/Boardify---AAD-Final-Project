@@ -1,5 +1,5 @@
 // Create this new file: ImgbbService.java
-package org.example.bordifybackend.service;
+package org.example.bordifybackend.service.impl;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

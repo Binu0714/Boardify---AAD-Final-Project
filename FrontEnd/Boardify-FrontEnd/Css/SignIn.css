@@ -5,45 +5,41 @@
 }
 
 /* --- STYLES FOR SHOW/HIDE PASSWORD ICON --- */
-
-/* 1. Create a positioning context for the icon */
 .password-wrapper {
     position: relative;
 }
 
-/* 2. Style the icon's container (the span) */
 .toggle-password {
     position: absolute;
     top: 50%;
-    right: 16px; /* Position icon on the right */
+    right: 16px;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #a0aec0; /* Icon color */
+    color: #a0aec0;
     transition: color 0.2s ease;
 }
 
 .toggle-password:hover {
-    color: #4facfe; /* Icon color on hover */
+    color: #4facfe;
 }
 
-/* 3. Adjust input padding to prevent text from overlapping the icon */
 .password-wrapper input {
-    padding-right: 45px; /* Make space for the icon */
+    padding-right: 45px;
 }
 
-/* 4. Logic to show/hide the correct eye icon */
 .toggle-password .eye-slash {
-    display: none; /* Hide the slashed eye by default */
+    display: none;
 }
 
 .toggle-password.visible .eye-slash {
-    display: block; /* Show the slashed eye when active */
+    display: block;
 }
 
 .toggle-password.visible .eye-open {
-    display: none; /* Hide the open eye when active */
+    display: none;
 }
 
+/* --- GLOBAL PAGE LAYOUT --- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     min-height: 100vh;
@@ -51,31 +47,32 @@ body {
     align-items: center;
     justify-content: center;
     padding: 20px;
+    background: #f0f4f8;
 }
 
 .container {
     display: flex;
     background: white;
     border-radius: 20px;
-    /*box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);*/
     overflow: hidden;
     max-width: 900px;
     width: 100%;
     height: 630px;
 }
 
+/* --- LEFT PANEL --- */
 .left-panel {
     flex: 1;
     background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     padding: 40px 30px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     text-align: center;
     color: white;
     position: relative;
     overflow: hidden;
+    justify-content: flex-start; /* logo goes to top */
 }
 
 .left-panel::before {
@@ -95,37 +92,34 @@ body {
     66% { transform: translateY(10px) rotate(-1deg); }
 }
 
+/* --- LOGO + DIVIDER --- */
 .logo-container {
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    position: relative;
-    z-index: 2;
+    margin-top: 30px;
+    margin-bottom: 15px;
 }
 
-.logo-placeholder {
-    width: 30px;
-    height: 30px;
+.logo-container img {
+    width: 250px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+.logo-divider {
+    width: 100px;
+    height: 3px;
     background: white;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    color: #4facfe;
-    font-size: 16px;
+    margin: 12px auto 25px auto;
+    border-radius: 2px;
+    opacity: 0.9;
 }
 
+/* --- WELCOME TEXT --- */
 .welcome-text {
     position: relative;
     z-index: 2;
+    margin-top: 10px;
 }
 
 .welcome-text h1 {
@@ -142,6 +136,7 @@ body {
     max-width: 260px;
 }
 
+/* --- RIGHT PANEL --- */
 .right-panel {
     flex: 1;
     padding: 30px;
@@ -177,6 +172,7 @@ body {
     filter: blur(60px);
 }
 
+/* --- FORM STYLES --- */
 .form-container {
     max-width: 340px;
     width: 100%;
@@ -254,6 +250,7 @@ body {
     transform: translateY(-1px);
 }
 
+/* --- BUTTONS & LINKS --- */
 .checkbox-group {
     display: flex;
     align-items: center;
@@ -390,10 +387,12 @@ body {
     text-decoration: underline;
 }
 
+/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
         margin: 10px;
+        height: auto;
     }
 
     .left-panel {
@@ -402,7 +401,6 @@ body {
 
     .right-panel {
         padding: 30px 20px;
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     }
 
     .form-container {

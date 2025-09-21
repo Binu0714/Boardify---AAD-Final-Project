@@ -117,10 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
-    // --- Event Delegation for Delete Buttons ---
-    // NO CHANGES NEEDED HERE. The listener only targets '.btn-icon-danger',
-    // so it will automatically ignore the admin rows.
     userTableBody.addEventListener('click', function(event) {
         const deleteButton = event.target.closest('.btn-icon-danger');
 
@@ -139,17 +135,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const userRow = deleteButton.closest('tr');
-                    userRow.style.transition = 'opacity 0.5s ease';
-                    userRow.style.opacity = '0';
-                    setTimeout(() => userRow.remove(), 500);
+                    $.ajax({
+                        url: `http://localhost:8080/user/delete/${userId}`,
+                        method: 'DELETE',
+                        headers: { 'Authorization': `Bearer ${token}` },
 
-                    Swal.fire('Deleted!', `User "${userName}" has been removed.`, 'success');
+                        success: function(res) {
+                            const userRow = deleteButton.closest('tr');
+                            userRow.style.transition = 'opacity 0.5s ease';
+                            userRow.style.opacity = '0';
+                            setTimeout(() => userRow.remove(), 500);
+
+                            Swal.fire('Deleted!', `User "${userName}" has been removed.`, 'success');
+                        },
+                        error: function(err) {
+                            console.error("Error deleting user:", err);
+                            Swal.fire('Error!', 'Could not delete the user. Please try again.', 'error');
+                        }
+
+                    });
                 }
             });
         }
     });
 
-    // --- Initial Load ---
     fetchAndRenderUsers();
 });

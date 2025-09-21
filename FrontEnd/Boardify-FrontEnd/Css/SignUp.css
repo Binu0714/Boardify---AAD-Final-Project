@@ -5,45 +5,41 @@
 }
 
 /* --- STYLES FOR SHOW/HIDE PASSWORD ICON --- */
-
-/* 1. Create a positioning context for the icon */
 .password-wrapper {
     position: relative;
 }
 
-/* 2. Style the icon's container (the span) */
 .toggle-password {
     position: absolute;
     top: 50%;
-    right: 16px; /* Position icon on the right */
+    right: 16px;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #a0aec0; /* Icon color */
+    color: #a0aec0;
     transition: color 0.2s ease;
 }
 
 .toggle-password:hover {
-    color: #4facfe; /* Icon color on hover */
+    color: #4facfe;
 }
 
-/* 3. Adjust input padding to prevent text from overlapping the icon */
 .password-wrapper input {
-    padding-right: 45px; /* Make space for the icon */
+    padding-right: 45px;
 }
 
-/* 4. Logic to show/hide the correct eye icon */
 .toggle-password .eye-slash {
-    display: none; /* Hide the slashed eye by default */
+    display: none;
 }
 
 .toggle-password.visible .eye-slash {
-    display: block; /* Show the slashed eye when active */
+    display: block;
 }
 
 .toggle-password.visible .eye-open {
-    display: none; /* Hide the open eye when active */
+    display: none;
 }
 
+/* --- BASE BODY --- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: white;
@@ -54,6 +50,7 @@ body {
     padding: 20px;
 }
 
+/* --- MAIN CONTAINER --- */
 .container {
     display: flex;
     background: white;
@@ -66,13 +63,14 @@ body {
     height: 600px;
 }
 
+/* --- LEFT PANEL --- */
 .left-panel {
     flex: 1;
     background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     padding: 40px 30px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Move content to top */
     align-items: center;
     text-align: center;
     color: white;
@@ -97,34 +95,31 @@ body {
     66% { transform: translateY(10px) rotate(-1deg); }
 }
 
+/* --- LOGO --- */
 .logo-container {
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    position: relative;
-    z-index: 2;
+    margin-top: 10px; /* push logo closer to top */
+    margin-bottom: 15px;
 }
 
-.logo-placeholder {
-    width: 30px;
-    height: 30px;
+.logo-container img {
+    width: 250px;   /* bigger logo */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+/* --- DIVIDER UNDER LOGO --- */
+.logo-divider {
+    width: 100px;
+    height: 3px;
     background: white;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    color: #4facfe;
-    font-size: 16px;
+    margin: 12px auto 25px auto;
+    border-radius: 2px;
+    opacity: 0.9;
 }
 
+/* --- WELCOME TEXT --- */
 .welcome-text {
     position: relative;
     z-index: 2;
@@ -144,6 +139,7 @@ body {
     max-width: 260px;
 }
 
+/* --- RIGHT PANEL --- */
 .right-panel {
     flex: 1;
     padding: 30px;
@@ -179,6 +175,7 @@ body {
     filter: blur(60px);
 }
 
+/* --- FORM CONTAINER --- */
 .form-container {
     max-width: 340px;
     width: 100%;
@@ -225,6 +222,7 @@ body {
     font-weight: 500;
 }
 
+/* --- INPUTS --- */
 .form-group {
     margin-bottom: 18px;
 }
@@ -256,6 +254,7 @@ body {
     transform: translateY(-1px);
 }
 
+/* --- OPTIONS --- */
 .form-options {
     display: flex;
     justify-content: space-between;
@@ -286,6 +285,7 @@ body {
     text-decoration: underline;
 }
 
+/* --- BUTTONS --- */
 .btn {
     padding: 12px 20px;
     border: none;
@@ -333,6 +333,7 @@ body {
     box-shadow: 0 12px 35px rgba(79, 172, 254, 0.5);
 }
 
+/* --- DIVIDER --- */
 .divider {
     text-align: center;
     margin: 16px 0;
@@ -357,6 +358,7 @@ body {
     font-weight: 500;
 }
 
+/* --- GOOGLE BUTTON --- */
 .btn-google {
     width: 100%;
     padding: 12px 20px;
@@ -387,6 +389,7 @@ body {
     flex-shrink: 0;
 }
 
+/* --- SIGNUP LINK --- */
 .signup-link {
     text-align: center;
     margin-top: 15px;
@@ -409,6 +412,7 @@ body {
     text-decoration: underline;
 }
 
+/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
     .container {
         flex-direction: column;

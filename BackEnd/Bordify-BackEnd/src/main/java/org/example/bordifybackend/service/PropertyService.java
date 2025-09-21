@@ -495,4 +495,11 @@ public class PropertyService {
 
         propertyRepo.deleteById(id);
     }
+
+    public List<PropertyDTO> getAllAds() {
+        List<Property> properties = propertyRepo.findAllByVerifiedTrue();
+        return properties.stream()
+                .map(this::mapToPropertyDTO)
+                .collect(Collectors.toList());
+    }
 }

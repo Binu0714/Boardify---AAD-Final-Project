@@ -33,6 +33,8 @@ public interface PropertyRepo extends JpaRepository<Property, Long> {
 
     List<Property> findAllByVerifiedFalse();
 
+    List<Property> findAllByVerifiedTrue();
+
     long countByVerifiedTrue();
 
     long countByUser(User user);

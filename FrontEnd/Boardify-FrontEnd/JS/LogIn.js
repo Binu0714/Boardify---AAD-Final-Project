@@ -15,6 +15,8 @@ $("#login-form").submit(function (event) {
             password: password
         }),
         success: function (response) {
+
+
             console.log("Login response:", response);
 
             const token = response.data?.accessToken;

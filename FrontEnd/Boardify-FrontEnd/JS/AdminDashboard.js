@@ -1,5 +1,60 @@
 $(document).ready(function() {
+
+    function validateAndLoadDashboard(requiredRole) {
+        let token = localStorage.getItem('token');
+
+        if (!token) {
+            window.location.href = "Login.html";
+            return false;
+        }
+
+        const tokenParts = token.split('.');
+
+        if (tokenParts.length !== 3) {
+            window.location.href = "Login.html";
+            return false;
+        }
+
+        try {
+            const tokenPayload = JSON.parse(atob(tokenParts[1]));
+            const currentTimestamp = Math.floor(Date.now() / 1000);
+            // console.log("Current timestamp:", currentTimestamp);
+            // console.log("Token expiration timestamp:", tokenPayload.exp);
+
+            if (tokenPayload.exp && currentTimestamp >= tokenPayload.exp) {
+                alert('Session expired. Please login again.');
+                localStorage.removeItem('authToken');
+                window.location.href = "Login.html";
+                return false;
+            }
+
+            const userRole = tokenPayload.role;
+
+            console.log(userRole);
+
+
+            if (!userRole || userRole !== requiredRole) {
+                alert("Access Denied: You do not have permission to view this page.");
+                // Redirect to a more appropriate page, like the user dashboard or login
+                window.location.href = "Login.html";
+                return false;
+            }
+
+        } catch (error) {
+
+            console.error('Invalid token:', error);
+            window.location.href = "Login.html";
+            return false;
+        }
+        return true;
+    }
+
+    if (validateAndLoadDashboard('ADMIN')) {
+        setInterval(validateAndLoadDashboard, 10000);
+    }
+
     const token = localStorage.getItem("token");
+
     if (!token) {
         window.location.href = "Login.html";
         return;
@@ -120,7 +175,6 @@ function setupLeafletMap() {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // --- University / Listing Markers ---
         L.marker([6.83, 79.91]).addTo(map)
             .bindPopup('KDU, Werahera');
 
@@ -152,7 +206,6 @@ function createUserGrowthChart() {
     const ctx = document.getElementById('userRegistrationsChart');
     if (!ctx) return; // Exit if the canvas element doesn't exist
 
-    // --- 1. Generate Fake Data ---
     const labels = [];
     const dataPoints = [];
     let cumulativeUsers = Math.floor(Math.random() * 2) + 2; // Start with a random base of 100-150 users

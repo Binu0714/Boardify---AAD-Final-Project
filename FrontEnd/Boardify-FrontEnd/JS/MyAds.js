@@ -3,6 +3,59 @@ let currentPage = 1;
 const itemsPerPage = 4;
 
 $(document).ready(function () {
+
+    function validateAndLoadDashboard() {
+        let token = localStorage.getItem('token');
+
+        if (!token) {
+
+            window.location.href = "Login.html";
+            return false;
+
+        }
+
+        const tokenParts = token.split('.');
+
+        if (tokenParts.length !== 3) {
+            window.location.href = "Login.html";
+            return false;
+        }
+
+        try {
+            const tokenPayload = JSON.parse(atob(tokenParts[1]));
+
+            const currentTimestamp = Math.floor(Date.now() / 1000);
+            // console.log("Current timestamp:", currentTimestamp);
+            // console.log("Token expiration timestamp:", tokenPayload.exp);
+
+            if (tokenPayload.exp && currentTimestamp >= tokenPayload.exp) {
+                alert('Session expired. Please login again.');
+                localStorage.removeItem('authToken');
+                window.location.href = "Login.html";
+                return false;
+            }
+
+
+        } catch (error) {
+
+            console.error('Invalid token:', error);
+            window.location.href = "Login.html";
+            return false;
+
+        }
+
+        return true;
+
+    }
+
+    if (validateAndLoadDashboard()) {
+
+        setInterval(validateAndLoadDashboard, 10000);
+
+    }
+
+
+
     loadMyAds();
 
     // Pagination click handling

@@ -1,8 +1,46 @@
 $(document).ready(function() {
+
+    function validateAndLoadDashboard() {
+        let token = localStorage.getItem('token');
+
+        if (!token) {
+            window.location.href = "Login.html";
+            return false
+        }
+
+        const tokenParts = token.split('.');
+
+        if (tokenParts.length !== 3) {
+            window.location.href = "Login.html";
+            return false;
+        }
+
+        try {
+            const tokenPayload = JSON.parse(atob(tokenParts[1]));
+            const currentTimestamp = Math.floor(Date.now() / 1000);
+
+            if (tokenPayload.exp && currentTimestamp >= tokenPayload.exp) {
+                alert('Session expired. Please login again.');
+                localStorage.removeItem('authToken');
+                window.location.href = "Login.html";
+                return false;
+            }
+
+        } catch (error) {
+            console.error('Invalid token:', error);
+            window.location.href = "Login.html";
+            return false;
+        }
+        return true;
+    }
+
+    if (validateAndLoadDashboard()) {
+        setInterval(validateAndLoadDashboard, 10000);
+    }
+
     const token = localStorage.getItem("token");
 
     if (!token) {
-        alert("fuck you...")
         window.location.href = "LogIn.html";
         return;
     }

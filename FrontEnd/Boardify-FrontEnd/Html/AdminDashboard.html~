@@ -154,7 +154,7 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; 2025 Boardify. All Rights Reserved. Designed with ❤️ in Sri Lanka.</p>
+        <p>&copy; 2025 Boardify. All Rights Reserved. Designed By Binu Jinnajith.</p>
     </div>
 </footer>
 
@@ -164,6 +164,14 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../JS/AdminDashboard.js"></script>
 <script src="../JS/LogOut.js"></script>
+
+<script>
+    const role = localStorage.getItem("role");
+    if (role !== "ADMIN") {
+        window.location.href = "Dashboard.html";
+    }
+</script>
+
 
 </body>
 </html>

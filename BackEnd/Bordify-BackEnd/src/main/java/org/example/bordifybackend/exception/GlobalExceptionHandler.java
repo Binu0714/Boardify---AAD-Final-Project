@@ -13,19 +13,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     // Exception Handler for username not found Exception
-    @ExceptionHandler(UsernameNotFoundException.class)
+    @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiResponse handleUserNameNotFoundException
-    (UsernameNotFoundException ex){
+    public ApiResponse HandleResourcesNotFoundException(ResourceNotFoundException ex){
         return new ApiResponse(
                 404,
-                "User Not Found",
+                "Unable to Found Resources",
                 null
         );
     }
 
     // Exception Handler for Bad Credentials Exception
-    @ExceptionHandler(BadCredentialsException.class)
+    @ExceptionHandler(BadCredentialException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiResponse handleBadCredentials(BadCredentialsException ex){
         return new ApiResponse(

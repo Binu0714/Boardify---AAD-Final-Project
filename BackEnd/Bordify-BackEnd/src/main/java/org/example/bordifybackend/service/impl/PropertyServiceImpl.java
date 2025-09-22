@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.bordifybackend.Dto.FilterDTO;
 import org.example.bordifybackend.Dto.PropertyDTO;
 import org.example.bordifybackend.entity.*;
+import org.example.bordifybackend.exception.ResourceNotFoundException;
 import org.example.bordifybackend.repo.AmenityRepo;
 import org.example.bordifybackend.repo.PropertyRepo;
 import org.example.bordifybackend.repo.UserRepo;
@@ -35,7 +36,7 @@ public class PropertyServiceImpl implements PropertyService {
     public Property createProperty(PropertyDTO propertyDTO, List<MultipartFile> images) {
         User currentUser = userRepo.findByUsername(
                 SecurityContextHolder.getContext().getAuthentication().getName()
-        ).orElseThrow(() -> new RuntimeException("User not found"));
+        ).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         Location location = Location.builder()
                 .address(propertyDTO.getAddress())
@@ -146,7 +147,7 @@ public class PropertyServiceImpl implements PropertyService {
         Property property = propertyRepo.findById(id).orElse(null);
 
         if (property == null) {
-            throw new RuntimeException("Property not found");
+            throw new ResourceNotFoundException("Property not found");
         }
 
         return mapToPropertyDTO(property);
@@ -206,7 +207,7 @@ public class PropertyServiceImpl implements PropertyService {
     @Transactional
     public void updateProperty(Long id, PropertyDTO propertyDTO, List<MultipartFile> images) {
         Property property = propertyRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Property not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Property not found"));
 
         property.setTitle(propertyDTO.getTitle());
         property.setDescription(propertyDTO.getDescription());
@@ -452,7 +453,7 @@ public class PropertyServiceImpl implements PropertyService {
     @Transactional
     public void approveProperty(Long id) {
         Property property = propertyRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Property not found with id : " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Property not found with id : " + id));
 
         property.setVerified(true);
         propertyRepo.save(property);
@@ -476,7 +477,7 @@ public class PropertyServiceImpl implements PropertyService {
 
     public void rejectProperty(Long id) {
         Property property = propertyRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Property not found with id : " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Property not found with id : " + id));
 
         User owner = property.getUser();
         if (owner != null && owner.getMobile() != null && !owner.getMobile().isEmpty()) {

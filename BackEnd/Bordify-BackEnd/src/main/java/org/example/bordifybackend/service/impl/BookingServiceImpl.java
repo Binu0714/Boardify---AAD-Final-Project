@@ -6,6 +6,9 @@ import org.example.bordifybackend.entity.BookingReq;
 import org.example.bordifybackend.entity.BookingStatus;
 import org.example.bordifybackend.entity.Property;
 import org.example.bordifybackend.entity.User;
+import org.example.bordifybackend.exception.BadCredentialException;
+import org.example.bordifybackend.exception.ExpiredJwtException;
+import org.example.bordifybackend.exception.ResourceNotFoundException;
 import org.example.bordifybackend.repo.BookingRepo;
 import org.example.bordifybackend.repo.NotificationRepo;
 import org.example.bordifybackend.repo.PropertyRepo;
@@ -30,15 +33,15 @@ public class BookingServiceImpl implements BookingService {
     public void createBookingRequest(BookingRequestDTO requestDTO) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User seeker = userRepo.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         Property property = propertyRepo.findById(requestDTO.getPropertyId())
-                .orElseThrow(() -> new RuntimeException("Property not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Property not found"));
 
         User owner = property.getUser();
 
         if (seeker.equals(owner)) {
-            throw new RuntimeException("You cannot book your own property");
+            throw new BadCredentialException("You cannot book your own property");
         }
 
         BookingReq newBookingReq = BookingReq.builder()
@@ -57,7 +60,7 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     public void acceptBookingRequest(Long bookingId) {
         BookingReq acceptedRequest = bookingRepo.findById(bookingId)
-                .orElseThrow(() -> new RuntimeException("Booking request not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Booking request not found"));
 
         Property property = acceptedRequest.getProperty();
         User owner = property.getUser();
@@ -66,7 +69,7 @@ public class BookingServiceImpl implements BookingService {
         User currentUser = userRepo.findByUsername(username).orElseThrow();
 
         if (!owner.equals(currentUser)) {
-            throw new IllegalStateException("You are not authorized to accept requests for this property.");
+            throw new ExpiredJwtException("You are not authorized to accept requests for this property.");
         }
 
         notificationRepo.findByBookingReq_Id(acceptedRequest.getId())
@@ -102,7 +105,7 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     public void declineBookingRequest(long id) {
         BookingReq declinedRequest = bookingRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Booking request not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Booking request not found"));
 
         Property property = declinedRequest.getProperty();
         User owner = property.getUser();
@@ -111,7 +114,7 @@ public class BookingServiceImpl implements BookingService {
         User currentUser = userRepo.findByUsername(username).orElseThrow();
 
         if (!owner.equals(currentUser)) {
-            throw new IllegalStateException("You are not authorized to decline requests for this property.");
+            throw new ExpiredJwtException("You are not authorized to decline requests for this property.");
         }
 
         notificationRepo.findByBookingReq_Id(declinedRequest.getId())

@@ -5,6 +5,7 @@ import org.example.bordifybackend.Dto.NotificationDTO;
 import org.example.bordifybackend.entity.BookingReq;
 import org.example.bordifybackend.entity.Notification;
 import org.example.bordifybackend.entity.User;
+import org.example.bordifybackend.exception.ResourceNotFoundException;
 import org.example.bordifybackend.repo.NotificationRepo;
 import org.example.bordifybackend.repo.UserRepo;
 import org.example.bordifybackend.service.NotificationService;
@@ -37,7 +38,7 @@ public class NotificationServiceImpl implements NotificationService {
     public List<NotificationDTO> getUnreadNotifications() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepo.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         List<Notification> notificationEntities = notificationRepo.findByRecipientAndIsReadFalse(currentUser);
 
@@ -65,7 +66,7 @@ public class NotificationServiceImpl implements NotificationService {
     public List<NotificationDTO> getUnreadAndMarkAsRead() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepo.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         List<Notification> unreadNotifications = notificationRepo.findByRecipientAndIsReadFalse(currentUser);
 

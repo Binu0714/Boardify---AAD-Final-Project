@@ -4,11 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.example.bordifybackend.Dto.*;
 import org.example.bordifybackend.entity.Role;
 import org.example.bordifybackend.entity.User;
+import org.example.bordifybackend.exception.BadCredentialException;
+import org.example.bordifybackend.exception.ResourceNotFoundException;
 import org.example.bordifybackend.repo.PropertyRepo;
 import org.example.bordifybackend.repo.UserRepo;
 import org.example.bordifybackend.service.UserService;
 import org.example.bordifybackend.util.JwtUtil;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,12 +25,12 @@ public class UserServiceImpl implements UserService {
     public AuthResponseDTO authenticate(AuthDTO authDTO){
 
         User user=userRepository.findByUsername(authDTO.getUsername())
-                .orElseThrow(()->new RuntimeException("User not found"));
+                .orElseThrow(()->new ResourceNotFoundException("User not found"));
 
         if (!passwordEncoder.matches(
                 authDTO.getPassword(),
                 user.getPassword())){
-            throw new BadCredentialsException("Invalid credentials");
+            throw new BadCredentialException("Invalid credentials");
         }
         String token=jwtUtil.generateToken(authDTO.getUsername(), user.getRole());
         return new AuthResponseDTO(token, user.getRole());
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
     public String register(RegisterDTO registerDTO){
         if (userRepository.findByUsername(registerDTO.getUsername())
                 .isPresent()){
-            throw new RuntimeException("Username already exists");
+            throw new ResourceNotFoundException("Username already exists");
         }
         User user=User.builder()
                 .username(registerDTO.getUsername())
@@ -54,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     public UserDTO getByUsername(String username) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         return new UserDTO(
                 user.getUsername(),
@@ -67,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
     public UserDTO updateUser(String username, String email, String mobile, String profilePicUrl) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         user.setEmail(email);
         user.setMobile(mobile);
@@ -89,14 +90,14 @@ public class UserServiceImpl implements UserService {
 
     public void updatePassword(String username, String currentPassword, String newPassword, String confirmPassword) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
-            throw new RuntimeException("Invalid current password");
+            throw new BadCredentialException("Invalid current password");
         }
 
         if (!newPassword.equals(confirmPassword)) {
-            throw new RuntimeException("New password and confirm password do not match");
+            throw new BadCredentialException("New password and confirm password do not match");
         }
 
         user.setPassword(passwordEncoder.encode(newPassword));
@@ -108,7 +109,7 @@ public class UserServiceImpl implements UserService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         long totalAds = propertyRepo.countByVerifiedTrue();
         long myAds = propertyRepo.countByUser(user);

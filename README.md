@@ -87,7 +87,7 @@
 
 ## 🎥 Demo Video
 Watch the full project demonstration here:  
-[https://youtu.be/uHcjZ4TLW-E](https://youtu.be/uHcjZ4TLW-E)
+[https://youtu.be/uHcjZ4TLW-E](https://youtu.be/XbZz5JYh990?si=MePBvUnr_3Aae_I6)
 
 ---
 

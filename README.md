@@ -34,6 +34,57 @@
 
 ---
 
+## 📸 Screenshots
+
+### 🔑 Authentication
+- **Login Page**
+  ![Login](screenshots/logIn.jpg)
+
+- **Sign Up Page**
+  ![Sign Up](screenshots/signUp.jpg)
+
+### 🏠 User Side
+- **Landing Page**
+  ![Landing Page](screenshots/landingPage.jpg)
+
+- **User Dashboard**
+  ![User Dashboard](screenshots/userDashboard.jpg)
+
+- **User Profile**
+  ![User Profile](screenshots/userProfile.jpg)
+
+- **User Ads**
+  ![User Ads](screenshots/userMyAds.jpg)
+
+- **All Ads**
+  ![All Ads](screenshots/userAllAds.jpg)
+
+- **Booking Ad**
+  ![Booking Ad](screenshots/userBookingAdd.jpg)
+
+- **Post Ad**
+  ![Post Ad](screenshots/userPostAdd.jpg)
+
+- **Notifications**
+  ![Notifications](screenshots/userNotification.jpg)
+
+### 👨‍💼 Admin Side
+- **Admin Dashboard**
+  ![Admin Dashboard](screenshots/adminDashboard.jpg)
+
+- **Admin Profile**
+  ![Admin Profile](screenshots/adminProfile.jpg)
+
+- **Manage Users**
+  ![Manage Users](screenshots/adminUserManage.jpg)
+
+- **View Ads**
+  ![View Ads](screenshots/adminViewAdd.jpg)
+
+- **Confirm Ads**
+  ![Confirm Ads](screenshots/adminConfirmAdd.jpg)
+
+
 ## 🎥 Demo Video
 Watch the full project demonstration here:  
 [https://youtu.be/uHcjZ4TLW-E](https://youtu.be/uHcjZ4TLW-E)
